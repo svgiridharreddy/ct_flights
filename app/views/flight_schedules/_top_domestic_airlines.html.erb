@@ -1,0 +1,39 @@
+<div class="blocks">
+	<h2><%= t('brand.top_airlines_from')%> <%= dep_city_name%></h2>
+	<ul class="list-unstyled top-airlines">
+		<% unless rhs_content.present? %>
+			<% top_airlines.each do |cc| %>
+			<li>
+				<% if ENV['COUNTRY']=='IN' && section.include?('dom') %>
+					<div class="col-xs-3 no-padding">
+						<!-- <img src="<%= assets_path%>/new_images/airlines/<%=cc%>.png" alt="<%#= t("airlines.#{cc}") %>"> -->
+						<% formated_carrier_name =  t("airlines.#{cc}").downcase.gsub(" ",'-').gsub('--','-') %>
+							<span class="carrier-logo <%= formated_carrier_name %>">
+		                 	</span>
+		 			</div>
+				<% end %>
+				<div class="<%= ENV['COUNTRY']=='IN' && section.include?('dom') ? 'col-xs-5 text-center' : 'col-xs-8' %> pad-5">
+					<% airline_name = link_to( t("airlines.#{cc}"), "/flight-booking/" + format_airline_name(I18n.with_locale(:en) { t("airlines.#{cc}") }).downcase.gsub(" ", "-").gsub("--","-") + ".html") %>
+					<%= airline_name %>
+				</div>
+				<div class="col-xs-4 pad-rzero">
+					<%= link_to( "Book", "/flight-booking/" + t("airlines.#{cc}").downcase.gsub(" ", "-").gsub("--","-") + "-"+ url_escape("#{dep_city_name}-#{arr_city_name}-flights") + ".html",:class=>"booking") %>
+				</div>
+				<div class="clearfix"></div>
+			</li>
+			<% end %>
+		<% else %>
+			<% rhs_content.each do |rhs|%>
+			<li>
+				<div class="<%= ENV['COUNTRY']=='IN' && section.include?('dom') ? 'col-xs-5 text-center' : 'col-xs-8' %> pad-5">
+				<%= link_to rhs[:rhs_link_title] , rhs[:rhs_link] %>
+				</div>
+				<div class="col-xs-4 pad-rzero">
+					<%= link_to(t('button.book'),rhs[:rhs_link],:class=>"booking") %>
+				</div>
+				<div class="clearfix"></div>
+			</li>
+			<% end %>
+		<% end %>
+	</ul>
+</div>

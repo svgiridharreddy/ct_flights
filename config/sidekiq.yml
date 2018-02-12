@@ -1,0 +1,13 @@
+:concurrency: 30
+:logfile: ./log/sidekiq.log
+#:pidfile: tmp/pids/sidekiq.pid
+staging:
+  :concurrency: 35
+development:
+  :concurrency: 30
+production:
+  :concurrency: 45
+
+:queues:
+  - default
+  - insert_unique_routes_worker

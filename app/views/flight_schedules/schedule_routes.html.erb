@@ -1,0 +1,205 @@
+<% use_helper = self.extend ApplicationHelper %>
+<!doctype html>
+<!DOCTYPE html>
+<html>
+<head>
+	<title><% dep_city_name %> to <% arr_city_name %> Flights,Airfares </title>
+	<!-- Google Tag Manager -->
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-T9S432');</script>
+<!-- End Google Tag Manager -->
+<link rel="stylesheet" href="https://s3-ap-southeast-1.amazonaws.com/waytogo-assets/waytogo-staging/stylesheets/application.css"/>
+ <style>
+        .list-inline>li {
+          display: inline-block;
+          padding-right: 5px;
+          padding-left: 5px;
+          position: relative;
+        }
+        .airline-info h3{
+          font-size: 18px;
+        }
+        .airline-info{
+          padding: 0 0 20px;
+        }
+        .airline-info table.airline-info-table,.airline-info .fare-table,.other-info{
+          width: 100%;
+          font-size: 14px;
+          border: 1px solid #d9d9d9;
+          border-collapse: collapse;
+          
+        }
+        .airline-info table.airline-info-table td,.fare-table td,.other-info td{
+          padding: 10px;
+          border-bottom: 1px solid #d9d9d9;
+        }
+        .fare-table th,.other-info th{
+          padding: 10px;
+          background: #eeeeee54;
+          border-bottom: 1px solid #d9d9d9;
+          font-weight: 500;
+        }
+        .airline-info table.airline-info-table td:nth-child(odd){
+          background: #eeeeee54;
+          font-weight: 500;
+          border-right: 1px solid #d9d9d9;
+        }
+        .airline-info .booking {
+          padding: 4px 15px;
+        }
+        .normal-list .dep-time,.normal-list .arr-time{
+          width: 32%;
+          display: inline-block;
+          vertical-align: top;
+        }
+        .schedule-divide{
+          width: 30px;
+          display: inline-block;
+          font-size: 18px;
+          font-weight: 600;
+          position: relative;
+          top: 5px;
+        }
+        .normal-list .timing-duration{
+
+        }
+        @media Screen and (max-width: 468px){
+          .airline-info{
+            width: 100%;
+            overflow-x: auto;
+          }
+          .airline-info table{
+            width: 700px!important;
+          }
+        }
+        </style>
+</head>
+<body>
+<!-- Google Tag Manager (noscript) -->
+	<noscript>
+		<iframe  src="https://www.googletagmanager.com/ns.html?id=GTM-T9S432"
+            height="0" width="0" >
+        </iframe>
+  </noscript>
+
+<!-- End Google Tag Manager (noscript) -->
+ <section id="flights-nav">
+	<div class="container-fluid">
+		<div class="ctCol ctProducts mview-header">
+			<a class="ctBrand" href="/">
+				<span class="cleartripLogo" title="Homepage">Home</span>
+			</a>
+			<ul class="productLinks hasProductIcons">
+				<li class="flightApp">
+					<a rel="bToolTip" Flights href="/flights">
+						<span class="productIcon flights">Flights</span>
+					</a>
+				</li>
+				<li class="hotelApp">
+					<a rel="bToolTip" Hotels href="/hotels">
+						<span class="productIcon hotels">Hotels</span>
+					</a>
+				</li>
+				<li class="packagesApp">
+					<a rel="bToolTip" Packages href="/packages">
+						<span class="productIcon packages">Packages</span>
+					</a>
+				</li>
+				<li class="trainsApp">
+					<a rel="bToolTip" title="Trains" href="/trains">
+						<span class="productIcon trains">Trains</span>
+					</a>
+				</li>
+			</ul>
+			<div class="Menuicon visible-xs pull-right"> <span></span> <span></span> <span></span></div>
+		</div>
+		<div class="ctCol ctCenter mview-center">&nbsp;</div>
+		<div class="ctCol">
+			<ul class="list-inline language">
+				<li class="en first active">
+					<a href="https://www.cleartrip.com/flight-schedule/hi/bangalore-new-delhi-flights.html" lang="hi">हिन्दी</a>
+				</li>
+				<li>|</li>
+				<li>
+					<a href="https://www.cleartrip.com/flight-schedule/bangalore-new-delhi-flights.html" lang="en">English</a>
+				</li>
+			</ul>
+		</div>
+	</div>
+	<div class="clearfix"></div>
+</section>
+		<%= render :partial=>"common/search_widget" %>
+	<div class="col-lg-9 col-md-9 col-sm-12 mobile-view pad-lzero" id="flight-schedule">
+  <div class="list-box">
+		<h2 class="f16">Flight tickets from <%= schedule_layout_values["dep_city_name"] %> to <%= schedule_layout_values["arr_city_name"] %></h2>
+		<div class="normal-list">
+			<div class="sort-bar">
+				<div class="items text-center">
+					<div class="col-xs-2"><a href="">Airline</a></div>
+					<div class="col-xs-3"><a href="">Dept & Arrival</a></div>
+					<div class="col-xs-1"><a href="">Duration</a></div>
+		<!-- 			<div class="col-xs-2"><a href="">Price</a></div>
+		 -->	<div class="col-xs-2"><a href="">Days of Operation</a></div>
+					<div class="col-xs-2"><a href="">&nbsp;</a></div>
+				</div>
+				<div class="clearfix"></div>
+			</div>
+	
+			<ul id="airline-lists" class="list-unstyled">
+				<% schedule_layout_values["schedule_routes"].each do |route| %>
+					<li>
+						<div class="airline">
+							<div class="col-xs-2 no-padding">
+					      <span class="name mt-15">
+					          	<%= route[:carrier_code] %><%= route[:flight_no] %>
+					      </span>
+				        <span class="name mt-5">
+					          	<% airline_name = link_to( t("airlines.#{route[:carrier_code]}"), "/flight-booking/" + format_airline_name(I18n.with_locale(:en) { t("airlines.#{route[:carrier_code]}") }).downcase.gsub(" ", "-").gsub("--","-") + ".html") %>                  
+					          	<%= airline_name %>	
+					      </span>
+					    </div>
+					    <div class="col-xs-3 no-padding pad-10">
+					      <div class="dep-time">
+			        	<span><%= Time.strptime(route[:dep_time],"%H:%M").to_time.strftime("%I:%M %p") %></span>
+			        	<span class="type"><%= dep_city_name %></span>
+			          </div>
+					      <div class="schedule-divide">→</div>
+			          <div class="arr-time">
+			        	<span><%= Time.strptime(route[:arr_time],"%H:%M").to_time.strftime("%I:%M %p") %></span>
+			        	<span class="type"><%= arr_city_name %></span>
+			          </div>
+				      </div> 
+			        <div class="col-xs-1 no-padding pad-10">
+			            <!-- <span> <%#= Time.at(route[:duration].to_i*60).utc.strftime("%Hh %Mm") %></span> -->
+			            <% if route[:duration].include? (":")%>
+			            	<span> <%= route[:duration] %></span>
+			            	<span class="type">non-stop</span>
+			            <% else %>
+			            	<span> <%= Time.at(route[:duration].to_i*60).utc.strftime("%Hh %Mm") %></span>
+			            <% end %>   
+
+			  		  </div>	
+				        
+				      <div class="col-xs-2 no-padding pad-10">
+			        	<span><%= route[:days_of_operation]%></span>
+			        </div>
+				      <div class="col-xs-2 no-padding">
+				        	<a data-route="<%=schedule_layout_values["dep_airport_code"]%>-<%= schedule_layout_values["arr_airport_code"]%>-<%= route[:carrier_code] %>" class="booking flight-schedule-booking" >Book Now</a>
+				      </div>
+					    <div class="clearfix"></div>
+						</div>
+				  </li>
+			  <% end %>
+			</ul>
+		</div>
+		 <div class="return_link">
+      Get airfare and schedule for return <a href="/flight-schedule/<%= schedule_layout_values["return_url"] %>"> <%= arr_city_name%> <%= dep_city_name%></a> flights.
+      </div>
+      </div>
+      </div>
+
+  </body>
+</html>
