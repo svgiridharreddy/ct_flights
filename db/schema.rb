@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180209115750) do
+ActiveRecord::Schema.define(version: 20180214101039) do
 
   create_table "airline_brands", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "carrier_code"
@@ -53,6 +53,29 @@ ActiveRecord::Schema.define(version: 20180209115750) do
     t.boolean "is_index"
     t.float "arr_latitude", limit: 53
     t.float "arr_langitude", limit: 53
+  end
+
+  create_table "city_contents", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string "city_code"
+    t.string "city_name_en"
+    t.string "city_name_ar"
+    t.string "city_name_hi"
+    t.text "content_in_en"
+    t.text "content_ae_en"
+    t.text "content_sa_en"
+    t.text "content_bh_en"
+    t.text "content_kw_en"
+    t.text "content_qa_en"
+    t.text "content_om_en"
+    t.text "content_in_hi"
+    t.text "content_ae_ar"
+    t.text "content_sa_ar"
+    t.text "content_bh_ar"
+    t.text "content_kw_ar"
+    t.text "content_qa_ar"
+    t.text "content_om_ar"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "city_names", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
