@@ -1,0 +1,4 @@
+<h3>FAQs</h3>
+<b>1.What is the flight bookings and reservations policy at IndiGo?</b>
+<p>IndiGo Airlines allows passengers to change the date and time of the booking of their flight via the View/Change booking facility, provided they are traveling via a Multi-City booking. When you update your ticket in the View/Changes booking facility, you will get a confirmation message displayed on your screen.
+IndiGo does not allow you to cancel the segment and make the ticket open dated as they do not provide open tickets. Bookings for 9 passengers can be made per PNR. You may book 2 hours prior to the flight departure for domestic flights and 4 hours prior for international flights by contacting the IndiGo call center. You may also book tickets for infants through the Interactive voice response (IVR) system. </p>

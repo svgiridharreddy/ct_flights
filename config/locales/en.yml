@@ -30,4 +30,17 @@
 # available at http://guides.rubyonrails.org/i18n.html.
 
 en:
-  hello: "Hello world"
+  brand: 
+    top_dom_airlines_from: "Top Domestic Airlines From"
+  button:
+    book: "Book Now"
+  breadcrumb:
+    flights: "Flights"
+  flight_schedule: 
+    breadcrumb_flight_title: "Cheap Flights to your destination"
+    breadcrumb_second_dom: "Domestic Flight Schedules"
+    breadcrumb_second_intl: "International Flight Schedules"
+    breadcrumb_title: "%{dep_city_name} %{arr_city_name} Flight Schedule"
+    header_1: "%{dep_city_name} (%{dep_city_code}) to %{arr_city_name} (%{arr_city_code}) Flights"
+    top_dom_airlines: "Top Domestic Airlines From"
+    top_int_airlines: "Top International Airlines From"

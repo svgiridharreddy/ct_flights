@@ -1,5 +1,6 @@
 en:
   airlines:
+    US: "US Airways"
     0B: "Blue Air"
     2B: "Ak Bars Aero"
     2E: "Smokey Bay Air"
@@ -3200,7 +3201,6 @@ en:
     EU: "United Eagle  Airlines"
     5X: "UPS  Airlines"
     U6: "Ural  Airlines"
-    US: "US Airways"
     U5: "USA3000"
     UT: "UTair"
     UR: "UTair Express"

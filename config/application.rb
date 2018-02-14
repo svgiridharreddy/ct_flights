@@ -16,6 +16,13 @@ module CtFlights
     config.autoload_paths += Dir[File.join("#{Rails.root.to_s}", 'app', 'workers', "**","*")]
     config.autoload_paths += Dir[File.join("#{Rails.root.to_s}", 'lib',"*")]
 
+    config.i18n.enforce_available_locales = false
+    config.i18n.available_locales = [:hi, :en, :ar]
+    #config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
+    #config.i18n.load_path += Dir["#{Rails.root.to_s}/config/locales/**/*.{rb,yml}"]
+    config.i18n.load_path += Dir[File.join("#{Rails.root.to_s}", 'config', 'locales', '**', '*.{rb,yml}')]
+    config.i18n.default_locale = :en
+    config.i18n.fallbacks = true
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.
