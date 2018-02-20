@@ -75,7 +75,38 @@
             width: 700px!important;
           }
         }
-        </style>
+      </style>
+      <% lang = {
+           "calender"=>{
+            "airfare"=>t('calender.airfare'),
+            "today"=>t('calender.today'),
+            "cheapest"=>t('calender.cheapest'),
+            "calendar_note"=>t('calender.calendar_note')
+            },
+            "flight_schedule"=>{
+              "mo"=>t('flight_schedule.mo'),
+              "tu"=>t('flight_schedule.tu'),
+              "we"=>t('flight_schedule.we'),
+              "th"=>t('flight_schedule.th'),
+              "fr"=>t('flight_schedule.fr'),
+              "sa"=>t('flight_schedule.sa'),
+              "su"=>t('flight_schedule.su')
+              },
+              "month": ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+              "currency"=>use_helper.currency_name(@country_code)
+            } 
+      %>
+       <script>
+        var country_code= "<%= @country_code.downcase %>";
+        var section_type= "<%= @section.include?("dom") ? "domestic" : "international" %>";
+        var page_type="flight-schedule";
+        var language_type = "en";
+        var dep_city_code = "<%= schedule_layout_values["dep_city_code"] %>";
+        var arr_city_code = "<%= schedule_layout_values["arr_city_code"] %>";
+        var dep_city_name = "<%= dep_city_name %>";
+        var arr_city_name = "<%= arr_city_name %>";
+        var page_sub_type = "routes";
+      </script>
 </head>
 <body>
 <!-- Google Tag Manager (noscript) -->
@@ -120,7 +151,7 @@
 			<div class="ctCol">
 				<ul class="list-inline language">
 					<li class="en first active">
-						<a href="https://www.cleartrip.com/flight-schedule/hi/bangalore-new-delhi-flights.html" lang="hi">हिन्दी</a>
+						<a href="https://www.cleartrip.com/flight-schedule/hi/<%= schedule_layout_values["dep_city_name_formated"]%>-<%= schedule_layout_values["arr_city_name_formated"] %>-flights." lang="hi">हिन्दी</a>
 					</li>
 					<li>|</li>
 					<li>
@@ -157,6 +188,7 @@
 			<%= render :partial=>"common/search_widget" %>
 			<div class="col-lg-9 col-md-9 col-sm-12 mobile-view pad-lzero" id="flight-schedule">
 	  		<div class="list-box">
+          <div id="banner" class="lhs-banner"></div>
           <div class="calendar-new" >
               <h2 class="pull-left"> <%= t('cheap_air_fare', dep_city_name: dep_city_name, arr_city_name: arr_city_name) %> </h2>
               <div class="text-right pull-right full-calendar">
@@ -179,14 +211,27 @@
                 </div>
               </div>
             </div><!--/calendar-new-->
-	  			<%= render :partial=> "flight_schedule_routes/shared/en/schedule_routes_table",locals: {schedule_layout_values: schedule_layout_values,dep_city_name: dep_city_name,arr_city_name: arr_city_name}%>
-					<div class="return_link">
-			      Get airfare and schedule for return <a href="/flight-schedule/<%= schedule_layout_values["return_url"] %>"> <%= arr_city_name %> <%= dep_city_name %></a> flights.
-			  	</div>
-	      </div>
-        <div class="content-desc">
-          <%= render :partial => "flight_schedule_routes/contents/templatized_content_en_in",locals: {schedule_layout_values: schedule_layout_values,dep_city_name: dep_city_name,arr_city_name: arr_city_name} %>
-          <%= render :partial =>  "flight_schedule_routes/shared/en/route_information",locals: {schedule_layout_values: schedule_layout_values,dep_city_name: dep_city_name,arr_city_name: arr_city_name} %>
+	  			  <%= render :partial=> "flight_schedule_routes/shared/en/schedule_routes_table",locals: {schedule_layout_values: schedule_layout_values,dep_city_name: dep_city_name,arr_city_name: arr_city_name}%>
+  					<div class="return_link">
+  			      Get airfare and schedule for return <a href="/flight-schedule/<%= schedule_layout_values["return_url"] %>"> <%= arr_city_name %> <%= dep_city_name %></a> flights.
+  			  	</div>
+	     
+          <div class="content-desc">
+            <% if schedule_layout_values["unique_route_content"].present? %>
+              <%= raw schedule_layout_values["unique_route_content"] %>
+            <% else %>
+              <%= render :partial => "flight_schedule_routes/contents/templatized_content_en_in",locals: {schedule_layout_values: schedule_layout_values,dep_city_name: dep_city_name,arr_city_name: arr_city_name} %>
+                <% if schedule_layout_values["dep_city_conent"].present? && schedule_layout_values["arr_city_content"].present? %>
+                  <h3> About <%= dep_city_name %> (<%= dep_city_code %>) </h3>
+                  <%= raw schedule_layout_values["dep_city_conent"]%>
+                  <div class="clearfix"></div>
+                  <h3> About <%= arr_city_name %> (<%= arr_city_code %>) </h3>
+                  <%= raw schedule_layout_values["arr_city_conent"]%>
+                <% end %>
+            <% end %>
+            <%= render :partial =>  "flight_schedule_routes/shared/en/route_information",locals: {schedule_layout_values: schedule_layout_values,dep_city_name: dep_city_name,arr_city_name: arr_city_name} %>
+            <%= render partial: "flight_schedule_routes/shared/en/schedule_faq", locals: { arr_city_name: arr_city_name, dep_city_name: dep_city_name, schedule_layout_values: schedule_layout_values, use_helper: use_helper } %>
+          </div>
         </div>
     	</div>
       <div id="Rside-bar">
@@ -201,5 +246,12 @@
       </div>
     </div>
   </section>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+  <script src="https://d2w5af8s1781.cloudfront.net/waytogo-staging/javascripts/jquery-ui.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bxslider/4.2.5/jquery.bxslider.min.js"></script>
+  <script type="text/javascript" src="https://d2w5af8s1781.cloudfront.net/waytogo-staging/javascripts/date_format.js"></script>
+  <script type="text/javascript" src="https://d2w5af8s1781.cloudfront.net/waytogo-staging/javascripts/ct_custom.js"></script>
+  <script type="text/javascript" src="https://d2w5af8s1781.cloudfront.net/waytogo-staging/javascripts/banner_tool_v1.js"></script>
 </body>
 </html>

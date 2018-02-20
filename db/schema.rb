@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180214101039) do
+ActiveRecord::Schema.define(version: 20180216110147) do
 
   create_table "airline_brands", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "carrier_code"
@@ -96,6 +96,15 @@ ActiveRecord::Schema.define(version: 20180214101039) do
     t.index ["unique_route_id"], name: "index_collectives_on_unique_route_id"
   end
 
+  create_table "fare_calendars", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci" do |t|
+    t.string "source_city_code"
+    t.string "destination_city_code"
+    t.text "calendar_json", limit: 4294967295
+    t.string "section"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "flight_schedule_collectives", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|
     t.string "carrier_code"
     t.integer "flight_no"
@@ -136,6 +145,24 @@ ActiveRecord::Schema.define(version: 20180214101039) do
     t.string "data_source"
     t.integer "distance"
     t.date "created_at"
+  end
+
+  create_table "flights_headers", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string "dep_city_code"
+    t.string "arr_city_code"
+    t.string "dep_city_name"
+    t.string "arr_city_name"
+    t.string "hop"
+    t.string "section"
+    t.string "page_type"
+    t.string "route_type"
+    t.string "language"
+    t.text "airport_details", limit: 4294967295
+    t.text "hotel_details", limit: 4294967295
+    t.text "train_details", limit: 4294967295
+    t.text "tourism_details", limit: 4294967295
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "package_flight_schedules", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|

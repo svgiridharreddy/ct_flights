@@ -9,7 +9,8 @@ class InsertUniqueRoutesWorker
   # sidekiq_options queue: "insert_unique_routes_worker", backtrace: true 
   def perform()
     country_code = 'IN'
-      all_routes = PackageFlightSchedule.where("arr_city_code!=dep_city_code and ((dep_country_code='IN' and arr_country_code='IN') or ((dep_country_code='IN' and arr_country_code!='IN')or (dep_country_code!='IN' and arr_country_code='IN')or(dep_country_code!='IN' and arr_country_code!='IN'))) and stop=0").group(:dep_city_code,:arr_city_code,:dep_airport_code,:arr_airport_code,:dep_country_code,:arr_country_code).order("sum(flight_count) desc").pluck(:dep_city_code,:arr_city_code,:dep_airport_code,:arr_airport_code,:dep_country_code,:arr_country_code,"sum(flight_count) as total",:stop)
+      all_routes = PackageFlightSchedule.where("arr_city_code!=dep_city_code and ((dep_country_code='IN' and arr_country_code='IN') or ((dep_country_code='IN' and arr_country_code!='IN')or (dep_country_code!='IN' and arr_country_code='IN')or(dep_country_code!='IN' and arr_country_code!='IN'))) and (stop=0)").group(:dep_city_code,:arr_city_code,:dep_airport_code,:arr_airport_code,:dep_country_code,:arr_country_code).order("sum(flight_count) desc").pluck(:dep_city_code,:arr_city_code,:dep_airport_code,:arr_airport_code,:dep_country_code,:arr_country_code,"sum(flight_count) as total",:stop)  
+      binding.pry
       create_flight_routes(all_routes)
   end
 

@@ -186,16 +186,43 @@ module ApplicationHelper
     end
   end
 
-  def display_country(country_code, locale)
-    I18n.with_locale(locale) { t("country.#{country_code}") }
+  def currency_code(country_code)
+    if country_code == 'AE'
+      return 'AED'
+    elsif country_code == 'KW'
+      return 'KWD'
+    elsif country_code == 'SA'
+      return 'SAR'
+    elsif country_code == 'BH'
+      return 'BHD'
+    elsif country_code == 'QA'
+      return 'QAR'
+    elsif country_code == 'OM'
+      return 'OMR'
+    elsif country_code == 'IN'
+      return '₹'
+    else
+      ''
+    end
   end
 
-  def get_tourism_place(place_name)
-    #tourism_place_of_interest = TourismPlacesOfInterest.find_by_place_name(place_name)
-    tourism_place_of_interest = TourismPlacesOfInterest.where("place_name = '#{place_name}' and poi_details is not null").first
-
-
-    return tourism_place_of_interest if !tourism_place_of_interest.blank?
-
+  def currency_name(country_code)
+    if country_code == 'AE'
+      return 'AED'
+    elsif country_code == 'KW'
+      return 'KWD'
+    elsif country_code == 'SA'
+      return 'SAR'
+    elsif country_code == 'BH'
+      return 'BHD'
+    elsif country_code == 'QA'
+      return 'QAR'
+    elsif country_code == 'OM'
+      return 'OMR'
+    elsif country_code == 'IN'
+      return 'Rs.'
+    else
+      ''
+    end
   end
 end

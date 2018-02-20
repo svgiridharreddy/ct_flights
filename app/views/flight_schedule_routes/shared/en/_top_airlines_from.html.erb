@@ -15,11 +15,11 @@
 		                 	<!-- </span> -->
 		 			 <!-- </div>   -->
 				<div class="<%= schedule_layout_values["country_code"]=='IN' && (schedule_layout_values["dep_country_code"]=='IN' && schedule_layout_values["arr_country_code"]=='IN') ? 'col-xs-5 text-center' : 'col-xs-8' %> pad-5">
-					<% airline_name = link_to( t("airlines.#{cc}"), "/flight-booking/" + format_airline_name(I18n.with_locale(:en) { t("airlines.#{cc}") }).downcase.gsub(" ", "-").gsub("--","-") + ".html") %>
+					<% airline_name = link_to( t("airlines.#{cc}"), "#{use_helper.host_name(schedule_layout_values["country_code"])}/flight-booking/" + format_airline_name(I18n.with_locale(:en) { t("airlines.#{cc}") }).downcase.gsub(" ", "-").gsub("--","-") + ".html") %>
 					<%= airline_name %>
 				</div>
 				<div class="col-xs-4 pad-rzero">
-					<%= link_to( "Book", "/flight-booking/" + t("airlines.#{cc}").downcase.gsub(" ", "-").gsub("--","-") + "-"+ url_escape("#{dep_city_name}-#{arr_city_name}-flights") + ".html",:class=>"booking") %>
+					<%= link_to( "Book", "#{use_helper.host_name(schedule_layout_values["country_code"])}/flight-booking/" + t("airlines.#{cc}").downcase.gsub(" ", "-").gsub("--","-") + "-"+ url_escape("#{dep_city_name}-#{arr_city_name}-flights") + ".html",:class=>"booking") %>
 				</div>
 				<div class="clearfix"></div>
 			</li>

@@ -5,12 +5,12 @@ require "active_record/relation"
 class IdentifyFlightScheduleCollectiveWorker
 
 	def perform()
-	  unique_routes = UniqueRoute.where(dep_city_code: 'BOM',arr_city_code: 'DXB') 
+	  unique_routes = UniqueRoute.where(dep_city_code: 'NYC',arr_city_code: 'JAX')
+
 	  unique_routes.find_each do |route|
 	  	dep_city_code = route.dep_city_code
 	  	arr_city_code = route.arr_city_code
     	result = PackageFlightSchedule.where("dep_city_code='#{dep_city_code}' and arr_city_code='#{arr_city_code}'").group(:carrier_code).order(data_source: :desc,dep_time: :asc) 
-
     	routes = []
     	days_of_operation = %W(S M T W T F S)
 	    result.each do |r|
@@ -31,6 +31,7 @@ class IdentifyFlightScheduleCollectiveWorker
 	      }
 	    end
     	routes = routes.group_by{|c| c[:flight_no]}.map{|k,v| v.max{|d| d[:flight_count]}}
+      binding.pry
     	create_schedule_collective(routes,dep_city_code,arr_city_code)
   	end
   end

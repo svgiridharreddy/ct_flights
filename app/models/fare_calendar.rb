@@ -1,0 +1,2 @@
+class FareCalendar < ApplicationRecord
+end
