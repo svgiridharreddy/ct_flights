@@ -1,10 +1,8 @@
 # config valid only for current version of Capistrano
 lock "3.10.1"
 
-set :application, "flights-dynamic"
+set :application, "ct_flights"
 set :repo_url, "git@github.com:svgiridharreddy/ct_flights.git"
-set :deploy_to, "/var/ww/flights-waytogo-dynamic"
-set :application, 'flights-dynamic'
 set :deploy_to, '/var/www/flights-dynamic'
 set :scm, :git
 set :branch, 'testing'

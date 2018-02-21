@@ -20,10 +20,6 @@
 # # Force rails through bundle exec
 # SSHKit.config.command_map[:rails] = "bundle exec rails"
 
-
-
-
-
 server '54.169.165.81',
  user: 'ubuntu',
  roles: %w{app web app},

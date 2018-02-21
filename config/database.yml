@@ -10,5 +10,12 @@ development:
   host: 54.169.165.81
   username: root
   password: ClearTripCalendar
+  
+production:
+  <<: *default
+  database: air_development
+  host: 54.169.165.81
+  username: root
+  password: ClearTripCalendar  
 
 # pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
