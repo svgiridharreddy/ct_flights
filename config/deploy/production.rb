@@ -5,7 +5,7 @@ set :rails_env, :production
 set :deploy_to, '/var/www/flights-dynamic'
 set :normalize_asset_timestamps, %{public/images public/javascripts public/stylesheets}
  
-role :app, %w{ubuntu@52.77.224.118}
+role :app, %w{ubuntu@54.169.165.81}
 
 set :ssh_options, {
    forward_agent: true,

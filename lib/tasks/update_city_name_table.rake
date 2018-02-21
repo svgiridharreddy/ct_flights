@@ -10,7 +10,6 @@ namespace :city_name_table do
         city_name_en = row[1]
         city_name_hi = row[2]
         city_name_ar = row[3]
-
         city = CityName.find_or_create_by(:city_code => city_code)
          city.city_name_en = city_name_en
          city.city_name_ar = city_name_ar

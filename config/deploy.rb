@@ -5,9 +5,7 @@ set :application, "flights-dynamic"
 set :repo_url, "git@github.com:svgiridharreddy/ct_flights.git"
 set :deploy_to, "/var/ww/flights-waytogo-dynamic"
 set :application, 'flights-dynamic'
-set :repo_url, "git@github.com:Cleartrip-ltd/editor_panel.git"
 set :deploy_to, '/var/www/flights-dynamic'
-
 set :scm, :git
 set :branch, 'testing'
 set :keep_releases, 5
@@ -19,10 +17,10 @@ set :linked_dirs, %w{pids bin log tmp/pids tmp/cache tmp/sockets vendor/bundle p
 set :stages, %w(staging production development)
 set :default_stage, "development"
 set :ssh_options, {:forward_agent => true,
-	 :user=> "root",
+	 :user=> "ubuntu",
    :keepalive => true,
    :keepalive_interval => 3000}
-set :user, "root"
+set :user, "ubuntu"
 
 # Force rake through bundle exec
 SSHKit.config.command_map[:rake] = "bundle exec rake"
@@ -41,13 +39,25 @@ namespace :deploy do
       # execute :rake,"db:create"
       # execute :rake,"db:migrate"
       execute "chmod 777 -R #{release_path}/tmp"
-      execute "sudo service apache2 restart"
+      execute "sudo service nginx restart"
       # execute "sudo touch #{File.join(current_path,'tmp','restart.txt')}"
     end
   end
-
+  desc 'precompile assets'
+  task :precompile do    
+  	on roles(:app), in: :sequence, wait: 5 do   
+  		with :environment=>:production do       
+  			within release_path do          
+  				rake "assets:clean"         
+  				rake "assets:precompile NG_FORCE=true"        
+            #rake "assets:copy"      
+        	end    
+    		end  
+			end 
+		end
   after :finishing, 'deploy:restart'
   after :finishing, 'deploy:cleanup'
+  after :updated, 'deploy:precompile'
 
   # after :bundle, 'deploy:after_bundle'
 end 
