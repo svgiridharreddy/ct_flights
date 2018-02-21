@@ -7,8 +7,8 @@ default: &default
 development:
   <<: *default
   database: air_development
-  host: localhost
+  host: 54.169.165.81
   username: root
-  password: root
+  password: ClearTripCalendar
 
 # pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
