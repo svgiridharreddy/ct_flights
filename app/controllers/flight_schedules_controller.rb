@@ -59,9 +59,9 @@ class FlightSchedulesController < ApplicationController
 	def host_name(host)
 		# host = host || ""
     # puts "country_code - #{country_code}"
-    if host == 'http://54.169.165.81'
-    	return ['IN',"India"]
-    elsif host == 'https://www.cleartrip.ae'
+    
+    	
+    if host == 'https://www.cleartrip.ae'
       return ['AE',"United Arab Emirates"]
     elsif host == 'https://kw.cleartrip.com'
       return ['KW',"Kuwait"]
@@ -76,7 +76,7 @@ class FlightSchedulesController < ApplicationController
     elsif host == 'https://www.cleartrip.com'
       return ['IN',"India"]
     else
-      ''
+      return ['IN',"India"]
     end
   end
 	
