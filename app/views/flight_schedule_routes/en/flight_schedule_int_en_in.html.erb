@@ -231,6 +231,8 @@
             <% end %>
             <%= render :partial =>  "flight_schedule_routes/shared/en/route_information",locals: {schedule_layout_values: schedule_layout_values,dep_city_name: dep_city_name,arr_city_name: arr_city_name} %>
             <%= render partial: "flight_schedule_routes/shared/en/schedule_faq", locals: { arr_city_name: arr_city_name, dep_city_name: dep_city_name, schedule_layout_values: schedule_layout_values, use_helper: use_helper } %>
+             <%= render :partial => "flight_schedule_routes/shared/en/airport_details",locals: {airport_details: schedule_layout_values["airport_details"],dep_city_name: dep_city_name,arr_city_name: arr_city_name} %>
+            <%= render :partial=>"flight_schedule_routes/shared/en/top_routes",locals: {flights_dep: schedule_layout_values['more_flights_from_dep'],flights_arr: schedule_layout_values['more_flights_to_arr'],arr_city_name: arr_city_name,dep_city_name_en:dep_city_name,arr_city_name_en: arr_city_name, dep_city_name: dep_city_name,use_helper: use_helper} %>
           </div>
         </div>
     	</div>
