@@ -55,7 +55,7 @@ class FlightSchedulesController < ApplicationController
 
 	def host_name(host)
     # puts "country_code - #{country_code}"
-    if host == 'localhost'
+    if host == 'http://54.169.165.81'
     	return ['IN',"India"]
     elsif host == 'https://www.cleartrip.ae'
       return ['AE',"United Arab Emirates"]
