@@ -3,10 +3,12 @@ class FlightSchedulesController < ApplicationController
 	def schedule_values
 		domain = request.domain
 		url = request.original_url
-		# @country_code = host_name(domain)[0]
-		@country_code = 'IN'
-		# @country_name = host_name(domain)[1]
-		@country_name = 'India'
+				binding.pry
+
+		@country_code = host_name(domain)[0]
+		# @country_code = 'IN'
+		@country_name = host_name(domain)[1]
+		# @country_name = 'India'
 		@dep_city_name  = params[:dep_city_name].titleize
 		@arr_city_name = params[:arr_city_name].titleize
 		@language = params[:lang].nil? ? 'en' : params[:lang]
@@ -56,8 +58,9 @@ class FlightSchedulesController < ApplicationController
 
 
 	def host_name(host)
+		# host = host || ""
     # puts "country_code - #{country_code}"
-    if host == '54.169.165.81'
+    if host == 'http://54.169.165.81'
     	return ['IN',"India"]
     elsif host == 'https://www.cleartrip.ae'
       return ['AE',"United Arab Emirates"]
