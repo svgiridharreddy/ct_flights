@@ -11,7 +11,7 @@ set :format, :pretty
 set :log_level, :debug
 set :pty, true
 # set :rvm_map_bins, %w{rake gem bundle ruby rails}
-set :linked_dirs, %w{pids bin log tmp/pids tmp/cache tmp/sockets vendor/bundle public/system}
+set :linked_dirs, %w{pids log tmp/pids tmp/cache tmp/sockets vendor/bundle public/system}
 set :stages, %w(staging production development)
 set :default_stage, "development"
 set :ssh_options, {:forward_agent => true}
