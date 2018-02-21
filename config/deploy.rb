@@ -1,5 +1,5 @@
 # config valid only for current version of Capistrano
-lock "3.8.2"
+lock "3.10.1"
 
 set :application, "flights-dynamic"
 set :repo_url, "git@github.com:svgiridharreddy/ct_flights.git"
