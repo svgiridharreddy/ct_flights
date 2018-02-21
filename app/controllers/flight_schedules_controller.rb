@@ -3,7 +3,6 @@ class FlightSchedulesController < ApplicationController
 	def schedule_values
 		domain = request.domain
 		url = request.original_url
-				binding.pry
 
 		@country_code = host_name(domain)[0]
 		# @country_code = 'IN'
