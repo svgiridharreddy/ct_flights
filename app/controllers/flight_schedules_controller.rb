@@ -12,9 +12,9 @@ class FlightSchedulesController < ApplicationController
 		@arr_city_name = params[:arr_city_name].titleize
 		@language = params[:lang].nil? ? 'en' : params[:lang]
 		@route = UniqueRoute.find_by(dep_city_name: @dep_city_name,arr_city_name: @arr_city_name)
-		# @route_type = @route.hop == 0 ? "direct" : "hop"
+		# @route_type = @route.hop == 0 ? "non-stop" : "hop"
 		# binding.pry
-		@route_type = "direct"
+		@route_type = "non-stop"
 		if @route.dep_country_code == @country_code &&  @route.arr_country_code == @country_code
 			@section = @country_code + "-dom"
 		else
