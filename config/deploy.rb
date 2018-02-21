@@ -12,14 +12,11 @@ set :keep_releases, 5
 set :format, :pretty
 set :log_level, :debug
 set :pty, true
-set :rvm_map_bins, %w{rake gem bundle ruby rails}
+# set :rvm_map_bins, %w{rake gem bundle ruby rails}
 set :linked_dirs, %w{pids bin log tmp/pids tmp/cache tmp/sockets vendor/bundle public/system}
 set :stages, %w(staging production development)
 set :default_stage, "development"
-set :ssh_options, {:forward_agent => true,
-	 :user=> "ubuntu",
-   :keepalive => true,
-   :keepalive_interval => 3000}
+set :ssh_options, {:forward_agent => true}
 set :user, "ubuntu"
 
 # Force rake through bundle exec
@@ -31,6 +28,7 @@ SSHKit.config.command_map[:rails] = "bundle exec rails"
 set :migration_role, 'app' # Defaults to 'db'
 set :assets_roles, [:app] # Defaults to [:web]
 set :linked_files, %w(config/database.yml)
+
 namespace :deploy do
 
   desc 'Restart application'
@@ -38,26 +36,15 @@ namespace :deploy do
     on roles(:app), in: :sequence, wait: 5 do
       # execute :rake,"db:create"
       # execute :rake,"db:migrate"
-      execute "chmod 777 -R #{release_path}/tmp"
-      execute "sudo service nginx restart"
+      # execute "chmod 777 -R #{release_path}/tmp"
+      execute "sudo service apache2 restart"
       # execute "sudo touch #{File.join(current_path,'tmp','restart.txt')}"
     end
   end
-  desc 'precompile assets'
-  task :precompile do    
-  	on roles(:app), in: :sequence, wait: 5 do   
-  		with :environment=>:production do       
-  			within release_path do          
-  				rake "assets:clean"         
-  				rake "assets:precompile NG_FORCE=true"        
-            #rake "assets:copy"      
-        	end    
-    		end  
-			end 
-		end
+  
   after :finishing, 'deploy:restart'
   after :finishing, 'deploy:cleanup'
-  after :updated, 'deploy:precompile'
+  
 
   # after :bundle, 'deploy:after_bundle'
 end 
