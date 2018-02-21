@@ -4,13 +4,14 @@ default: &default
   timeout: 5000
   username: root
   password: root
+
 development:
   <<: *default
   database: air_development
-  host: 54.169.165.81
+  host: localhost
   username: root
-  password: ClearTripCalendar
-  
+  password: root
+
 production:
   <<: *default
   database: air_development

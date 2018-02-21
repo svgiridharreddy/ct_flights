@@ -146,7 +146,6 @@ class FlightScheduleService
       schedule_layout_values["more_flights_from_dep"] = more_routes["dep_more_routes"]
       schedule_layout_values["more_flights_to_arr"] = more_routes["arr_more_routes"]
       schedule_layout_values["airport_details"] = get_airport_deatils
-      binding.pry
       return schedule_layout_values
     end
      def min_price_new_changes(dep_city_code,arr_city_code,carrier_code='')
