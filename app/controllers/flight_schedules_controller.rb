@@ -76,7 +76,7 @@ class FlightSchedulesController < ApplicationController
     elsif host == 'https://www.cleartrip.com'
       return ['IN',"India"]
     else
-      return ['IN',"India"]
+      return ['AE',"United Arab Emirates"]
     end
   end
 	

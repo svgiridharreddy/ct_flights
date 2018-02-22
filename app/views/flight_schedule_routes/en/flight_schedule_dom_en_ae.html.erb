@@ -152,6 +152,9 @@
 		</div>
 		<div class="clearfix"></div>
 	</section>
+  <!--======Second Header Starts Here==========-->
+  <%= render :partial => "flight_schedule_routes/shared/en/schedule_header",locals: { dep_city_name: dep_city_name,arr_city_name: arr_city_name,route_dom_airlines: schedule_header["dom_airlines"],route_int_airlines: schedule_header["int_airlines"],near_by_airport_hotels: schedule_header["near_by_airport_hotels"],hotels_list: schedule_header["hotels_list"],hotels_header_list: schedule_header["hotels_header_list"],hotel_types: schedule_header["hotel_types"],train_details: schedule_header["train_details"] ,dep_city_name_formated: schedule_layout_values["dep_city_name_formated"],arr_city_name_formated: schedule_layout_values["arr_city_name_formated"],use_helper: use_helper,arr_city_weekend_getaway: schedule_header["arr_city_weekend_getaway"],arr_featured_city: schedule_header["arr_featured_city"],arr_country_code: schedule_layout_values["arr_country_code"],dep_country_code: schedule_layout_values["dep_country_code"],arr_city_package: schedule_header["arr_city_package"],arr_events_city: schedule_header["arr_events_city"],section: schedule_layout_values["section"],country_code: schedule_layout_values["country_code"]} %> 
+  <!--======Second Header Ends Here==========-->
 	<section id="content">
     <div class="container-fluid">
 			<ol itemscope itemtype="https://schema.org/BreadcrumbList" class="list-inline bread-crumb no-padding">
@@ -211,15 +214,18 @@
             <%= raw schedule_layout_values["unique_route_content"] %>
           <% else %>
             <%= render :partial => "flight_schedule_routes/contents/templatized_content_en_in",locals: {schedule_layout_values: schedule_layout_values,dep_city_name: dep_city_name,arr_city_name: arr_city_name} %>
-            <% if schedule_layout_values["dep_city_content"].present? && schedule_layout_values["arr_city_content"].present? %>
-              <h3> About <%= dep_city_name %> (<%= schedule_layout_values["dep_city_code"] %>) </h3>
-                <%=  raw schedule_layout_values["dep_city_content"]%>
-              <div class="clearfix"></div>
-              <h3> About <%= arr_city_name %> (<%= schedule_layout_values["arr_city_code"] %>) </h3>
-                <%=  raw schedule_layout_values["arr_city_content"]%>
-            <% end %>
           <% end %>
           <%= render :partial =>  "flight_schedule_routes/shared/en/route_information",locals: {schedule_layout_values: schedule_layout_values,dep_city_name: dep_city_name,arr_city_name: arr_city_name} %>
+          <% if schedule_layout_values["dep_city_content"].present? && schedule_layout_values["arr_city_content"].present? %>
+            <h3> About <%= dep_city_name %> (<%= schedule_layout_values["dep_city_code"] %>) </h3>
+              <%=  raw schedule_layout_values["dep_city_content"]%>
+            <div class="clearfix"></div>
+            <h3> About <%= arr_city_name %> (<%= schedule_layout_values["arr_city_code"] %>) </h3>
+              <%=  raw schedule_layout_values["arr_city_content"]%>
+          <% end %>
+          <%= render partial: "flight_schedule_routes/shared/en/schedule_faq", locals: { arr_city_name: arr_city_name, dep_city_name: dep_city_name, schedule_layout_values: schedule_layout_values, use_helper: use_helper } %>
+          <%= render :partial => "flight_schedule_routes/shared/en/airport_details",locals: {airport_details: schedule_layout_values["airport_details"],dep_city_name: dep_city_name,arr_city_name: arr_city_name} %>
+          <%= render :partial=>"flight_schedule_routes/shared/en/top_routes",locals: {flights_dep: schedule_layout_values['more_flights_from_dep'],flights_arr: schedule_layout_values['more_flights_to_arr'],arr_city_name: arr_city_name,dep_city_name_en:dep_city_name,arr_city_name_en: arr_city_name, dep_city_name: dep_city_name,use_helper: use_helper} %>
         </div>
     	</div>
       <div id="Rside-bar">

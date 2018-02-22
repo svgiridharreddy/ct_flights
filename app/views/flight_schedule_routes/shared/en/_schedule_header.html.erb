@@ -2,7 +2,7 @@
   <section id="Second-menu">
     <div class="close visible-xs"><i class="fa fa-close"></i></div>
     <ul class="list-inline">
-      <% if dep_country_code=="IN" || arr_country_code=="IN" %>
+      <% if country_code=="IN"%>
         <li>
           <a class="dropdown-toggle" type="button" data-toggle="dropdown">About<span class="caret"></span></a>
           <ul class="list-unstyled dropdown-menu"> 
@@ -31,7 +31,7 @@
           </ul>
         </li>
       <% end %>
-        <% if dep_country_code.present? && arr_country_code.present? %>
+        <% if dep_country_code == country_code && arr_country_code == country_code %>
         <li>
           <a class="dropdown-toggle" type="button" data-toggle="dropdown">How To Reach <%= arr_city_name.titleize %> <span class="caret"></span></a>
           <ul class="list-unstyled dropdown-menu"> 
@@ -124,37 +124,38 @@
         </ul>
       </li>
       <% end %>
-      <% binding.pry %>
-      <% if (train_details["origin_from"].present? || train_details["passing_from"].present?)  %>
-        <li>
-          <a class="dropdown-toggle" type="button" data-toggle="dropdown">Trains <span class="caret"></span></a>
+      <% if dep_country_code== country_code && arr_country_code== country_code %>
+        <% if (train_details["origin_from"].present? || train_details["passing_from"].present?)  %>
+          <li>
+            <a class="dropdown-toggle" type="button" data-toggle="dropdown">Trains <span class="caret"></span></a>
 
-          <ul class="list-unstyled dropdown-menu">
-              <% if section=="IN-dom" %>
-                <li><%= link_to("#{dep_city_name} to #{arr_city_name} Trains","https://www.cleartrip.com/tourism/train/routes/#{dep_city_name_formated}-to-#{arr_city_name_formated}-trains.html",title: "#{dep_city_name} to #{arr_city_name} Trains",target: "_blank")%></li>
-                <% if dep_country_code=="IN" && train_details["train_stations"]["dep_stations"].present? %> 
-                  <li><%= link_to("#{dep_city_name} railway station","https://www.cleartrip.com#{train_details["train_stations"]["dep_stations"].first[:link]}",title: "#{dep_city_name} railway station",target: "_blank")%></li>
-                <% end %>
-              <% end %>
-              <% if arr_country_code=="IN" && train_details["train_stations"]["arr_stations"].present? %>
-                <li><%= link_to("#{arr_city_name} railway station","https://www.cleartrip.com#{train_details["train_stations"]["arr_stations"].first[:link]}",title: "#{arr_city_name} railway station",target: "_blank")%></li>
-              <% end %>
-              <% if train_details["origin_from"].present? && arr_country_code=="IN" %>
-                <li><span class="high-light-txt"><b>Trains originating from <%= arr_city_name.titleize%> </b> </span>
-                  <% train_details["origin_from"].each do |train|%>
-                    <li><%= link_to("#{train["name"]}","https://www.cleartrip.com#{train["link"]}",title: "#{train["name"]}",target: "_blank")%></li>
+            <ul class="list-unstyled dropdown-menu">
+                <% if section=="IN-dom" %>
+                  <li><%= link_to("#{dep_city_name} to #{arr_city_name} Trains","https://www.cleartrip.com/tourism/train/routes/#{dep_city_name_formated}-to-#{arr_city_name_formated}-trains.html",title: "#{dep_city_name} to #{arr_city_name} Trains",target: "_blank")%></li>
+                  <% if dep_country_code=="IN" && train_details["train_stations"]["dep_stations"].present? %> 
+                    <li><%= link_to("#{dep_city_name} railway station","https://www.cleartrip.com#{train_details["train_stations"]["dep_stations"].first[:link]}",title: "#{dep_city_name} railway station",target: "_blank")%></li>
                   <% end %>
-                </li>
-              <% end %>
-              <% if train_details["passing_from"].present? && arr_country_code=="IN" %>
-                  <li><span class="high-light-txt"><b>Trains passing from <%= arr_city_name.titleize%> </b>></span>
-                    <% train_details["passing_from"].each do |train|%>
+                <% end %>
+                <% if arr_country_code=="IN" && train_details["train_stations"]["arr_stations"].present? %>
+                  <li><%= link_to("#{arr_city_name} railway station","https://www.cleartrip.com#{train_details["train_stations"]["arr_stations"].first[:link]}",title: "#{arr_city_name} railway station",target: "_blank")%></li>
+                <% end %>
+                <% if train_details["origin_from"].present? && arr_country_code=="IN" %>
+                  <li><span class="high-light-txt"><b>Trains originating from <%= arr_city_name.titleize%> </b> </span>
+                    <% train_details["origin_from"].each do |train|%>
                       <li><%= link_to("#{train["name"]}","https://www.cleartrip.com#{train["link"]}",title: "#{train["name"]}",target: "_blank")%></li>
                     <% end %>
                   </li>
-              <% end %>
-          </ul>
-        </li>
+                <% end %>
+                <% if train_details["passing_from"].present? && arr_country_code=="IN" %>
+                    <li><span class="high-light-txt"><b>Trains passing from <%= arr_city_name.titleize%> </b>></span>
+                      <% train_details["passing_from"].each do |train|%>
+                        <li><%= link_to("#{train["name"]}","https://www.cleartrip.com#{train["link"]}",title: "#{train["name"]}",target: "_blank")%></li>
+                      <% end %>
+                    </li>
+                <% end %>
+            </ul>
+          </li>
+        <% end %>
       <% end %>
       <li>
         <a class="dropdown-toggle" type="button" data-toggle="dropdown">Offers <span class="caret"></span></a>
