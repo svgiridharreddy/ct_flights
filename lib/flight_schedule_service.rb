@@ -68,7 +68,37 @@ class FlightScheduleService
       airport_details['arr_airport_website'] = @airports[@arr_city_code].website rescue ""
       return airport_details
     end
-  	
+
+  	def schedule_header_details 
+      flights_header = {}  
+      top_dom_cc = AirlineBrand.where(country_code: @country_code).order("brand_routes_count desc").limit(8).pluck(:carrier_code)
+      route_dom_airlines = PackageFlightSchedule.where(dep_city_code: @dep_city_code,arr_city_code: @arr_city_code,carrier_code: top_dom_cc).pluck(:carrier_code).uniq
+      route_int_airlines = PackageFlightSchedule.where(dep_city_code: @dep_city_code,arr_city_code: @arr_city_code).where.not(carrier_code: top_dom_cc).pluck(:carrier_code).uniq
+      flights_header["dom_airlines"] = route_dom_airlines
+      flights_header["int_airlines"] = route_int_airlines
+      arr_city_weekend_getaway = false
+      arr_featured_city = false
+      arr_city_package = false
+      arr_events_city = false
+      events_cities = ["Bangalore","Mumbai","Hyderabad","New Delhi"]
+      weekend_getaway_cities = ["Agra", "Bhopal", "Goa", "Dehradun", "Ahmedabad", "Jammu", "Patna", "Kochi", "New Delhi", "Coorg", "Bangalore", "Mumbai", "Udaipur", "Chennai", "Pune"]
+      featured_cities  =  ["Agra", "Gangtok", "Bhopal", "Goa", "Chandigarh", "Amritsar", "Gurgaon", "Dehradun", "Wayanad", "Ahmedabad", "Kolkata", "Kochi", "Jaipur", "Thekkady", "New Delhi", "Coorg", "Kullu", "Bangalore", "Alleppey", "Manali", "Mumbai", "Lucknow", "Hyderabad", "Indore", "Chennai", "Pune"]
+      package_cities = ["Dehradun","Ahmedabad","Vijayawada","Rajkot","Belgaum","Leh","Mangalore","Vadodara","Mumbai","Lucknow","Madurai","Goa","Guwahati","Indore","Jaipur","Calicut","Tiruchirappally","Port Blair","Aizawl","Udaipur","Cochin","Raipur","Visakhapatnam","Hyderabad","Coimbatore","Khajuraho","Kullu Manali","Porbandar","Bhopal","Agra","Bangalore","Pune","Kanpur","Ranchi","Jorhat","Visakhapatnam","Mysore","Ranchi","Jodhpur","Dharamsala","Ludhiana","New Delhi","Agartala","Diu","Pantnagar","Bhubaneswar","Srinagar","Jammu","Patna","Hubli","Aurangabad","Shillong","Allahabad","Surat","Imphal","Jabalpur","Kolkata","Trivandrum","Chandigarh","Rajahmundry","Nagpur","Dibrugarh","Varanasi","Bhavnagar","Bhuj","Chennai","Amritsar","Jamnagar","Gwalior","Tirupati","Gorakhpur"]
+        flights_header["arr_city_package"] =  package_cities.include?("#{@arr_city_name}") ? true : false
+        flights_header["arr_featured_city"] = featured_cities.include?("#{@arr_city_name}") ? true : false
+        flights_header["arr_city_weekend_getaway"] = weekend_getaway_cities.include?("#{@arr_city_name}") ? true : false
+        flights_header["arr_events_city"] = events_cities.include?("#{@arr_city_name}") ? true : false
+        header_record = FlightsHeader.find_by(dep_city_code: @dep_city_code,arr_city_code: @arr_city_code)
+
+        hotel_details = eval(header_record.hotel_details) rescue []
+        flights_header["near_by_airport_hotels"] = hotel_details["near_by_hotels"].uniq.sample(3) rescue []
+        flights_header["hotels_list"] = hotel_details["city_top_hotels"].uniq.take(5) rescue []
+        flights_header["hotel_types"] = hotel_details["types_of_hotels"] rescue []
+        flights_header["train_details"] = eval(header_record.train_details) rescue []
+        flights_header["hotels_header_list"] = flights_header["hotels_list"].values_at(* flights_header["hotels_list"].each_index.select {|h| h.even?})
+        flights_header["hotels_rhs_list"] = flights_header["hotels_list"].values_at(* flights_header["hotels_list"].each_index.select {|h| h.odd?})
+      return flights_header      
+    end
   	def get_more_routes
       more_routes =  {}
   		more_routes["dep_more_routes"] = PackageFlightSchedule.where(dep_city_code: @dep_city_code).where.not(arr_city_code: @arr_city_code).order("flight_count desc").pluck(:arr_city_name).uniq.take(30)
@@ -83,7 +113,6 @@ class FlightScheduleService
       weekly_airlines_count = weekly_airlines_count.map{|k,v| I18n.t("airlines.#{k}") +"has #{v}"}.to_sentence
       weekly_flights_count = weekly_flights.count
       # airline_count_list = weekly_flights.map{}
-      
       more_routes = get_more_routes
       min_pr = min_price_new_changes(@dep_city_code,@arr_city_code)
       schedule_routes_with_price = []
@@ -111,6 +140,7 @@ class FlightScheduleService
       schedule_layout_values["arr_city_code"] = @route.arr_city_code
       schedule_layout_values["dep_airport_code"] = @route.dep_airport_code
       schedule_layout_values["arr_airport_code"] = @route.arr_airport_code
+      schedule_layout_values["section"] = @section
       schedule_layout_values["dep_airport_name"] = Airport.find_by(airport_code: @route.dep_airport_code).airport_name
       schedule_layout_values["arr_airport_name"] = Airport.find_by(airport_code: @route.arr_airport_code).airport_name
       schedule_layout_values["country_code"] = @country_code
@@ -148,7 +178,8 @@ class FlightScheduleService
       schedule_layout_values["airport_details"] = get_airport_deatils
       return schedule_layout_values
     end
-     def min_price_new_changes(dep_city_code,arr_city_code,carrier_code='')
+
+    def min_price_new_changes(dep_city_code,arr_city_code,carrier_code='')
     result={}
     date_res={}
     result1={}
@@ -233,6 +264,7 @@ class FlightScheduleService
     return {:cc=>result,:dt=>date_res,:min=>min_rate.to_i,:max=>max_rate.to_i,:cm=>result1,:cc1=>min30,:max1=>max_rate_30,:cm1=>max30,:cc2=>min90,:max2=>max_rate_90,:cm2=>max90}
   end
 
+ 
   	def url_escape(url_string)
 		unless url_string.blank?
 			result = url_string.encode("UTF-8", :invalid => :replace, :undef => :replace).to_s

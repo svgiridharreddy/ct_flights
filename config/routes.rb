@@ -1,6 +1,10 @@
+class DynamicValue
+end
 Rails.application.routes.draw do
 	resources :flights
+	
 	scope 'flight-schedule' do 
+
 		get '/:dep_city_name-:arr_city_name-flights.html' => "flight_schedules#schedule_values"
 		get '/:lang/:dep_city_name-:arr_city_name-flights.html' => "flight_schedules#schedule_values"
 	end	

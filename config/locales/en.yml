@@ -47,6 +47,8 @@ en:
     phone_val:  "%{phone_number}"
     email_val:  "%{email_addresses}"
     website_val: "%{website}"
+  brand_flights_routes_html: "<a href= %{link} title= '%{airline_name} %{dep_city_name} %{arr_city_name} flights'> %{airline_name} %{dep_city_name} %{arr_city_name} flights</a>"
+
   flight_schedule: 
     breadcrumb_flight_title: "Cheap Flights to your destination"
     breadcrumb_second_dom: "Domestic Flight Schedules"

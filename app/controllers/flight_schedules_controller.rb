@@ -3,7 +3,6 @@ class FlightSchedulesController < ApplicationController
 	def schedule_values
 		domain = request.domain
 		url = request.original_url
-
 		@country_code = host_name(domain)[0]
 		# @country_code = 'IN'
 		@country_name = host_name(domain)[1]
@@ -46,13 +45,14 @@ class FlightSchedulesController < ApplicationController
       inc_cc =  "carrier_code in ('#{@all_carrier_codes.join("\',\'")}')"
     end
 		@schedule_routes = @route.flight_schedule_collectives.where("#{inc_cc}").order("dep_time asc").limit(10)
+		header_values = flight_schedule_service.schedule_header_details
 		schedule_layout_values = flight_schedule_service.schedule_values(@schedule_routes)
 		if @section.include? ("dom") 
 			partial = "flight_schedule_routes/#{@language}/flight_schedule_dom_#{@language.downcase}_#{@country_code.downcase}"
 		else
 			partial = "flight_schedule_routes/#{@language}/flight_schedule_int_#{@language.downcase}_#{@country_code.downcase}"
 		end
-		render  partial,locals: {schedule_layout_values: schedule_layout_values,dep_city_name: @dep_city_name,arr_city_name: @arr_city_name,dep_city_code: @dep_city_code,arr_city_code: @arr_city_code }
+		render  partial,locals: {schedule_layout_values: schedule_layout_values,dep_city_name: @dep_city_name,arr_city_name: @arr_city_name,dep_city_code: @route.dep_city_code,arr_city_code: @route.arr_city_code,schedule_header: header_values }
 	end
 
 
