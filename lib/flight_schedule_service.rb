@@ -167,7 +167,7 @@ class FlightScheduleService
       content = fetch_route_content
       schedule_layout_values["dep_city_content"] = content["dep_city_content"]
       schedule_layout_values["arr_city_content"] = content["arr_city_content"]
-      schedule_layout_values["unique_route_content"] = content["unique_route_content"] %{airlines_list: schedule_layout_values["operational_airlines"],weekly_flights_count: schedule_layout_values["weekly_flights_count"],airline_count_list: schedule_layout_values["operational_airlines"],first_dep_airline_name: schedule_layout_values["first_dep_airline"],first_dep_time: schedule_layout_values["first_dep_time"],last_dep_airline_name: schedule_layout_values["last_dep_airline"],last_dep_time: schedule_layout_values["last_dep_time"]}
+      schedule_layout_values["unique_route_content"] = content["unique_route_content"] %{airlines_list: schedule_layout_values["operational_airlines"],weekly_flights_count: schedule_layout_values["weekly_flights_count"],airline_count_list: schedule_layout_values["operational_airlines"],first_dep_airline_name: schedule_layout_values["first_dep_airline"],first_dep_time: schedule_layout_values["first_dep_time"],first_dep_flight_no: schedule_layout_values["first_dep_airline_no"],last_dep_flight_no: schedule_layout_values["last_dep_airline_no"],last_dep_airline_name: schedule_layout_values["last_dep_airline"],last_dep_time: schedule_layout_values["last_dep_time"]}
       schedule_layout_values['max_price'] = min_pr[:max]
       schedule_layout_values['route_min_price'] = min_pr[:min]
       schedule_layout_values["min30"] = main_min30
@@ -224,7 +224,7 @@ class FlightScheduleService
             end 
             if time.hour >= 16 && time.hour < 20             
               evening += 1
-            end 
+            end   
             if time.hour >= 20 && time.hour < 24             
               night += 1
             end           
