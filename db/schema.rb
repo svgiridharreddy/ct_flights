@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180222063756) do
+ActiveRecord::Schema.define(version: 20180227123923) do
 
   create_table "airline_brands", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "carrier_code"
@@ -164,6 +164,36 @@ ActiveRecord::Schema.define(version: 20180222063756) do
     t.string "status"
   end
 
+  create_table "footers", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string "city_code"
+    t.string "city_name"
+    t.string "country_code"
+    t.string "country_name"
+    t.string "section"
+    t.integer "total_routes_count"
+    t.integer "current_routes_count"
+    t.text "routes_data", limit: 4294967295
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "headers", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string "dep_city_code"
+    t.string "arr_city_code"
+    t.string "dep_city_name"
+    t.string "arr_city_name"
+    t.string "route_type"
+    t.string "event_city"
+    t.string "weekend_getaway_city"
+    t.string "package_city"
+    t.string "featured_city"
+    t.string "things_todo_city"
+    t.text "hotel_details", limit: 4294967295
+    t.text "train_details", limit: 4294967295
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "package_flight_schedules", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "carrier_code"
     t.string "carrier_brand"
@@ -212,6 +242,9 @@ ActiveRecord::Schema.define(version: 20180222063756) do
     t.datetime "updated_at", null: false
     t.string "dep_city_name"
     t.string "arr_city_name"
+    t.string "schedule_route_url"
+    t.string "ticket_route_url"
+    t.index ["schedule_route_url", "ticket_route_url", "dep_city_code", "arr_city_code"], name: "indecies"
   end
 
   add_foreign_key "collectives", "unique_routes"

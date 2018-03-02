@@ -10,7 +10,7 @@ class FlightsHeaderMonitorWorker
       
       # routes = UniqueRoute.where("dep_city_code!=' ' and arr_city_code!=' ' and page_type = 'flight_schedule' and section = ? and route_type='direct'",section).order("flight_count desc")
 
-      routes = UniqueRoute.where("dep_city_code='BLR' and arr_city_code='DXB'")
+      routes = UniqueRoute.where("dep_city_code='BLR' and arr_city_code='DEL'")
 
       # routes = FlightRoute.where(section: section, page_type: 'flight_schedule').order('flight_count DESC').limit(10)
     begin 

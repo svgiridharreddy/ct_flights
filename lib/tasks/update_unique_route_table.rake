@@ -1,4 +1,6 @@
 require "csv"
+# =========== run rake in background =============
+# nohup bundle exec rake unique_routes_table:dep_and_arr_cities_name QUEUE="*" --trace > rake.out 2>&1 &
 
 namespace :unique_routes_table do 
 	desc "update dep_city_names and arr_city_names in unique_routes table"
@@ -26,4 +28,32 @@ namespace :unique_routes_table do
       end
 		end
 	end
+  desc "update route url in unique routes table"
+  task :update_schedule_url => :environment do 
+    # routes = UniqueRoute.all
+    def url_escape(url_string)
+      unless url_string.blank?
+        result = url_string.encode("UTF-8", :invalid => :replace, :undef => :replace).to_s
+        result = result.gsub(/[\/]/,'-')
+        result = result.gsub(/[^\x00-\x7F]+/, '') # Remove anything non-ASCII entirely (e.g. diacritics).
+        result = result.gsub(/[^\w_ \-]+/i,   '') # Remove unwanted chars.
+        result = result.gsub(/[ \-]+/i,      '-') # No more than one of the separator in a row.
+        result = result.gsub(/^\-|\-$/i,      '') # Remove leading/trailing separator.
+        result = result.downcase
+      end
+    end
+    routes = UniqueRoute.all
+    count = 0
+    begin 
+      routes.find_each do |route|
+        
+        route_url_format = url_escape("#{route.dep_city_name}-#{route.arr_city_name}")
+        route.schedule_route_url = route_url_format
+        route.save!
+        puts "#{count+=1}-#{route_url_format} has been updated!"
+      end
+    rescue StandardError => e 
+      binding.pry
+    end
+  end
 end 

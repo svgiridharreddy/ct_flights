@@ -2,15 +2,17 @@ class FlightSchedulesController < ApplicationController
 
 	def schedule_values
 		domain = request.domain
-		url = request.original_url
+		url = params[:route].gsub("-flights","")
 		@country_code = host_name(domain)[0]
 		# @country_code = 'IN'
 		@country_name = host_name(domain)[1]
 		# @country_name = 'India'
-		@dep_city_name  = params[:dep_city_name].titleize
-		@arr_city_name = params[:arr_city_name].titleize
+		
 		@language = params[:lang].nil? ? 'en' : params[:lang]
-		@route = UniqueRoute.find_by(dep_city_name: @dep_city_name,arr_city_name: @arr_city_name)
+		@route = UniqueRoute.find_by(schedule_route_url: url)
+		binding.pry
+		@dep_city_name  = CityName.find_by(city_code: @route.dep_city_code).city_name_en.titleize
+		@arr_city_name = CityName.find_by(city_code: @route.arr_city_code).city_name_en.titleize
 		# @route_type = @route.hop == 0 ? "non-stop" : "hop"
 		# binding.pry
 		@route_type = "non-stop"
@@ -76,7 +78,7 @@ class FlightSchedulesController < ApplicationController
     elsif host == 'https://www.cleartrip.com'
       return ['IN',"India"]
     else
-      return ['AE',"United Arab Emirates"]
+      return ['IN',"India"]
     end
   end
 	

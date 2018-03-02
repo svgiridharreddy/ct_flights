@@ -5,8 +5,8 @@ require "active_record/relation"
 class IdentifyFlightScheduleCollectiveWorker
 
 	def perform()
-	  unique_routes = UniqueRoute.where(dep_city_code: 'NYC',arr_city_code: 'JAX')
-
+	  # unique_routes = UniqueRoute.where(dep_city_code: 'BLR',arr_city_code: 'DEL')
+    unique_routes = UniqueRoute.all
 	  unique_routes.find_each do |route|
 	  	dep_city_code = route.dep_city_code
 	  	arr_city_code = route.arr_city_code
@@ -31,7 +31,6 @@ class IdentifyFlightScheduleCollectiveWorker
 	      }
 	    end
     	routes = routes.group_by{|c| c[:flight_no]}.map{|k,v| v.max{|d| d[:flight_count]}}
-      binding.pry
     	create_schedule_collective(routes,dep_city_code,arr_city_code)
   	end
   end

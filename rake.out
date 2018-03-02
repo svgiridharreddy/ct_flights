@@ -1,31 +1,5 @@
 nohup: ignoring input
-** Invoke package_flight_schedules:update_city_name (first_time)
+** Invoke unique_routes_table:dep_and_arr_cities_name (first_time)
 ** Invoke environment (first_time)
 ** Execute environment
-** Execute package_flight_schedules:update_city_name
-rake aborted!
-NameError: uninitialized constant APP_ROOT
-/home/giri/Documents/projects/cleartrip/ct_flights/lib/tasks/update_package_flight_schedules_table.rake:5:in `block (2 levels) in <top (required)>'
-/home/giri/.rvm/gems/ruby-2.3.1/gems/rake-12.3.0/lib/rake/task.rb:251:in `block in execute'
-/home/giri/.rvm/gems/ruby-2.3.1/gems/rake-12.3.0/lib/rake/task.rb:251:in `each'
-/home/giri/.rvm/gems/ruby-2.3.1/gems/rake-12.3.0/lib/rake/task.rb:251:in `execute'
-/home/giri/.rvm/gems/ruby-2.3.1/gems/rake-12.3.0/lib/rake/task.rb:195:in `block in invoke_with_call_chain'
-/home/giri/.rvm/rubies/ruby-2.3.1/lib/ruby/2.3.0/monitor.rb:214:in `mon_synchronize'
-/home/giri/.rvm/gems/ruby-2.3.1/gems/rake-12.3.0/lib/rake/task.rb:188:in `invoke_with_call_chain'
-/home/giri/.rvm/gems/ruby-2.3.1/gems/rake-12.3.0/lib/rake/task.rb:181:in `invoke'
-/home/giri/.rvm/gems/ruby-2.3.1/gems/rake-12.3.0/lib/rake/application.rb:160:in `invoke_task'
-/home/giri/.rvm/gems/ruby-2.3.1/gems/rake-12.3.0/lib/rake/application.rb:116:in `block (2 levels) in top_level'
-/home/giri/.rvm/gems/ruby-2.3.1/gems/rake-12.3.0/lib/rake/application.rb:116:in `each'
-/home/giri/.rvm/gems/ruby-2.3.1/gems/rake-12.3.0/lib/rake/application.rb:116:in `block in top_level'
-/home/giri/.rvm/gems/ruby-2.3.1/gems/rake-12.3.0/lib/rake/application.rb:125:in `run_with_threads'
-/home/giri/.rvm/gems/ruby-2.3.1/gems/rake-12.3.0/lib/rake/application.rb:110:in `top_level'
-/home/giri/.rvm/gems/ruby-2.3.1/gems/rake-12.3.0/lib/rake/application.rb:83:in `block in run'
-/home/giri/.rvm/gems/ruby-2.3.1/gems/rake-12.3.0/lib/rake/application.rb:186:in `standard_exception_handling'
-/home/giri/.rvm/gems/ruby-2.3.1/gems/rake-12.3.0/lib/rake/application.rb:80:in `run'
-/home/giri/.rvm/gems/ruby-2.3.1/gems/rake-12.3.0/exe/rake:27:in `<top (required)>'
-/home/giri/.rvm/gems/ruby-2.3.1/bin/rake:23:in `load'
-/home/giri/.rvm/gems/ruby-2.3.1/bin/rake:23:in `<main>'
-/home/giri/.rvm/gems/ruby-2.3.1/bin/ruby_executable_hooks:15:in `eval'
-/home/giri/.rvm/gems/ruby-2.3.1/bin/ruby_executable_hooks:15:in `<main>'
-Tasks: TOP => package_flight_schedules:update_city_name
---------Start adding Cities --------
+** Execute unique_routes_table:dep_and_arr_cities_name

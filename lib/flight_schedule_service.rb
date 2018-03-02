@@ -76,27 +76,42 @@ class FlightScheduleService
       route_int_airlines = PackageFlightSchedule.where(dep_city_code: @dep_city_code,arr_city_code: @arr_city_code).where.not(carrier_code: top_dom_cc).pluck(:carrier_code).uniq
       flights_header["dom_airlines"] = route_dom_airlines
       flights_header["int_airlines"] = route_int_airlines
+      
+      dep_city_weekend_getaway = false
+      dep_featured_city = false
+      dep_city_package = false
+      dep_events_city = false
+      dep_city_things_to_do = false
       arr_city_weekend_getaway = false
       arr_featured_city = false
       arr_city_package = false
       arr_events_city = false
+      arr_city_things_to_do = false
+
       events_cities = ["Bangalore","Mumbai","Hyderabad","New Delhi"]
       weekend_getaway_cities = ["Agra", "Bhopal", "Goa", "Dehradun", "Ahmedabad", "Jammu", "Patna", "Kochi", "New Delhi", "Coorg", "Bangalore", "Mumbai", "Udaipur", "Chennai", "Pune"]
       featured_cities  =  ["Agra", "Gangtok", "Bhopal", "Goa", "Chandigarh", "Amritsar", "Gurgaon", "Dehradun", "Wayanad", "Ahmedabad", "Kolkata", "Kochi", "Jaipur", "Thekkady", "New Delhi", "Coorg", "Kullu", "Bangalore", "Alleppey", "Manali", "Mumbai", "Lucknow", "Hyderabad", "Indore", "Chennai", "Pune"]
       package_cities = ["Dehradun","Ahmedabad","Vijayawada","Rajkot","Belgaum","Leh","Mangalore","Vadodara","Mumbai","Lucknow","Madurai","Goa","Guwahati","Indore","Jaipur","Calicut","Tiruchirappally","Port Blair","Aizawl","Udaipur","Cochin","Raipur","Visakhapatnam","Hyderabad","Coimbatore","Khajuraho","Kullu Manali","Porbandar","Bhopal","Agra","Bangalore","Pune","Kanpur","Ranchi","Jorhat","Visakhapatnam","Mysore","Ranchi","Jodhpur","Dharamsala","Ludhiana","New Delhi","Agartala","Diu","Pantnagar","Bhubaneswar","Srinagar","Jammu","Patna","Hubli","Aurangabad","Shillong","Allahabad","Surat","Imphal","Jabalpur","Kolkata","Trivandrum","Chandigarh","Rajahmundry","Nagpur","Dibrugarh","Varanasi","Bhavnagar","Bhuj","Chennai","Amritsar","Jamnagar","Gwalior","Tirupati","Gorakhpur"]
-        flights_header["arr_city_package"] =  package_cities.include?("#{@arr_city_name}") ? true : false
-        flights_header["arr_featured_city"] = featured_cities.include?("#{@arr_city_name}") ? true : false
-        flights_header["arr_city_weekend_getaway"] = weekend_getaway_cities.include?("#{@arr_city_name}") ? true : false
-        flights_header["arr_events_city"] = events_cities.include?("#{@arr_city_name}") ? true : false
-        header_record = FlightsHeader.find_by(dep_city_code: @dep_city_code,arr_city_code: @arr_city_code)
-
-        hotel_details = eval(header_record.hotel_details) rescue []
-        flights_header["near_by_airport_hotels"] = hotel_details["near_by_hotels"].uniq.sample(3) rescue []
-        flights_header["hotels_list"] = hotel_details["city_top_hotels"].uniq.take(5) rescue []
-        flights_header["hotel_types"] = hotel_details["types_of_hotels"] rescue []
-        flights_header["train_details"] = eval(header_record.train_details) rescue []
-        flights_header["hotels_header_list"] = flights_header["hotels_list"].values_at(* flights_header["hotels_list"].each_index.select {|h| h.even?})
-        flights_header["hotels_rhs_list"] = flights_header["hotels_list"].values_at(* flights_header["hotels_list"].each_index.select {|h| h.odd?})
+      things_to_do_cities = ["Coorg","Madikeri","Bhimtal","Agra","Gangtok","Amboli","Junagadh","Srinagar","Munnar","Goa","Mysore","Chandigarh","Mohali","Ghaziabad","Amritsar","Ramanagara","Gadag","Nainital","Gurgaon","New delhi","Noida","Faridabad","Sonipat","Cherrapunjee","Lonavala","Mussoorie","Dehradun","Rishikesh","Jaisalmer","Dharamshala","Ahmedabad","Kolkata","Kochi","Jaipur","Pondicherry","Haridwar","Thekkady","Guwahati","Nashik","Shillong","Hassan","Bandipur","Jodhpur","Trivandrum","Kumbhalgarh","Mahabaleshwar","Binsar","Baiguney","Vijayawada","Ooty","Shimla","Kullu","Bangalore","Alleppey","Manali","Mumbai","Kollam","Alibaug","Kanha","Hyderabad","Udaipur","Chamba","Naukuchiyatal","Chennai","Pune"]
+      flights_header["dep_city_package"] =  package_cities.include?("#{@dep_city_name}") ? true : false
+      flights_header["arr_city_package"] =  package_cities.include?("#{@arr_city_name}") ? true : false
+      flights_header["dep_featured_city"] = featured_cities.include?("#{@dep_city_name}") ? true : false
+      flights_header["arr_featured_city"] = featured_cities.include?("#{@arr_city_name}") ? true : false
+      flights_header["dep_city_weekend_getaway"] = weekend_getaway_cities.include?("#{@dep_city_name}") ? true : false
+      flights_header["arr_city_weekend_getaway"] = weekend_getaway_cities.include?("#{@arr_city_name}") ? true : false
+      flights_header["dep_events_city"] = events_cities.include?("#{@dep_city_name}") ? true : false
+      flights_header["arr_events_city"] = events_cities.include?("#{@arr_city_name}") ? true : false
+      flights_header["dep_city_things_to_do"] = things_to_do_cities.include?("#{@dep_city_name}") ? true : false
+      flights_header["arr_city_things_to_do"] = things_to_do_cities..include?("#{@arr_city_name}") ? true : false
+      header_record = FlightsHeader.find_by(dep_city_code: @dep_city_code,arr_city_code: @arr_city_code)
+      hotel_details = eval(header_record.hotel_details) rescue []
+      flights_header["near_by_airport_hotels"] = hotel_details["near_by_hotels"].uniq.sample(3) rescue []
+      flights_header["hotels_list"] = hotel_details["city_top_hotels"].uniq.take(5) rescue []
+      flights_header["hotel_types"] = hotel_details["types_of_hotels"] rescue []
+      flights_header["train_details"] = eval(header_record.train_details) rescue []
+      flights_header["hotels_header_list"] = flights_header["hotels_list"].values_at(* flights_header["hotels_list"].each_index.select {|h| h.even?})
+      flights_header["hotels_rhs_list"] = flights_header["hotels_list"].values_at(* flights_header["hotels_list"].each_index.select {|h| h.odd?})
+        binding.pry
       return flights_header      
     end
   	def get_more_routes
@@ -178,7 +193,63 @@ class FlightScheduleService
       schedule_layout_values["airport_details"] = get_airport_deatils
       return schedule_layout_values
     end
+    def schedule_hotel_api_content
+      # to get hotel star data , local cities randamized  data and property data from table 
+      hotel_api_content = HotelApi.where(city_name: arr_city_name_formated.titleize)
+      if hotel_api_content.present?
+        api_data  = hotel_api_content.first
+        total_local_cities = eval(api_data["local_cities_data"]).count
+        current_index = api_data["current_iteration_count"]
+        if current_index == 0
+          api_data.update(current_iteration_count: current_index+1)
+        else
+          api_data.update(current_iteration_count: current_index+5)
+        end
+        if api_data["current_iteration_count"] <= total_local_cities
+          if current_index == 0
+            local_data_offset = eval(api_data["local_cities_data"]).first(5)
+          else
+            local_data_offset = eval(api_data["local_cities_data"]).drop(api_data["current_iteration_count"]-5).first(5)
+          end
+        else
+          api_data.update(current_iteration_count: 0)
+          local_data_offset = eval(api_data["local_cities_data"]).first(5)
+        end
+        hotel_api_stars = eval(api_data["star_data"])
+        hotel_api_property_types = eval(api_data["properties"])
+      end
+      #  ending of local cities randamization
+    end
+    def schedule_footer
+        #Foooter links randamization code
+        footer_links = FooterRand.where(city_code:@flight_route.dep_city_code)
 
+        if footer_links.present?
+          footer_links = footer_links.first
+          if footer_links.total_routes_count > 10
+            current_index =  footer_links.current_routes_count
+            if current_index == 0
+              footer_links.update(current_routes_count: current_index+1)
+            else
+              footer_links.update(current_routes_count: current_index+10)
+            end
+            if footer_links.current_routes_count <= footer_links.total_routes_count
+              if footer_links.current_routes_count == 0 || footer_links.total_routes_count <=10 || footer_links.current_routes_count <= 10
+                footer_links_data = eval(footer_links.routes_data).first(10)
+              else
+                footer_links_data = eval(footer_links.routes_data).drop(footer_links.current_routes_count-10).first(10)
+              end
+            else
+              footer_links.update(current_routes_count: 0)
+              footer_links_data = eval(footer_links.routes_data).first(10)
+            end
+          else
+            footer_links_data = eval(footer_links.routes_data)
+          end
+        end
+        #Ending of footer randamization code
+        
+    end
     def min_price_new_changes(dep_city_code,arr_city_code,carrier_code='')
     result={}
     date_res={}

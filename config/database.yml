@@ -8,15 +8,58 @@ default: &default
 development:
   <<: *default
   database: air_development
-  host: localhost
+  # host: localhost
+  # username: root
+  # password: root
+  host: 54.169.165.81
+  username: flights
+  password: ClearTripCalendar
+  port: 3306
+  encoding: utf8
+  # socket: /var/run/mysqld/mysqld.sock
+
+db_editor_panel:
+  adapter: mysql2
   username: root
-  password: root
+  password: ClearTripSeoHeader
+  # password: ClearTripCalendar
+  database: flights_editor_panel_development
+  pool: 40
+  host: 52.77.239.110
+  encoding: utf8
+
+db_flights_header:
+  adapter: mysql2
+  username: flights
+  # password: ClearTripSeoHeader
+  password: ClearTripCalendar
+  database: flights_header
+  pool: 40
+  # host: localhost
+  host: 52.221.208.99
+  port: 3306
+  reconnect: true
+  encoding: utf8
+
+db_postgres:
+  adapter: postgresql
+  host: 52.221.208.99
+  database: new_oag_flights_development
+  # database: air_development_new_oag
+  # database: air_development
+  username: postgres
+  # port: 5432
+  password: ClearTripWayToGo
+  # password: root
+
+
+
 
 production:
   <<: *default
   database: air_development
   host: 54.169.165.81
-  username: root
+  username: flights
   password: ClearTripCalendar  
 
 # pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
