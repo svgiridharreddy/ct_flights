@@ -178,12 +178,12 @@
         <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
           <a  itemprop="item"  href="/flight-schedule/flight-schedules-international.html" title="<%= t('flight_schedule.breadcrumb_flight_title') %>" itemprop="url">
             <span itemprop="name">
-              <%= t('flight_schedule.breadcrumb_second_dom') %></span>
+              <%= t('flight_schedule.breadcrumb_second_intl') %></span>
             </a>
             <meta itemprop="position" content="2" />
         </li>
         <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
-          <span itemprop="name" class="first"><%= t('flight_schedule.breadcrumb_title', dep_city_name: dep_city_name, arr_city_name: arr_city_name,:arr_city_code=>arr_city_code,:dep_city_code=>dep_city_code,:arr_city_code=>arr_city_code) %></span>
+          <span itemprop="name" class="first"><%= t('flight_schedule.breadcrumb_title', dep_city_name: dep_city_name, arr_city_name: arr_city_name,:arr_city_code=>arr_city_code,:dep_city_code=>dep_city_code) %></span>
           <meta itemprop="position" content="3" />
         </li>
       </ol>
@@ -256,6 +256,13 @@
     <div id="departure_city_code"><%= dep_city_code %></div>
     <div id="arrival_city_code"><%= arr_city_code %></div>
   </div>
+ <div id="footer_container">
+  <div id="footer">
+    <% country_code = schedule_layout_values["country_code"] %>
+    <%= render partial: "footers/#{country_code.downcase}/schedule/en_schedule_footer", locals: {country_code: country_code,dep_city_name: dep_city_name,arr_city_name: arr_city_name,dep_city_name_formated: schedule_layout_values["dep_city_name_formated"],arr_city_name_formated: schedule_layout_values["arr_city_name_formated"],page_type: 'schedule-routes',footer_links_data: schedule_footer[:footer_links_data],top_airlines: schedule_footer[:int_airlines],flights_header: schedule_header,section: @section}%>
+     
+  </div>
+</div>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
   <script src="https://d2w5af8s1781.cloudfront.net/waytogo-staging/javascripts/jquery-ui.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>

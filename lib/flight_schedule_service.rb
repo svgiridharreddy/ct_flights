@@ -102,16 +102,15 @@ class FlightScheduleService
       flights_header["dep_events_city"] = events_cities.include?("#{@dep_city_name}") ? true : false
       flights_header["arr_events_city"] = events_cities.include?("#{@arr_city_name}") ? true : false
       flights_header["dep_city_things_to_do"] = things_to_do_cities.include?("#{@dep_city_name}") ? true : false
-      flights_header["arr_city_things_to_do"] = things_to_do_cities..include?("#{@arr_city_name}") ? true : false
-      header_record = FlightsHeader.find_by(dep_city_code: @dep_city_code,arr_city_code: @arr_city_code)
+      flights_header["arr_city_things_to_do"] = things_to_do_cities.include?("#{@arr_city_name}") ? true : false
+      header_record = Header.find_by(dep_city_code: @dep_city_code,arr_city_code: @arr_city_code)
       hotel_details = eval(header_record.hotel_details) rescue []
       flights_header["near_by_airport_hotels"] = hotel_details["near_by_hotels"].uniq.sample(3) rescue []
       flights_header["hotels_list"] = hotel_details["city_top_hotels"].uniq.take(5) rescue []
       flights_header["hotel_types"] = hotel_details["types_of_hotels"] rescue []
-      flights_header["train_details"] = eval(header_record.train_details) rescue []
+      flights_header["train_details"] = eval(header_record.trains_details) rescue []
       flights_header["hotels_header_list"] = flights_header["hotels_list"].values_at(* flights_header["hotels_list"].each_index.select {|h| h.even?})
       flights_header["hotels_rhs_list"] = flights_header["hotels_list"].values_at(* flights_header["hotels_list"].each_index.select {|h| h.odd?})
-        binding.pry
       return flights_header      
     end
   	def get_more_routes
@@ -222,7 +221,7 @@ class FlightScheduleService
     end
     def schedule_footer
         #Foooter links randamization code
-        footer_links = FooterRand.where(city_code:@flight_route.dep_city_code)
+        footer_links = Footer.where(city_code: @dep_city_code)
 
         if footer_links.present?
           footer_links = footer_links.first
@@ -247,8 +246,11 @@ class FlightScheduleService
             footer_links_data = eval(footer_links.routes_data)
           end
         end
+
+        dom_airlines = AirlineBrand.where(country_code: @country_code).order("brand_routes_count desc").limit(8).pluck(:carrier_code).uniq
+        int_airlines = AirlineBrand.where.not(country_code: @country_code).order("brand_routes_count desc").limit(8).pluck(:carrier_code).uniq
         #Ending of footer randamization code
-        
+        return {footer_links_data: footer_links_data,dom_airlines: dom_airlines,int_airlines: int_airlines}
     end
     def min_price_new_changes(dep_city_code,arr_city_code,carrier_code='')
     result={}

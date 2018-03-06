@@ -42,7 +42,7 @@ namespace :unique_routes_table do
         result = result.downcase
       end
     end
-    routes = UniqueRoute.all
+    routes = UniqueRoute.where()
     count = 0
     begin 
       routes.find_each do |route|

@@ -4,15 +4,24 @@
       <div class="sixteen columns alpha">
       
         <ul class="footerlinkssmall list-unstyled">
-        <% dom_airlines.each do |cc| %>
-          <li>Domestic Airlines :</li>
+          <% title = section.include?("dom") ? "Domestic Airlines:" : "International Airlines:" %>
+          <li><%= title %></li>
+          <% top_airlines.each do |cc| %>
             <li> 
               <% airline_name = link_to( t("airlines.#{cc}"), "/flight-booking/" + format_airline_name(I18n.with_locale(:en) { t("airlines.#{cc}") }).downcase.gsub(" ", "-").gsub("--","-") + ".html") %>
               <%= airline_name %>
             </li>
           <% end %>
         </ul>
-        
+        <div class="clear"></div>
+        <ul class="footerlinkssmall">
+          <%if  footer_links_data.present? %>
+          <li>Popular Routes:</li>
+            <% footer_links_data.each_with_index do |footer,index| %> 
+                <li><%= link_to "#{footer[:dep_city_name]} #{footer[:arr_city_name]} Flights", "https://www.cleartrip.com/flight-schedule/#{footer[:dep_city_name].gsub(' ','-').downcase}-#{footer[:arr_city_name].gsub(' ','-').downcase}-flights.html" %></li>
+            <% end %>
+          <% end %>
+        </ul>
         <ul class="footerlinkssmall list-unstyled">
           <li> Other Tools:</li>
            
@@ -81,8 +90,8 @@
           </a>
         </li>
         <li>
-          <a href="/flight-booking/international-airlines.html" title="<%= t('footer.intl_airlines')%>">
-            <%= t('footer.intl_airlines')%>
+          <a href="/flight-booking/international-airlines.html" title="International Airlines">
+            International Airlines
           </a>
         </li>
         <li>
@@ -90,38 +99,42 @@
             IRCTC Seat Availability
           </a>
         </li>
-        <% if dep_city_package== true %>
+        <% if flights_header["dep_city_package"]== true %>
           <li>
-            <a href="http://www.cleartrip.com/tourism/packages/<%= dep_city_name_formatted %>" title="<%= dep_city_name %> Holiday Packages">
+            <a href="http://www.cleartrip.com/tourism/packages/<%= dep_city_name_formated %>" title="<%= dep_city_name %> Holiday Packages">
               <%= dep_city_name %> Holiday Packages
             </a>
           </li>
         <% end %>
-        <% if arr_city_package == true %>
+        <% if flights_header["arr_city_package"] == true %>
           <li>
             <a href="http://www.cleartrip.com/tourism/packages/<%= arr_city_name_formated %>" title="<%= arr_city_name %> Holiday Packages">
               <%= arr_city_name %> Holiday Packages
             </a>
           </li>
         <% end %>
-        <li>
-          <a href="https://www.cleartrip.com/local/<%= dep_city_name_formatted %>/things-to-do-in-<%= dep_city_name.downcase %>" title="Things to do in <%= dep_city_name %>">
-           Things to do in <%= dep_city_name %>
-          </a>
-        </li>
-        <li>
-          <a href="https://www.cleartrip.com/local/<%= arr_city_name_formated %>/things-to-do-in-<%= arr_city_name.downcase %>" title="Things to do in <%= arr_city_name %>">
-           Things to do in <%= arr_city_name %>
-          </a>
-        </li>
-        <% if dep_city_weekend_getaway==true %>
+        <% if flights_header["dep_city_things_to_do"] == true %>  
           <li>
-            <a href="https://www.cleartrip.com/hotels/india/<%= dep_city_name_formatted %>/weekend-getaways/" title="Long weekend getaways from <%= dep_city_name %>">
+            <a href="https://www.cleartrip.com/local/<%= dep_city_name_formated %>/things-to-do-in-<%= dep_city_name.downcase %>" title="Things to do in <%= dep_city_name %>">
+             Things to do in <%= dep_city_name %>
+            </a>
+          </li>
+        <% end %>
+        <% if flights_header["arr_city_things_to_do"] == true %>
+          <li>
+            <a href="https://www.cleartrip.com/local/<%= arr_city_name_formated %>/things-to-do-in-<%= arr_city_name.downcase %>" title="Things to do in <%= arr_city_name %>">
+             Things to do in <%= arr_city_name %>
+            </a>
+          </li>
+        <% end %>
+        <% if flights_header["dep_city_weekend_getaway"]== true %>
+          <li>
+            <a href="https://www.cleartrip.com/hotels/india/<%= dep_city_name_formated %>/weekend-getaways/" title="Long weekend getaways from <%= dep_city_name %>">
              Long weekend getaways from <%= dep_city_name %>
             </a>
           </li>
         <% end %>
-        <% if arr_city_weekend_gateway == true %>
+        <% if flights_header["arr_city_weekend_gateway"] == true %>
           <li>
             <a href="https://www.cleartrip.com/hotels/india/<%= arr_city_name_formated %>/weekend-getaways/" title="Long weekend getaways from <%= arr_city_name %>">
              Long weekend getaways from <%= arr_city_name %>
@@ -129,18 +142,7 @@
           </li>
         <% end %>
       </ul> 
-      <div class="clear"></div>
-      <ul class="footerlinkssmall">
-        <%if  footer_links_data.present? %>
-          <% footer_links_data.each_with_index do |footer,index| %>
-            <% if index ==0 %>
-              <li>Popular Routes:</li>
-            <% else %>
-              <li><%= link_to "#{footer[:dep_city_name]} #{footer[:arr_city_name]} Flights", "https://www.cleartrip.com/flight-schedule/#{footer[:dep_city_name].gsub(' ','-').downcase}-#{footer[:arr_city_name].gsub(' ','-').downcase}-flights.html" %></li>
-            <% end %>
-          <% end %>
-        <% end %>
-      </ul>
+     
       <div class="clear"></div>
       <ul class="footerlinkssmall">
        <li>Countries:</li>

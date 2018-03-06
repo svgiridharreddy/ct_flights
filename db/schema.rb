@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180227123923) do
+ActiveRecord::Schema.define(version: 20180227130759) do
 
   create_table "airline_brands", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "carrier_code"
@@ -183,15 +183,20 @@ ActiveRecord::Schema.define(version: 20180227123923) do
     t.string "dep_city_name"
     t.string "arr_city_name"
     t.string "route_type"
-    t.string "event_city"
-    t.string "weekend_getaway_city"
-    t.string "package_city"
-    t.string "featured_city"
-    t.string "things_todo_city"
+    t.string "dep_city_event"
+    t.string "dep_city_weekend_getaway"
+    t.string "dep_city_package"
+    t.string "dep_city_featured"
+    t.string "dep_city_things_todo"
     t.text "hotel_details", limit: 4294967295
     t.text "train_details", limit: 4294967295
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "arr_city_event"
+    t.string "arr_city_weekend_getaway"
+    t.string "arr_city_package"
+    t.string "arr_city_featured"
+    t.string "arr_things_todo"
   end
 
   create_table "package_flight_schedules", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|

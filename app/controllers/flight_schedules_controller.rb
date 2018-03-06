@@ -10,7 +10,6 @@ class FlightSchedulesController < ApplicationController
 		
 		@language = params[:lang].nil? ? 'en' : params[:lang]
 		@route = UniqueRoute.find_by(schedule_route_url: url)
-		binding.pry
 		@dep_city_name  = CityName.find_by(city_code: @route.dep_city_code).city_name_en.titleize
 		@arr_city_name = CityName.find_by(city_code: @route.arr_city_code).city_name_en.titleize
 		# @route_type = @route.hop == 0 ? "non-stop" : "hop"
@@ -21,7 +20,6 @@ class FlightSchedulesController < ApplicationController
 		else
 			@section = @country_code + "-int"
 		end
-		
 		@route_details =  { :dep_city_code => @route.dep_city_code,
 											  :arr_city_code => @route.arr_city_code,
 											  :dep_airport_code => @route.dep_airport_code,
@@ -38,6 +36,8 @@ class FlightSchedulesController < ApplicationController
 												:country_name => @country_name }
 
 		flight_schedule_service = FlightScheduleService.new @route_details	 
+		schedule_footer = flight_schedule_service.schedule_footer
+
 		@domestic_carrier_codes = AirlineBrand.where(country_code: @country_code).pluck("distinct(carrier_code)")
 		@all_carrier_codes = AirlineBrand.all.pluck(:carrier_code)
 
@@ -54,7 +54,7 @@ class FlightSchedulesController < ApplicationController
 		else
 			partial = "flight_schedule_routes/#{@language}/flight_schedule_int_#{@language.downcase}_#{@country_code.downcase}"
 		end
-		render  partial,locals: {schedule_layout_values: schedule_layout_values,dep_city_name: @dep_city_name,arr_city_name: @arr_city_name,dep_city_code: @route.dep_city_code,arr_city_code: @route.arr_city_code,schedule_header: header_values }
+		render  partial,locals: {schedule_layout_values: schedule_layout_values,dep_city_name: @dep_city_name,arr_city_name: @arr_city_name,dep_city_code: @route.dep_city_code,arr_city_code: @route.arr_city_code,schedule_header: header_values,schedule_footer: schedule_footer }
 	end
 
 
