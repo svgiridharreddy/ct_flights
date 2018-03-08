@@ -72,7 +72,7 @@ namespace :header_table do
         result = result.downcase
       end
     end
-		routes = UniqueRoute.all
+		routes = Header.where(header_status: "failed")
 		events_cities = ["Bangalore","Mumbai","Hyderabad","New Delhi"]
     weekend_getaway_cities = ["Agra", "Bhopal", "Goa", "Dehradun", "Ahmedabad", "Jammu", "Patna", "Kochi", "New Delhi", "Coorg", "Bangalore", "Mumbai", "Udaipur", "Chennai", "Pune"]
     featured_cities  =  ["Agra", "Gangtok", "Bhopal", "Goa", "Chandigarh", "Amritsar", "Gurgaon", "Dehradun", "Wayanad", "Ahmedabad", "Kolkata", "Kochi", "Jaipur", "Thekkady", "New Delhi", "Coorg", "Kullu", "Bangalore", "Alleppey", "Manali", "Mumbai", "Lucknow", "Hyderabad", "Indore", "Chennai", "Pune"]
@@ -82,85 +82,87 @@ namespace :header_table do
 		begin
 			routes.find_each do |r|
 				begin
-					route = Header.find_by(dep_city_code: r.dep_city_code,arr_city_code: r.arr_city_code)
-				dep_city_event = events_cities.include?(r.dep_city_name.titleize) ? "yes" : "no"
-				dep_city_weekend_getaway = weekend_getaway_cities.include?(r.dep_city_name.titleize) ? "yes" : "no"
-				dep_city_featured = featured_cities.include?(r.dep_city_name.titleize) ? "yes" : "no"
-				dep_city_package = package_cities.include?(r.dep_city_name.titleize) ? "yes" : "no"
-				dep_city_things_todo = things_to_do_cities.include?(r.dep_city_name.titleize) ? "yes" : "no"
-				arr_city_event = events_cities.include?(r.arr_city_name.titleize) ? "yes" : "no"
-				arr_city_weekend_getaway = weekend_getaway_cities.include?(r.dep_city_name.titleize) ? "yes" : "no"
-				arr_city_featured = featured_cities.include?(r.arr_city_name.titleize) ? "yes" : "no"
-				arr_city_package = package_cities.include?(r.arr_city_name.titleize) ? "yes" : "no"
-				arr_city_things_todo = things_to_do_cities.include?(r.arr_city_name.titleize) ? "yes" : "no"
-				
-				if r.arr_city_code.present? && r.arr_country_code.present?
-					airport_data = Airport.where(city_code: r.arr_city_code).first
-					unless airport_data.present?
-						airport_data = Airport.where(city_code: r.dep_city_code).first
-					end
-					lat =''
-					long =''
-					if airport_data.present?
-						lat = airport_data.latitude.present? ? airport_data.latitude: ""
-						long = airport_data.longitude.present? ? airport_data.longitude: ""
-						country_name = airport_data.country_name
-					end
-					hotel_details = {"near_by_hotels" => [],
-						"city_top_hotels" => [],
-						"types_of_hotels" => []
-					}
-					train_details = { "origin_from" => [],
-						"passing_from" => [],
-						"train_stations" => { "dep_stations" => [],
-							"arr_stations" => []
-						}
-					}
+				route = UniqueRoute.find_by(dep_city_code: r.dep_city_code,arr_city_code: r.arr_city_code)
+				if (route.dep_city_name != nil || route.arr_city_name != nil ) || ()
+					dep_city_event = events_cities.include?(route.dep_city_name.titleize) ? "yes" : "no"
+					dep_city_weekend_getaway = weekend_getaway_cities.include?(route.dep_city_name.titleize) ? "yes" : "no"
+					dep_city_featured = featured_cities.include?(route.dep_city_name.titleize) ? "yes" : "no"
+					dep_city_package = package_cities.include?(route.dep_city_name.titleize) ? "yes" : "no"
+					dep_city_things_todo = things_to_do_cities.include?(route.dep_city_name.titleize) ? "yes" : "no"
+					arr_city_event = events_cities.include?(route.arr_city_name.titleize) ? "yes" : "no"
+					arr_city_weekend_getaway = weekend_getaway_cities.include?(route.dep_city_name.titleize) ? "yes" : "no"
+					arr_city_featured = featured_cities.include?(route.arr_city_name.titleize) ? "yes" : "no"
+					arr_city_package = package_cities.include?(route.arr_city_name.titleize) ? "yes" : "no"
+					arr_city_things_todo = things_to_do_cities.include?(route.arr_city_name.titleize) ? "yes" : "no"
 					
-					if country_name.present?
-						hotels_near_by_airport_url = "http://54.169.90.61/hotels/api/#{url_escape(country_name)}/near-by-hotels?lat=#{lat}&long=#{long}"
-						arr_city_hotels_trains_url = "http://54.169.90.61/hotels/api/#{url_escape(country_name)}/#{url_escape(airport_data.city_name)}.json"
-						hotels_near_by_airport_response = HTTParty.get(hotels_near_by_airport_url) if lat.present? && long.present?
-						parsing_near_by_hotels = JSON.parse(hotels_near_by_airport_response.body) if hotels_near_by_airport_response.present? && hotels_near_by_airport_response.code == 200 
-
-						arr_city_hotels_trians_response = HTTParty.get(arr_city_hotels_trains_url)
-
-						parsing_arr_city_hotels_trains = JSON.parse(arr_city_hotels_trians_response.body) if  arr_city_hotels_trians_response.present? && arr_city_hotels_trians_response.code == 200 
-
-						if parsing_near_by_hotels == nil
-							parsing_near_by_hotels["hotels"] = parsing_arr_city_hotels_trains["hotels"] rescue []
+					if r.arr_city_code.present? && r.arr_country_code.present?
+						airport_data = Airport.where(city_code: r.arr_city_code).first
+						unless airport_data.present?
+							airport_data = Airport.where(city_code: r.dep_city_code).first
 						end
-						hotel_details["near_by_hotels"] = parsing_near_by_hotels["hotels"] rescue []
-						hotel_details["city_top_hotels"] = parsing_arr_city_hotels_trains["hotels"]  rescue []
-						hotel_details["types_of_hotels"] = parsing_arr_city_hotels_trains["properties"] rescue []
-						train_details["origin_from"] = parsing_arr_city_hotels_trains["trains"][0]["origin_from"] rescue []
-						train_details["passing_from"] = parsing_arr_city_hotels_trains["trains"][1]["passing_from"] rescue []
-						train_details["train_stations"]["dep_stations"] = parsing_dep_city_hotels_trains["train_stations"] rescue []
-						train_details["train_stations"]["arr_stations"] = parsing_arr_city_hotels_trains["train_stations"] rescue []
+						lat =''
+						long =''
+						if airport_data.present?
+							lat = airport_data.latitude.present? ? airport_data.latitude: ""
+							long = airport_data.longitude.present? ? airport_data.longitude: ""
+							country_name = airport_data.country_name
+						end
+						hotel_details = {"near_by_hotels" => [],
+							"city_top_hotels" => [],
+							"types_of_hotels" => []
+						}
+						train_details = { "origin_from" => [],
+							"passing_from" => [],
+							"train_stations" => { "dep_stations" => [],
+								"arr_stations" => []
+							}
+						}
+						
+						if country_name.present?
+							hotels_near_by_airport_url = "http://54.169.90.61/hotels/api/#{url_escape(country_name)}/near-by-hotels?lat=#{lat}&long=#{long}"
+							arr_city_hotels_trains_url = "http://54.169.90.61/hotels/api/#{url_escape(country_name)}/#{url_escape(airport_data.city_name)}.json"
+							hotels_near_by_airport_response = HTTParty.get(hotels_near_by_airport_url) if lat.present? && long.present?
+							parsing_near_by_hotels = JSON.parse(hotels_near_by_airport_response.body) if hotels_near_by_airport_response.present? && hotels_near_by_airport_response.code == 200 
+
+							arr_city_hotels_trians_response = HTTParty.get(arr_city_hotels_trains_url)
+
+							parsing_arr_city_hotels_trains = JSON.parse(arr_city_hotels_trians_response.body) if  arr_city_hotels_trians_response.present? && arr_city_hotels_trians_response.code == 200 
+
+							if parsing_near_by_hotels == nil
+								parsing_near_by_hotels["hotels"] = parsing_arr_city_hotels_trains["hotels"] rescue []
+							end
+							hotel_details["near_by_hotels"] = parsing_near_by_hotels["hotels"] rescue []
+							hotel_details["city_top_hotels"] = parsing_arr_city_hotels_trains["hotels"]  rescue []
+							hotel_details["types_of_hotels"] = parsing_arr_city_hotels_trains["properties"] rescue []
+							train_details["origin_from"] = parsing_arr_city_hotels_trains["trains"][0]["origin_from"] rescue []
+							train_details["passing_from"] = parsing_arr_city_hotels_trains["trains"][1]["passing_from"] rescue []
+							train_details["train_stations"]["dep_stations"] = parsing_dep_city_hotels_trains["train_stations"] rescue []
+							train_details["train_stations"]["arr_stations"] = parsing_arr_city_hotels_trains["train_stations"] rescue []
+						end
 					end
-				end
-				unless hotel_details.nil? || hotel_details=='' 
-					route.update(header_status: "created")
-				else
-					route.update(header_status: "failed")
-				end
-				# route_type = r.hop==0 ? "direct" : 'hop'
-					route.dep_city_name = r.dep_city_name
-					route.arr_city_name = r.arr_city_name
-					route.hotel_details = hotel_details.to_s rescue nil
-					route.trains_details = train_details.to_s rescue nil
-					route.dep_city_event = dep_city_event rescue ""
-					route.dep_city_weekend_getaway = dep_city_weekend_getaway rescue ""
-					route.dep_city_featured = dep_city_featured rescue ""
-					route.dep_city_package = dep_city_package rescue ""
-					route.dep_city_things_todo = dep_city_things_todo rescue ""
-					route.arr_city_event = arr_city_event rescue ""
-					route.arr_city_weekend_getaway = arr_city_weekend_getaway rescue ""
-					route.arr_city_featured = arr_city_featured rescue ""
-					route.arr_city_package = arr_city_package rescue ""
-					route.arr_city_things_todo = arr_city_things_todo rescue ""
-					route.save
-					puts "#{count+=1} header record inserted successfully! == #{r.dep_city_code}-#{r.arr_city_code} "
+					unless hotel_details.nil? || hotel_details=='' 
+						r.update(header_status: "created")
+					else
+						r.update(header_status: "failed")
+					end
+					# r_type = r.hop==0 ? "direct" : 'hop'
+						r.dep_city_name = r.dep_city_name
+						r.arr_city_name = r.arr_city_name
+						r.hotel_details = hotel_details.to_s rescue nil
+						r.trains_details = train_details.to_s rescue nil
+						r.dep_city_event = dep_city_event rescue ""
+						r.dep_city_weekend_getaway = dep_city_weekend_getaway rescue ""
+						r.dep_city_featured = dep_city_featured rescue ""
+						r.dep_city_package = dep_city_package rescue ""
+						r.dep_city_things_todo = dep_city_things_todo rescue ""
+						r.arr_city_event = arr_city_event rescue ""
+						r.arr_city_weekend_getaway = arr_city_weekend_getaway rescue ""
+						r.arr_city_featured = arr_city_featured rescue ""
+						r.arr_city_package = arr_city_package rescue ""
+						r.arr_city_things_todo = arr_city_things_todo rescue ""
+						r.save
+						puts "#{count+=1} header record inserted successfully! == #{r.dep_city_code}-#{r.arr_city_code} "
+					end
 				rescue StandardError => e 
 					e.message
 					e.backtrace
@@ -171,6 +173,42 @@ namespace :header_table do
 			e.message
 			e.backtrace
 		end
-		
+	end
+	desc "checking airline_overview structure" 
+	task :airline_overview => :environment do 
+			@carrier_code = '9W'
+			@country_code = 'IN'
+			@carrier_name = AirlineBrand.find_by(carrier_code: '9W').carrier_name
+		  airline_dom_dom_routes =  UniqueRoute.joins(:flight_schedule_collectives).where(["flight_schedule_collectives.carrier_code=? and flight_schedule_collectives.dep_country_code= ? and flight_schedule_collectives.arr_country_code=?",@carrier_code,@country_code,@country_code]).group("flight_schedule_collectives.dep_city_code,flight_schedule_collectives.arr_city_code,unique_routes.weekly_flights_count,flight_schedule_collectives.flight_no").order("unique_routes.weekly_flights_count desc").limit(30)
+		  popular_routes = {"dom_dom" => [],
+		  									"dom_int" => [],
+		  								  "int_int" => []}
+		  # flight_schedule_service = FlightScheduleService.new {}
+		  airline_dom_dom_routes.each do |route|
+		  	record = FlightScheduleCollective.find_by(unique_route_id: route.id,carrier_code: @carrier_code)
+
+		  	# min_price,max_price = flight_schedule_service.get_price_new(route.dep_city_code,route.arr_city_code,@carrier_code,@carrier_name)
+		  	popular_routes["dom_dom"] << {
+		  			"carrier_code" => @carrier_code,
+		  			"carrier_name" => @carrier_name,
+		  			"dep_city_name" => route.dep_city_name,
+		  			"arr_city_name" => route.arr_city_name,
+		  			"dep_city_code" => route.dep_city_code,
+		  			"arr_city_code" => route.arr_city_code,
+		  			"dep_airport_code" => route.dep_airport_code,
+		  			"arr_airport_code" => route.arr_airport_code,
+		  			"dep_time" => record.dep_time,
+		  			"arr_time" => record.arr_time,
+		  			"op_days" => record.days_of_operation,
+		  			"flight_no"=> record.flight_no
+		  			# "min_price" => min_price,
+		  			# "max_price" => max_price
+		  	}
+		  end
+		  	binding.pry
+
+	  airline_dom_int_routes =  UniqueRoute.joins(:flight_schedule_collectives).where(["flight_schedule_collectives.carrier_code=? and (flight_schedule_collectives.dep_country_code=? and flight_schedule_collectives.arr_country_code!=?)OR(flight_schedule_collectives.dep_country_code!=? and flight_schedule_collectives.arr_country_code=?)  ",@carrier_code,@country_code,@country_code,@country_code,@country_code]).group("flight_schedule_collectives.dep_city_code,flight_schedule_collectives.arr_city_code,unique_routes.weekly_flights_count").order("unique_routes.weekly_flights_count desc").limit(30)
+	  airline_int_int_routes =  UniqueRoute.joins(:flight_schedule_collectives).where(["flight_schedule_collectives.carrier_code=? and (flight_schedule_collectives.dep_country_code!=? and flight_schedule_collectives.arr_country_code!=?)",@carrier_code,@country_code,@country_code]).group("flight_schedule_collectives.dep_city_code,flight_schedule_collectives.arr_city_code,unique_routes.weekly_flights_count").order("unique_routes.weekly_flights_count desc").limit(30)
+	  binding.pry
 	end
 end

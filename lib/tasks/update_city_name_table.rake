@@ -108,4 +108,18 @@ namespace :city_name_table do
       end
     end
   end
+
+  desc "create csv for no name cities"
+  task :get_no_name_cities => :environment do 
+    dep_cities = UniqueRoute.where("dep_city_name IS NULL").pluck(:dep_city_code).uniq
+    arr_cities = UniqueRoute.where("arr_city_name IS NULL").pluck(:arr_city_code).uniq
+    total_cities = (dep_cities + arr_cities).uniq
+    CSV.open("#{Rails.root}/missing_city_names.csv","w") do |csv|
+      attributes = %w(city_code city_name_en city_name_ar city_name_hi)
+      csv << attributes
+      total_cities.each do |city_code|
+        csv << [city_code,'','','']
+      end
+    end
+  end
 end

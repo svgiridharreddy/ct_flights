@@ -144,6 +144,28 @@ class ApplicationProcessor
     end
   end
 
+    def host_country_code(host)
+    # host = host || ""
+    # puts "country_code - #{country_code}"
+    if host == 'https://www.cleartrip.ae'
+      return ['AE',"United Arab Emirates"]
+    elsif host == 'https://kw.cleartrip.com'
+      return ['KW',"Kuwait"]
+    elsif host == 'https://www.cleartrip.sa'
+      return ['SA',"Saudi Arabia"]
+    elsif host == 'https://bh.cleartrip.com'
+      return ['BH',"Bahrain"]
+    elsif host == 'https://qa.cleartrip.com'
+      return ['QA',"Qatar"]
+    elsif host == 'https://om.cleartrip.com'
+      return ['OM',"Oman"]
+    elsif host == 'https://www.cleartrip.com'
+      return ['IN',"India"]
+    else
+      return ['IN',"India"]
+    end
+  end
+
   def currency_code(country_code)
     if country_code == 'AE'
       return 'AED'

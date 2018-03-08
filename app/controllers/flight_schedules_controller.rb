@@ -3,11 +3,9 @@ class FlightSchedulesController < ApplicationController
 	def schedule_values
 		domain = request.domain
 		url = params[:route].gsub("-flights","")
-		@country_code = host_name(domain)[0]
-		# @country_code = 'IN'
-		@country_name = host_name(domain)[1]
-		# @country_name = 'India'
-		
+		application_processor = ApplicationProcessor.new
+		@country_code = application_processor.host_country_code(domain)[0]
+		@country_name = application_processor.host_country_code(domain)[1]
 		@language = params[:lang].nil? ? 'en' : params[:lang]
 		@route = UniqueRoute.find_by(schedule_route_url: url)
 		@dep_city_name  = CityName.find_by(city_code: @route.dep_city_code).city_name_en.titleize
@@ -61,8 +59,6 @@ class FlightSchedulesController < ApplicationController
 	def host_name(host)
 		# host = host || ""
     # puts "country_code - #{country_code}"
-    
-    	
     if host == 'https://www.cleartrip.ae'
       return ['AE',"United Arab Emirates"]
     elsif host == 'https://kw.cleartrip.com'
@@ -81,7 +77,6 @@ class FlightSchedulesController < ApplicationController
       return ['IN',"India"]
     end
   end
-	
 end
 
 # just for reference --- earlier it was in controller method and now moved to service.

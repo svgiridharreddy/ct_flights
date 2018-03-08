@@ -35,7 +35,6 @@ gem 'sidekiq-superworker'
 gem 'sidetiq'
 gem 'pry'
 gem 'smarter_csv'
-gem 'pg'
 # gem 'listen', '~> 3.0.5'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development

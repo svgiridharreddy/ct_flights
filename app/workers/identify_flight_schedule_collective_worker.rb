@@ -6,8 +6,9 @@ class IdentifyFlightScheduleCollectiveWorker
 
 	def perform()
 	  # unique_routes = UniqueRoute.where(dep_city_code: 'BLR',arr_city_code: 'DEL')
-    unique_routes = UniqueRoute.all
-	  unique_routes.find_each do |route|
+    unique_routes = UniqueRoute.where(dep_country_code: 'IN',arr_country_code: 'IN')
+	  binding.pry
+    unique_routes.find_each do |route|
 	  	dep_city_code = route.dep_city_code
 	  	arr_city_code = route.arr_city_code
     	result = PackageFlightSchedule.where("dep_city_code='#{dep_city_code}' and arr_city_code='#{arr_city_code}'").group(:carrier_code).order(data_source: :desc,dep_time: :asc) 

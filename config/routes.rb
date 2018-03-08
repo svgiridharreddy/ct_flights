@@ -12,7 +12,8 @@ Rails.application.routes.draw do
 		get '/:dep_city_name-:arr_city_name-flights.html' => "flight_schedules#schedule_values"
 	end
 	scope 'flight-booking' do 
-		get '/' => "flight_bookings#booking_values"
+		get '/:airline' => "overview_bookings#booking_values"
+		get '/:lang/:airline' => "overview_bookings#booking_values"
 	end
 	
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html

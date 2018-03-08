@@ -2,7 +2,7 @@ require_relative './support/constants.rb'
 require 'net/http'
 
 class FlightScheduleService
-	def initialize(args)
+	def initialize(args={})
 	    @dep_city_code = args[:dep_city_code]
 	    @arr_city_code = args[:arr_city_code]
 	    @dep_city_name = args[:dep_city_name]
@@ -115,8 +115,8 @@ class FlightScheduleService
     end
   	def get_more_routes
       more_routes =  {}
-  		more_routes["dep_more_routes"] = PackageFlightSchedule.where(dep_city_code: @dep_city_code).where.not(arr_city_code: @arr_city_code).order("flight_count desc").pluck(:arr_city_name).uniq.take(30)
-  		more_routes["arr_more_routes"] = PackageFlightSchedule.where(arr_city_code: @arr_city_code).where.not(dep_city_code: @dep_city_code).order("flight_count desc").pluck(:dep_city_name).uniq.take(30)
+  		more_routes["dep_more_routes"] = UniqueRoute.where(dep_city_code: @dep_city_code).where.not(arr_city_code: @arr_city_code).order("weekly_flights_count desc").pluck(:arr_city_name).uniq.take(30)
+  		more_routes["arr_more_routes"] = UniqueRoute.where(arr_city_code: @arr_city_code).where.not(dep_city_code: @dep_city_code).order("weekly_flights_count desc").pluck(:dep_city_name).uniq.take(30)
   		return more_routes
       
   	end
@@ -337,6 +337,29 @@ class FlightScheduleService
     return {:cc=>result,:dt=>date_res,:min=>min_rate.to_i,:max=>max_rate.to_i,:cm=>result1,:cc1=>min30,:max1=>max_rate_30,:cm1=>max30,:cc2=>min90,:max2=>max_rate_90,:cm2=>max90}
   end
 
+  def get_price_new(dep_city_code,arr_city_code,carrier_code='',carrier_name='')
+    day_least_rate = {"pr"=>0}
+    day_max_rate = {"pr"=>0}
+    today_date = Date.today
+    today = today_date.to_s.split('-').join('')
+    next_ninety_days = (today_date + 90).to_s.split('-').join('')
+    headers = {"user-agent" => "seo-codingmart"}
+    calendar_url = "https://www.cleartrip.com/flights/calendar/calendarstub.json?from=#{dep_city_code}&to=#{arr_city_code}&start_date=#{today}&end_date=#{next_ninety_days}"
+    calendar_url_response = HTTParty.get(calendar_url,:headers => headers)
+    calendar_data_json = JSON.parse(calendar_url_response.body.gsub('\"','"')) if calendar_url_response.present? && calendar_url_response.code == 200
+    if calendar_data_json.present? && calendar_data_json["calendar_json"].present?
+      calendar_data = calendar_data_json['calendar_json'].values.flatten
+      if carrier_code.present? 
+        cal_data =  calendar_data.group_by{|c| c["al"]}[carrier_code]
+        day_least_rate = cal_data.min{|a,b| (a["pr"].to_f)<=>(b["pr"].to_f) } ||  {"pr"=>0} rescue ""
+        day_max_rate = cal_data.max{|a,b| (a["pr"].to_f)<=>(b["pr"].to_f)} || {"pr"=>0} rescue ""
+      else
+        day_least_rate = calendar_data.min{|a,b| (a["pr"].to_f)<=>(b["pr"].to_f) } ||  {"pr"=>0}
+        day_max_rate = calendar_data.max{|a,b| (a["pr"].to_f)<=>(b["pr"].to_f)} || {"pr"=>0}
+      end
+    end
+    [day_least_rate["pr"].to_i,day_max_rate["pr"].to_i]
+  end
  
   	def url_escape(url_string)
 		unless url_string.blank?
