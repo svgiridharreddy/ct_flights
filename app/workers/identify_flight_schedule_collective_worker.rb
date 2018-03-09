@@ -3,16 +3,17 @@ require 'sidekiq_status'
 require "active_record/relation"
 
 class IdentifyFlightScheduleCollectiveWorker
-
+  include SidekiqStatus::Worker
+  sidekiq_options queue: "identify_flight_schedule_collective_worker", backtrace: true
 	def perform()
-	  # unique_routes = UniqueRoute.where(dep_city_code: 'BLR',arr_city_code: 'DEL')
-    unique_routes = UniqueRoute.where(dep_country_code: 'IN',arr_country_code: 'IN')
-	  binding.pry
+	  # unique_routes = UniqueRoute.where(dep_city_code: 'DXB',arr_city_code: 'BLR')
+    unique_routes = UniqueRoute.where("(dep_country_code='IN' and arr_country_code!='IN') OR (dep_country_code!='IN' and arr_country_code='IN') OR (dep_country_code!='IN' and arr_country_code!='IN') ")
+    puts "Started inseting data for unique routes"
     unique_routes.find_each do |route|
 	  	dep_city_code = route.dep_city_code
 	  	arr_city_code = route.arr_city_code
     	result = PackageFlightSchedule.where("dep_city_code='#{dep_city_code}' and arr_city_code='#{arr_city_code}'").group(:carrier_code).order(data_source: :desc,dep_time: :asc) 
-    	routes = []
+      routes = []
     	days_of_operation = %W(S M T W T F S)
 	    result.each do |r|
 	      op_days = r.day_of_operation.gsub(/\s/,'').split("").collect{|i| days_of_operation[(i.to_i-1)]}.join(" ")  rescue r.day_of_operation
@@ -34,6 +35,7 @@ class IdentifyFlightScheduleCollectiveWorker
     	routes = routes.group_by{|c| c[:flight_no]}.map{|k,v| v.max{|d| d[:flight_count]}}
     	create_schedule_collective(routes,dep_city_code,arr_city_code)
   	end
+    puts "end of inserting data"
   end
   def create_schedule_collective(routes,dep_city_code,arr_city_code)
   	count = 0

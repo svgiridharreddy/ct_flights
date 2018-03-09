@@ -1,0 +1,23 @@
+<% if routes.present? && !routes.nil? %>
+<div class="blocks">
+	<h2><%= t("brand.top_#{section}_flight_schedule_title") %></h2>
+	<ul class="list-unstyled top-airlines">
+		<% routes.each do |route| %>
+		<li>
+			<% if I18n.locale.to_s == "en"%> 
+			<% link = link_to( "#{route['dep_city_name']} to #{route['arr_city_name']} Flights", "/flight-schedule/" + "#{route['schedule_route_url']}" + "-flights.html") %>
+			<% else %>
+			<% link = link_to( "#{route['dep_city_name']} to #{route['arr_city_name']} #{t('brand_flight.flights')}", "/flight-schedule/#{I18n.locale.to_s}/" + url_escape("#{route['dep_city_name']}-#{route['arr_city_name']}-flights") + ".html") %>
+			<% end %>
+			<%= link %>
+			<% if I18n.locale==:hi %>
+			<% link = link_to( "#{route['dep_city_name']} सेवा मेरे #{route['arr_city_name']} #{t('brand_flight.flights')}", "/flight-schedule/hi/" + url_escape("#{route['dep_city_name_en']}-#{route['arr_city_name_en']}-flights") + ".html") %>
+			<%= link %>
+			<% end %>
+
+			<div class="clearfix"></div>
+		</li>
+		<% end %>
+	</ul>
+</div>
+<% end %>
