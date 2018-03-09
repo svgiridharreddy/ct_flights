@@ -21,7 +21,7 @@ class OverviewBookingsController < ApplicationController
 												country_code: @country_code
 											  }
 		customer_support_airlines = ['AI','CX','TG','SQ','G8','AK','UK','SG','G9','9W','LH','EY','BA','6E','QR','EK']
-     baggages_airlines =['AI','TR','EY','SG','QR','AK','9W','G9','6E','FZ','BA','LH','UK','CX','SQ','UA','UL','G8','TG','MH','EK','WY']
+     baggages_airlines = ['AI','TR','EY','SG','QR','AK','9W','G9','6E','FZ','BA','LH','UK','CX','SQ','UA','UL','G8','TG','MH','EK','WY']
      customer_support = customer_support_airlines.include?(@carrier_code)
      baggages = baggages_airlines.include?(@carrier_code)
 		flight_booking_service = FlightBookingService.new @airline_details

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180227130759) do
+ActiveRecord::Schema.define(version: 20180309094955) do
 
   create_table "airline_brands", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "carrier_code"
@@ -25,6 +25,28 @@ ActiveRecord::Schema.define(version: 20180227130759) do
     t.string "publish_status"
     t.string "carrier_name_ar"
     t.string "carrier_name_hi"
+  end
+
+  create_table "airline_contents", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string "carrier_code"
+    t.string "carrier_name"
+    t.string "country_code"
+    t.text "content_en_in"
+    t.text "content_en_ae"
+    t.text "content_en_sa"
+    t.text "content_en_bh"
+    t.text "content_en_kw"
+    t.text "content_en_qa"
+    t.text "content_en_om"
+    t.text "content_hi_in"
+    t.text "content_ar_ae"
+    t.text "content_ar_sa"
+    t.text "content_ar_bh"
+    t.text "content_ar_kw"
+    t.text "content_ar_qa"
+    t.text "content_ar_om"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "airports", id: false, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
