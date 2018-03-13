@@ -13,3 +13,9 @@
 <p>Cleartrip’s Indigo online booking is the most convenient way of making your reservation to a favorite destination. </p>
 <p>Now you can say goodbye to long queues and traditional check-ins long hours prior to flight departure. The Indigo Web <a href="http://checkin.goindigo.in:8080/WebCheckIn/login.do" target="_blank">check-in</a> facility helps you to check in your luggage from anywhere in the world with the click of a button. On Cleartrip, you could also check the Indigo PNR status that helps you ascertain the exact status of your e-ticket, whether waitlisted or confirmed. </p>
 <p>Make your Indigo airline ticket booking on Cleartrip today and enjoy the happy journey that awaits you! </p>
+
+
+<h3>FAQs</h3>
+<b>1.What is the flight bookings and reservations policy at IndiGo?</b>
+<p>IndiGo Airlines allows passengers to change the date and time of the booking of their flight via the View/Change booking facility, provided they are traveling via a Multi-City booking. When you update your ticket in the View/Changes booking facility, you will get a confirmation message displayed on your screen.
+IndiGo does not allow you to cancel the segment and make the ticket open dated as they do not provide open tickets. Bookings for 9 passengers can be made per PNR. You may book 2 hours prior to the flight departure for domestic flights and 4 hours prior for international flights by contacting the IndiGo call center. You may also book tickets for infants through the Interactive voice response (IVR) system. </p>

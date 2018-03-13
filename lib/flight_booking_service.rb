@@ -24,7 +24,7 @@ class FlightBookingService
 
 			  airline_dom_dom_routes.each do |route|
 
-			  	record = FlightScheduleCollective.find_by(unique_route_id: route.id,carrier_code: @carrier_code)
+			  	record = FlightScheduleCollective.find_by(carrier_code: @carrier_code,unique_route_id: route.id)
 			  	
 			  	min_price,max_price = flight_schedule_service.get_price_new(route.dep_city_code,route.arr_city_code,@carrier_code,@carrier_name)
 			  	popular_routes["dom_dom"] << {
@@ -126,6 +126,22 @@ class FlightBookingService
     return airports
   end
 
+  def fetch_content 
+  	contents = {}
+  	model_name = "#{@country_code.titleize}AirlineContent".constantize
+  	airline = model_name.find_by(carrier_name: @carrier_name,carrier_code: @carrier_code)
+  	overview_content_en = airline.overview_content_en rescue ""
+  	meta_title_en = airline.meta_title_en rescue ""
+  	meta_description_en = airline.meta_description_en rescue ""
+  	contents["overview_content_en"] = overview_content_en
+  	contents["meta_description_en"] = meta_description_en
+  	contents["meta_title_en"] = meta_title_en
+  	return contents
+  end
+ 	
+ 	def airline_top_routes 
+
+ 	end
   def rhs_top_airlines
   	dom_airlines = AirlineBrand.where(country_code: @country_code).order(brand_routes_count:  :desc).limit(8).pluck(:carrier_code)
   	int_airlines = AirlineBrand.where.not(country_code: @country_code).order(brand_routes_count:  :desc).limit(8).pluck(:carrier_code)
@@ -140,5 +156,11 @@ class FlightBookingService
   	end
   	return {dom_routes: dom_routes,int_routes: int_routes}
   end
+  
+	def booking_footer
+		dom_airlines = AirlineBrand.where(country_code: @country_code).order("brand_routes_count desc").limit(8).pluck(:carrier_code).uniq
+  	int_airlines = AirlineBrand.where.not(country_code: @country_code).order("brand_routes_count desc").limit(8).pluck(:carrier_code).uniq
+	 	return {dom_airlines: dom_airlines,int_airlines: int_airlines}
+ 	end
 
 end

@@ -12,3 +12,4 @@ production:
   - default
   - insert_unique_routes_worker
   - identify_flight_schedule_collective_worker
+  - identify_airline_brand_collective_worker

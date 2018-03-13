@@ -1,9 +1,0 @@
-<h3>FAQs</h3>
-<b>1.How can I make changes/cancel my reservation?</b>
-<p>You can cancel/make changes to your reservation by the ‘My Booking’ section, which you can access from the homepage of the Air India website. All the applicable charges will be levied for canceling or making changes to your reservations.</p>
-<b>2.Does rebooking charges any fee?</b>
-<p>Air India does charge a rebooking fee as per the applicable fare. In case of rebooking, it is advisable to pay from the same mode as that of your original booking.</p>
-<b>3.When can I expect my refund to be processed?</b>
-<p>Refunds are processed immediately in normal circumstances, but for credit card bank transfer it can take a minimum of 20 days.</p>
-<b>4.When can I apply for a ticket refund?</b>
-<p>At Air India, you can submit your ticket for a refund within one year of the expiration of the ticket.</p>

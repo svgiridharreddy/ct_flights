@@ -24,3 +24,12 @@
 
 <h2>Cleartrip: Runway for Booking Jet Airways Flights</h2>
 <p>With Cleartrip, you may easily avail more information about baggage, services and more. Along with that, we have a comprehensive list of Jet Airways flight schedule when you search for your destination. Additionally, you may track your Jet Airways flight status by simply entering your ticket details. </p>
+
+
+<h3>FAQs</h3>
+<b>1.How do I manage/make changes to my reservations?</b>
+<p>You can manage your bookings through the Jet Airways 'Manage Booking' option which allows you to retrieve and re-print your bookings. With the help of 'Manage Bookings', you can also update any special requests in the booking records.<p>
+<b>2.What is the use of 'Manage Bookings'?</b>
+<p>'Manage Booking' is an online initiative designed for the self-service purpose which eliminates the need to call and check, cancel, or change your bookings. The 'Manage Booking' option lets you cancel your booking and obtain the refund. However, certain cancellation charges may apply.</p>
+<b>3.Can I book a meal from 'Manage Bookings' option?</b>
+<p>You can book your meals online through 'Manage Booking.'The meals should be booked 2 hours prior to the flight departure. However, if you need to request a special meal, then you will have to book it at least 24 hours before departure time. </p>

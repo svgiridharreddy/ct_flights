@@ -10,7 +10,25 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180309094955) do
+ActiveRecord::Schema.define(version: 20180312115938) do
+
+  create_table "airline_brand_collectives", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string "carrier_code"
+    t.string "carrier_name"
+    t.string "flight_no"
+    t.string "dep_time"
+    t.string "arr_time"
+    t.string "duration"
+    t.string "days_of_operation"
+    t.string "dep_city_code"
+    t.string "arr_city_code"
+    t.string "dep_country_code"
+    t.string "arr_country_code"
+    t.bigint "unique_route_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["unique_route_id"], name: "index_airline_brand_collectives_on_unique_route_id"
+  end
 
   create_table "airline_brands", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "carrier_code"
@@ -47,6 +65,7 @@ ActiveRecord::Schema.define(version: 20180309094955) do
     t.text "content_ar_om"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "icoa_code"
   end
 
   create_table "airports", id: false, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
@@ -221,6 +240,31 @@ ActiveRecord::Schema.define(version: 20180309094955) do
     t.string "arr_things_todo"
   end
 
+  create_table "in_airline_contents", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string "carrier_code"
+    t.string "carrier_name"
+    t.string "country_code"
+    t.string "icoa_code"
+    t.string "meta_title_en"
+    t.string "meta_title_hi"
+    t.text "meta_description_en"
+    t.text "meta_description_hi"
+    t.text "overview_content_en", limit: 4294967295
+    t.text "overview_content_hi", limit: 4294967295
+    t.text "baggage_content_en", limit: 4294967295
+    t.text "baggage_content_hi", limit: 4294967295
+    t.text "cancellation_content_en", limit: 4294967295
+    t.text "cancellation_content_hi", limit: 4294967295
+    t.text "customer_support_content_en", limit: 4294967295
+    t.text "customer_support_content_hi", limit: 4294967295
+    t.text "pnr_content_en", limit: 4294967295
+    t.text "pnr_content_hi", limit: 4294967295
+    t.text "web_checkin_content_en", limit: 4294967295
+    t.text "web_checkin_content_hi", limit: 4294967295
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "package_flight_schedules", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "carrier_code"
     t.string "carrier_brand"
@@ -274,6 +318,7 @@ ActiveRecord::Schema.define(version: 20180309094955) do
     t.index ["schedule_route_url", "ticket_route_url", "dep_city_code", "arr_city_code"], name: "indecies"
   end
 
+  add_foreign_key "airline_brand_collectives", "unique_routes"
   add_foreign_key "collectives", "unique_routes"
   add_foreign_key "flight_schedule_collectives", "unique_routes"
 end

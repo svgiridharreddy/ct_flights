@@ -191,15 +191,25 @@
           <h2><%= t('brand.popular_int_route_title', airline_name: @carrier_name) %></h2>
           <%= render :partial=>"bookings/overview/en/brand_flight_schedule",:locals=>{:routes=>popular_routes['dom_int'], :use_helper=>use_helper, :assets_path=>@assets_path, :country_code=> @country_code, :section=> 'int',currency_code: 'Rs.'} %><!--mobile-view-->
           <% end %>
-        
+          <div class="content-desc">
+            <% if content["overview_content_en"].present? %>
+              <%= raw content["overview_content_en"] %>
+            <% end%>
+          </div>
           <div class="clearfix"></div>
+          <div class="top-routes">
+            <h2><%= t('brand.top_route' , airline_name: @carrier_name) %></h2>
+            <%#= render :partial=>"airline_brands/brand_top_routes", locals: { top_routes: top_routes, t_helper: t_helper, page_number: page_number, airline_name: @carrier_name} %>
+            <%#= will_paginate top_routes %>
+            <%# end %>
+          </div>
         </div><!--list-box-->
       </div>
       <div id="Rside-bar">
         <div class="col-lg-3 col-md-3 col-sm-12 pad-rzero side-bar">
           <div class="blocks banner-section">
             <div id="banner">
-              <a target="_blank"><img></a>`
+              <a target="_blank"><img></a>
             </div>
           </div>
           <%= render :partial=>"bookings/shared/en/rhs_top_airlines",:locals=>{:top_airlines=>rhs_airlines[:dom_airlines], use_helper: use_helper,:assets_path=>@assets_path, application_processor: application_processor,section: "dom"} %>
@@ -214,10 +224,15 @@
     <div class="clearfix"></div>
   </section><!--/contnet-- >
   <!--/contnet Ends Here-->
-  
+  <div id="footer_container">
+    <div id="footer">
+      <% country_code = @country_code %>
+      <%= render partial: "footers/#{country_code.downcase}/booking/dom_footer", locals: {country_code: country_code,top_airlines: booking_footer[:dom_airlines],section: @section}%>
+    </div>
+  </div>
   <%= render :partial=>"shared/#{@country_code.downcase}/#{@country_code.downcase}_gac"%>
   <%= render partial: "common/comscore" %>
-  <noscript>
+  <noscript>  
     <img src="http://b.scorecardresearch.com/p?c1=2&c2=7561529&cv=2.0&cj=1" />
   </noscript>
   <script type="text/javascript">

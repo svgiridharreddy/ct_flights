@@ -26,12 +26,14 @@ class OverviewBookingsController < ApplicationController
      baggages = baggages_airlines.include?(@carrier_code)
 		flight_booking_service = FlightBookingService.new @airline_details
 		popular_routes = flight_booking_service.airline_popular_routes
+		content = flight_booking_service.fetch_content
 		header_airports = flight_booking_service.top_dom_int_airports
 		rhs_airlines = flight_booking_service.rhs_top_airlines
 		rhs_schedule_routes = flight_booking_service.rhs_top_schedule_routes
+		booking_footer = flight_booking_service.booking_footer
 	  section =  @section.include?("dom") ? "dom" : "int"
 		partial = "bookings/overview/#{@language}/overview_#{@country_code.downcase}_#{section}_#{@language.downcase}"
-		render partial,locals: {popular_routes: popular_routes,flight_file_name: airline_name+".html",application_processor: application_processor,page_type: 'flight-booking',header_airports: header_airports,customer_support: customer_support,baggages: baggages,rhs_airlines: rhs_airlines,rhs_schedule_routes: rhs_schedule_routes}
+		render partial,locals: {popular_routes: popular_routes,flight_file_name: airline_name+".html",application_processor: application_processor,page_type: 'flight-booking',header_airports: header_airports,customer_support: customer_support,baggages: baggages,rhs_airlines: rhs_airlines,rhs_schedule_routes: rhs_schedule_routes,content: content,booking_footer: booking_footer}
 	end
 
 	def url_escape(url_string)

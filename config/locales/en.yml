@@ -31,7 +31,7 @@
 
 en:
   brand: 
-    top_dom_airlines_from: "Top Domestic Airlines From"
+    
   button:
     book: "Book Now"
   breadcrumb:
@@ -85,6 +85,8 @@ en:
     faq_new_changes_ques10: "What is excess charge that needs to be paid to exceed the limitations of the free baggage allowance on a %{dep_city_name} to %{arr_city_name} flight by <Air India>?"
     faq_new_changes_ans10: "For domestic routes, the excess baggage rate is INR <400> plus applicable GST per kg for <Air India>."
   brand:
+    top_dom_airlines_from: "Top Domestic Airlines From"
+    top_route: "Top %{airline_name} Routes"
     title: "Book %{airline_name} flight tickets & get up to  ₹15,000 cashback - Cleartrip"
     description: "%{airline_name} offers amazing discounts on booking of flight tickets. Use coupon code: FLYINTL. Get information about %{airline_name} flight schedule, airfares, PNR status, baggage allowance, web check-in on Cleartrip."
     keywords: "%{airline_name} flights, %{airline_name} booking, %{airline_name} tickets, %{airline_name}, %{airline_name} air tickets, %{airline_name} air fares, %{airline_name} flight schedule"
