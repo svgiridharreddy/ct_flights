@@ -9,11 +9,11 @@ development:
   <<: *default
   database: air_development
   host: localhost
-  username: root
-  password: root
-  # host: 54.169.165.81
-  # username: flights
-  # password: ClearTripCalendar
+  # username: root
+  # password: root
+  host: 54.169.165.81
+  username: flights
+  password: ClearTripCalendar
   port: 3306
   encoding: utf8
   # socket: /var/run/mysqld/mysqld.sock
@@ -32,7 +32,7 @@ db_flights_header:
   adapter: mysql2
   username: flights
   # password: ClearTripSeoHeader
-  password: ClearTripCalendar
+  password:   
   database: flights_header
   pool: 40
   # host: localhost

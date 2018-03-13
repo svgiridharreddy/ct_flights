@@ -48,7 +48,7 @@ class FlightBookingService
 			unless airline_dom_int_routes.nil? || airline_dom_int_routes.count==0
 			  airline_dom_int_routes.each do |route|
 			  	record = FlightScheduleCollective.find_by(unique_route_id: route.id,carrier_code: @carrier_code)
-			  	if record.present? && record!=nil
+			  	if record.present? && !record==nil
 				  	min_price,max_price = flight_schedule_service.get_price_new(route.dep_city_code,route.arr_city_code,@carrier_code,@carrier_name)
 				  	popular_routes["dom_int"] << {
 			  			"carrier_code" => @carrier_code,
@@ -74,7 +74,7 @@ class FlightBookingService
 			  airline_int_int_routes.each do |route|
 			  	record = FlightScheduleCollective.find_by(unique_route_id: route.id,carrier_code: @carrier_code)
 			  	if record.present? && record!=nil
-				  	# min_price,max_price = flight_schedule_service.get_price_new(route.dep_city_code,route.arr_city_code,@carrier_code,@carrier_name)
+				  	min_price,max_price = flight_schedule_service.get_price_new(route.dep_city_code,route.arr_city_code,@carrier_code,@carrier_name)
 				  	popular_routes["int_int"] << {
 			  			"carrier_code" => @carrier_code,
 			  			"carrier_name" => @carrier_name,
@@ -88,8 +88,8 @@ class FlightBookingService
 			  			"arr_time" => record.arr_time,
 			  			"op_days" => record.days_of_operation,
 			  			"flight_no"=> record.flight_no
-			  			# "min_price" => min_price,
-			  			# "max_price" => max_price
+			  			"min_price" => min_price,
+			  			"max_price" => max_price
 				  	}
 				  end
 				end

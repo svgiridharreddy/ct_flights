@@ -2,8 +2,9 @@ namespace :airline_content_tables do
 
 	desc "create airlines in table"
 	task :create_in_airines_content_data => :environment do 
-		# uniqie_content_carrier_codes = ["X01", "US", "LX", "SU", "AY", "B6", "U2", "X03", "S2", "UO", "DL", "UA", "9W", "WY", "X05", "TG", "SQ", "PK", "LH", "CX", "MU", "LB", "AC", "G9", "NK", "CI", "KL", "AF", "UL", "KU", "SG", "BA", "JQ", "EY", "UK", "PR", "Red ", "EK", "GF", "MK", "MH", "TK", "VS", "CO", "KQ", "AK", "RT", "J9", "A3", "2S", "F9", "SA", "X02 ", "AI", "6E", "SV", "IT", "G8", "AA", "X06", "PG", "IX", "RA", "IT", "QR", "MS", "QF", "K", "OS", "FL", "FZ", "ET", "VA", "KE", "FJ", "FJ", "TR", "HU", "IC", "X02", "VY", "HPR"]
-		airlines = AirlineBrand.where(carrier_code: carrier_codes)
+		uniqie_content_carrier_codes = ["X01", "US", "LX", "SU", "AY", "B6", "U2", "X03", "S2", "UO", "DL", "UA", "9W", "WY", "X05", "TG", "SQ", "PK", "LH", "CX", "MU", "LB", "AC", "G9", "NK", "CI", "KL", "AF", "UL", "KU", "SG", "BA", "JQ", "EY", "UK", "PR", "Red ", "EK", "GF", "MK", "MH", "TK", "VS", "CO", "KQ", "AK", "RT", "J9", "A3", "2S", "F9", "SA", "X02 ", "AI", "6E", "SV", "IT", "G8", "AA", "X06", "PG", "IX", "RA", "IT", "QR", "MS", "QF", "K", "OS", "FL", "FZ", "ET", "VA", "KE", "FJ", "FJ", "TR", "HU", "IC", "X02", "VY", "HPR"]
+		# airlines = AirlineBrand.where(carrier_code: uniqie_content_carrier_codes)
+		airlines = AirlineBrand.where(carrier_code: uniqie_content_carrier_codes)
 		puts "started updating table"
 		count = 0
 
@@ -19,15 +20,13 @@ namespace :airline_content_tables do
 				unique_content = File.read("#{Rails.root}/public/india/en/booking/in_airline_content/#{carrier_name.split(' ').join('-')}-#{carrier_code}.txt") rescue nil
 
 				if unique_content.present? && !unique_content.nil?
-					overview_content_en = unique_content 
-				else
-					key = "#{country_code.downcase}_#{carrier_code}_content"
-          overview_content_en = I18n.t("airline_brand_content.#{key}") rescue ""
+					# overview_content_en = unique_content
+					brand.overview_content_en = unique_content
+					brand.country_code = airline.country_code
+					brand.carrier_name = airline.carrier_name
+					brand.save! 
 				end
-				brand.overview_content_en = overview_content_en
-				brand.country_code = airline.country_code
-				brand.carrier_name = airline.carrier_name
-				brand.save!
+				
 				puts "#{count+=1} updated for airline-#{carrier_code}-#{carrier_name}"
 				# customer_support_content_en = File.read("#{Rails.root}/public/india/en/booking/customer_support/#{carrier_name.split(' ').join('-')}-#{carrier_code}.txt") rescue nil
 				# baggage_content_en = File.read("#{Rails.root}/public/india/en/booking/baggages_page/#{carrier_name.split(' ').join('-')}-#{carrier_code}.txt") rescue nil
@@ -52,6 +51,18 @@ namespace :airline_content_tables do
 				e.message
 				e.backtrace
 			end
+		end
+	end
+	task :create_airlines_testing_db => :environment do 
+		airlines = AirlineBrand.all 
+		count = 0
+		binding.pry
+		airlines.each do |airline|
+			country_code = "IN".titleize
+			modle_name = "#{country_code}AirlineContent".constantize
+			brand = modle_name.find_or_create_by(carrier_code: airline.carrier_code,icoa_code: airline.icoa_code)		
+			binding.pry
+			puts "#{count+=1}-inserted for #{airline.carrier_code}"
 		end
 	end
 end
