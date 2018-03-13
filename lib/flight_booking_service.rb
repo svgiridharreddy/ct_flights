@@ -87,7 +87,7 @@ class FlightBookingService
 			  			"dep_time" => record.dep_time,
 			  			"arr_time" => record.arr_time,
 			  			"op_days" => record.days_of_operation,
-			  			"flight_no"=> record.flight_no
+			  			"flight_no"=> record.flight_no,
 			  			"min_price" => min_price,
 			  			"max_price" => max_price
 				  	}
