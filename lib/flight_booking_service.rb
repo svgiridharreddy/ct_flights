@@ -24,7 +24,7 @@ class FlightBookingService
 
 			  airline_dom_dom_routes.each do |route|
 
-			  	record = AirlineBrandCollective.find_by(carrier_code: @carrier_code,unique_route_id: route.id)
+			  	record = AirlineBrandCollective.find_by(unique_route_id: route.id,carrier_code: @carrier_code)
 			  	if record.present? && record !=nil
 				  	min_price,max_price = flight_schedule_service.get_price_new(route.dep_city_code,route.arr_city_code,@carrier_code,@carrier_name)
 				  	popular_routes["dom_dom"] << {

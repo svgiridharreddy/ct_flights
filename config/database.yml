@@ -7,13 +7,13 @@ default: &default
 
 development:
   <<: *default
-  database: air_development
-  host: localhost
-  username: root
-  password: root
-  # host: 54.169.165.81
-  # username: flights
-  # password: ClearTripCalendar
+  database: air_development_testing
+  # host: localhost
+  # username: root
+  # password: root
+  host: 54.169.165.81
+  username: flights
+  password: ClearTripCalendar
   port: 3306
   encoding: utf8
   # socket: /var/run/mysqld/mysqld.sock
@@ -56,7 +56,7 @@ db_postgres:
 
 production:
   <<: *default
-  database: air_development
+  database: air_development_production
   host: 54.169.165.81
   username: flights
   password: ClearTripCalendar  
