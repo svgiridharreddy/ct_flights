@@ -14,16 +14,17 @@ class OverviewBookingsController < ApplicationController
 		@carrier_code = airline.carrier_code
 		file_paths = YAML.load(File.read('config/application.yml'))[Rails.env]
 		@assets_path = file_paths["assets_path"]
-		@section = airline.country_code == 'IN' ? "IN-dom" : 'IN-int'
+		@section = airline.country_code == @country_code ? "#{@country_code}-dom" : "#{@country_code}-int"
 		@airline_details = { carrier_code: @carrier_code,
 											  carrier_name: @carrier_name,
 											  section: @section,
 												country_code: @country_code
 											  }
+
 		customer_support_airlines = ['AI','CX','TG','SQ','G8','AK','UK','SG','G9','9W','LH','EY','BA','6E','QR','EK']
-     baggages_airlines = ['AI','TR','EY','SG','QR','AK','9W','G9','6E','FZ','BA','LH','UK','CX','SQ','UA','UL','G8','TG','MH','EK','WY']
-     customer_support = customer_support_airlines.include?(@carrier_code)
-     baggages = baggages_airlines.include?(@carrier_code)
+    baggages_airlines = ['AI','TR','EY','SG','QR','AK','9W','G9','6E','FZ','BA','LH','UK','CX','SQ','UA','UL','G8','TG','MH','EK','WY']
+    customer_support = @country_code=='IN' ? customer_support_airlines.include?(@carrier_code) : false
+    baggages = @country_code=='IN' ? baggages_airlines.include?(@carrier_code) : false
 		flight_booking_service = FlightBookingService.new @airline_details
 		popular_routes = flight_booking_service.airline_popular_routes
 		content = flight_booking_service.fetch_content

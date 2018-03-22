@@ -163,8 +163,8 @@
           <a href="/flights" title="<%= t('breadcrumb.flights') %>" itemprop="url"><span itemprop="title"><%= t('breadcrumb.flights') %></span></a>
         </li>
         <li itemscope itemtype="https://data-vocabulary.org/Breadcrumb">
-          <a href="/flight-booking/<%= locale %>domestic-airlines.html" title="<%= t('breadcrumb.domestic_airlines') %>" itemprop="url">
-            <span itemprop="title"><%= t('breadcrumb.domestic_airlines')%></span>
+          <a href="/flight-booking/international-airlines.html" title="<%= t('breadcrumb.domestic_airlines') %>" itemprop="url">
+            <span itemprop="title"><%= t('breadcrumb.international_airlines')%></span>
           </a>
         </li>
         <li itemscope itemtype="https://data-vocabulary.org/Breadcrumb">
@@ -212,7 +212,7 @@
               <a target="_blank"><img></a>
             </div>
           </div>
-          <%= render :partial=>"bookings/shared/en/rhs_top_airlines",:locals=>{:top_airlines=>rhs_airlines[:dom_airlines], use_helper: use_helper,:assets_path=>@assets_path, application_processor: application_processor,section: "dom"} %>
+          <%= render :partial=>"bookings/shared/en/rhs_top_airlines",:locals=>{:top_airlines=>rhs_airlines[:int_airlines], use_helper: use_helper,:assets_path=>@assets_path, application_processor: application_processor,section: "dom"} %>
           <%= render :partial=>"bookings/shared/en/rhs_top_routes",:locals=>{:routes=>rhs_schedule_routes[:dom_routes], page_type: 'flight-booking', application_processor: application_processor, :carrier_code=> @carrier_code, :section=>"dom" } %>
           <%= render :partial=>"bookings/shared/en/rhs_top_airports",:locals=>{:top_airports=>header_airports["int_airports"], use_helper: use_helper, application_processor: application_processor } %>
           <div class="blocks banner-section">
@@ -227,7 +227,7 @@
   <div id="footer_container">
     <div id="footer">
       <% country_code = @country_code %>
-      <%= render partial: "footers/#{country_code.downcase}/booking/dom_footer", locals: {country_code: country_code,top_airlines: booking_footer[:dom_airlines],section: @section}%>
+      <%= render partial: "footers/#{country_code.downcase}/booking/dom_footer", locals: {country_code: country_code,top_airlines: booking_footer[:int_airlines],section: @section}%>
     </div>
   </div>
   <%= render :partial=>"shared/#{@country_code.downcase}/#{@country_code.downcase}_gac"%>

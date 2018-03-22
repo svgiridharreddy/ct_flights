@@ -75,39 +75,7 @@ namespace :city_name_table do
     end
   end
 
-  desc "get null airport names"
-  task :get_null_airports => :environment do 
-    dep_airports = PackageFlightSchedule.all.pluck(:dep_airport_code).uniq
-    arr_airports = PackageFlightSchedule.all.pluck(:arr_airport_code).uniq
-    total_airports = (dep_airports + arr_airports).uniq
-    
-    count = 0
-    CSV.open("#{Rails.root}/all_airports_dynamic.csv","w") do |csv|
-      attributes = %w( airport_code city_code airport_name_en airport_name_ar airport_name_hi address phone email website)
-        csv << attributes
-      total_airports.each do |airport_code|
-        airport = Airport.find_by(airport_code: airport_code)
-        if airport.present? && !airport.nil? 
-          city_code = airport.city_code
-          airport_name_en = airport.airport_name
-          airport_name_ar = ''
-          airport_name_hi = ''
-          address = airport.address
-          phone = airport.phone
-          email = airport.email
-          csv << [airport_code,city_code,airport_name_en,airport_name_ar,airport_name_hi,address,phone,email]
-        else
-          csv << [airport_code,'','','','','','','']
-          CSV.open("#{Rails.root}/no_name_airports.csv","w") do |csv1|
-            attributes = %w( airport_code city_code airport_name_en airport_name_ar airport_name_hi address phone email website)
-            csv1 << attributes
-            csv1 << [airport_code,'','','','','','','']
-          end
-        end
-        puts "#{count+=1} written for airport-#{airport_code}"
-      end
-    end
-  end
+  
 
   desc "create csv for no name cities"
   task :get_no_name_cities => :environment do 

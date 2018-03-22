@@ -7,13 +7,15 @@ default: &default
 
 development:
   <<: *default
-  database: air_development_testing
-  # host: localhost
-  # username: root
-  # password: root
-  host: 54.169.165.81
-  username: flights
-  password: ClearTripCalendar
+  # when  deploying use database air_development_testing
+  # In local, use database air_development_dev
+  database: air_development_dev 
+  host: localhost
+  username: root
+  password: root
+  # host: 54.169.165.81
+  # username: flights
+  # password: ClearTripCalendar
   port: 3306
   encoding: utf8
   # socket: /var/run/mysqld/mysqld.sock

@@ -9,7 +9,9 @@ class InsertUniqueRoutesWorker
   # sidekiq_options queue: "insert_unique_routes_worker", backtrace: true 
   def perform()
     country_code = 'IN'
-      all_routes = PackageFlightSchedule.where("arr_city_code!=dep_city_code and ((dep_country_code='IN' and arr_country_code='IN') or ((dep_country_code='IN' and arr_country_code!='IN')or (dep_country_code!='IN' and arr_country_code='IN')or(dep_country_code!='IN' and arr_country_code!='IN'))) and (stop=0)").group(:dep_city_code,:arr_city_code,:dep_airport_code,:arr_airport_code,:dep_country_code,:arr_country_code).order("sum(flight_count) desc").pluck(:dep_city_code,:arr_city_code,:dep_airport_code,:arr_airport_code,:dep_country_code,:arr_country_code,"sum(flight_count) as total",:stop)  
+      all_routes = PackageFlightSchedule.where("arr_city_code!=dep_city_code and ((dep_country_code='IN' and arr_country_code='IN') or (((dep_country_code='IN' and arr_country_code!='IN')or (dep_country_code!='IN' and arr_country_code='IN'))or(dep_country_code!='IN' and arr_country_code!='IN'))) and (stop=0)").group(:dep_city_code,:arr_city_code,:dep_airport_code,:arr_airport_code,:dep_country_code,:arr_country_code).order("sum(flight_count) desc").pluck(:dep_city_code,:arr_city_code,:dep_airport_code,:arr_airport_code,:dep_country_code,:arr_country_code,"sum(flight_count) as total",:stop)
+      # top_routes_international =  PackageFlightSchedule.where("arr_city_code != dep_city_code and ((dep_country_code = '#{country_code}') AND NOT (arr_country_code = '#{country_code}')) OR (NOT (dep_country_code = '#{country_code}') AND ((arr_country_code = '#{country_code}'))) or (dep_country_code != '#{country_code}' and arr_country_code != '#{country_code}') and stop=0").group(:dep_city_code, :arr_city_code, :dep_airport_code,:arr_airport_code, :dep_city_name, :arr_city_name, :dep_country_code, :arr_country_code).order("sum(flight_count) desc").pluck(:dep_city_code, :arr_city_code, :dep_airport_code,:arr_airport_code, :dep_city_name, :arr_city_name, :dep_country_code, :arr_country_code, "sum(flight_count) as total") 
+        binding.pry
       create_flight_routes(all_routes)
   end
 
@@ -35,7 +37,6 @@ class InsertUniqueRoutesWorker
  
             end
         rescue ActiveRecord::RecordInvalid => exception
-          binding.pry
         end
     end
   end
