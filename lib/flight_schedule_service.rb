@@ -19,20 +19,21 @@ class FlightScheduleService
 
     def schedule_airline_values
     	route_values = {}
-    	dep_city_name_formated = url_escape(@dep_city_name)
-    	arr_city_name_formated = url_escape(@arr_city_name)
-    	return_url = arr_city_name_formated +"-"+dep_city_name_formated +"-flights.html"
+    	dep_city_name_formated = url_escape(@dep_city_name) rescue ""
+    	arr_city_name_formated = url_escape(@arr_city_name) rescue ""
+    	return_url = arr_city_name_formated +"-"+dep_city_name_formated +"-flights.html" rescue ""
 			top_dom_cc = AirlineBrand.where(country_code: @country_code).order("brand_routes_count desc").limit(8).pluck(:carrier_code)
 			top_dom_airlines = top_dom_cc.map{|cc| I18n.t("airlines.#{cc}")}
 			top_int_cc = AirlineBrand.where.not(country_code: @country_code).order("brand_routes_count desc").limit(8).pluck(:carrier_code)
 			top_int_airlines = top_int_cc.map{|cc| I18n.t("airlines.#{cc}") } 
 			route_values["return_url"] = return_url
-			route_values["dep_city_name_formated"] = dep_city_name_formated
-			route_values["arr_city_name_formated"] = arr_city_name_formated
+			route_values["dep_city_name_formated"] = dep_city_name_formated rescue ""
+			route_values["arr_city_name_formated"] = arr_city_name_formated rescue ""
 			route_values["top_dom_airlines"] = top_dom_cc
-			route_values["top_int_airlines"] = top_int_cc
+			route_values["top_int_airlines"] = top_int_cc  
 			return route_values
     end
+
     def fetch_route_content
     	content = {"unique_route_content" => "",
     				"dep_city_content" => "",
@@ -252,6 +253,129 @@ class FlightScheduleService
         #Ending of footer randamization code
         return {footer_links_data: footer_links_data,dom_airlines: dom_airlines,int_airlines: int_airlines}
     end
+
+  def from_to_values(city_code,section)
+    city_section = section.include?("from") ? "dep" : "arr"
+    dom_flight_route = UniqueRoute.where("#{city_section}_city_code=? and dep_city_code != arr_city_code and arr_city_name != ' ' and dep_city_name != ' ' and  arr_country_code=? and dep_country_code=?", city_code, ENV['COUNTRY'], ENV['COUNTRY']).order("weekly_flights_count desc").limit(10)
+    int_flight_route  = UniqueRoute.where("#{city_section}_city_code=? and dep_city_code != arr_city_code and arr_city_name != ' ' and dep_city_name != ' ' and  (arr_country_code!=? or dep_country_code!=?)", city_code, ENV['COUNTRY'], ENV['COUNTRY']).order("weekly_flights_count desc").limit(10)
+    routes = {
+      "dom"=>[],
+      "int"=>[]
+    }
+    dom_flight_route.each do |route|
+      min_price,max_price = get_price(route.dep_city_code,route.arr_city_code)
+      pfs_data = PackageFlightSchedule.where("dep_city_name is not null and arr_city_name is not null and dep_city_code=? and arr_city_code=? and carrier_code in (select carrier_code from airline_brands where country_code=?)",route.dep_city_code,route.arr_city_code, ENV['COUNTRY']).order('flight_count desc').limit(1).first
+      next unless pfs_data.present?
+      carrier_brand = AirlineBrand.find_by({carrier_code: pfs_data.carrier_code})
+      if carrier_brand.present? && carrier_brand.carrier_name.present?
+        routes["dom"] << {
+          "dep_city_name"=> pfs_data.dep_city_name,
+          "dep_airport_code"=> pfs_data.dep_airport_code,
+          "dep_city_code"=> pfs_data.dep_city_code,
+          "dep_country_code"=> pfs_data.dep_country_code,
+          "arr_city_name"=> pfs_data.arr_city_name,
+          "arr_city_code"=> pfs_data.arr_city_code,
+          "dep_time"=> Time.parse(pfs_data.dep_time[0...8]).strftime("%0l:%M %p"),
+          "arr_time"=> Time.parse(pfs_data.arr_time[0...8]).strftime("%0l:%M %p"),
+          "arr_airport_code"=> pfs_data.arr_airport_code,
+          "arr_country_code"=> pfs_data.arr_country_code,
+          "carrier_code"=> pfs_data.carrier_code,
+          "carrier_brand"=> carrier_brand.carrier_name,
+          "flight_no"=> pfs_data.flight_no,
+          "duration" => pfs_data.elapsed_journey_time,
+          "min_price"=> min_price,
+          "max_price"=> max_price
+        }
+      end
+    end
+    routes["dom"] = routes["dom"].sort {|a,b| a["min_price"] <=> b["min_price"]}
+    int_flight_route.each do |route|
+      min_price,max_price = get_price(route.dep_city_code,route.arr_city_code)
+      pfs_data = PackageFlightSchedule.where("dep_city_name is not null and arr_city_name is not null and dep_city_code=? and arr_city_code=?",route.dep_city_code,route.arr_city_code).order('flight_count desc').limit(1).first
+      next unless pfs_data.present?
+      carrier_brand = AirlineBrand.find_by({carrier_code: pfs_data.carrier_code})
+      if carrier_brand.present? && carrier_brand.carrier_name.present?
+        routes["int"] << {
+          "dep_city_name"=> pfs_data.dep_city_name,
+          "dep_airport_code"=> pfs_data.dep_airport_code,
+          "dep_city_code"=> pfs_data.dep_city_code,
+          "dep_country_code"=> pfs_data.dep_country_code,
+          "arr_city_name"=> pfs_data.arr_city_name,
+          "arr_city_code"=> pfs_data.arr_city_code,
+          "arr_airport_code"=> pfs_data.arr_airport_code,
+          "arr_country_code"=> pfs_data.arr_country_code,
+          "dep_time"=> Time.parse(pfs_data.dep_time[0...8]).strftime("%0l:%M %p"),
+          "arr_time"=> Time.parse(pfs_data.arr_time[0...8]).strftime("%0l:%M %p"),
+          "carrier_code"=> pfs_data.carrier_code,
+          "carrier_brand"=> carrier_brand.carrier_name,
+          "flight_no"=> pfs_data.flight_no,
+          "duration" => pfs_data.elapsed_journey_time,
+          "min_price"=> min_price,
+          "max_price"=> max_price
+        }
+      end
+    end
+    routes["int"] = routes["int"].sort {|a,b| a["min_price"] <=> b["min_price"]}
+    return routes
+  end
+  def city_layout_values(city_code, section)
+     country_code = @country_code
+    if section == "from"
+      city_section = "dep"
+      other_section = "arr"
+    else
+      city_section = "arr"
+      other_section = "dep"
+    end
+    city_section = section == "from" ? "dep" : "arr"
+    city_layout_values = {}
+    airport = Airport.find_by({:city_code=> city_code})
+    city_layout_values["dom_airlines"] = schedule_airline_values["top_dom_airlines"]
+    city_layout_values["int_airlines"] = schedule_airline_values["top_int_airlines"]
+    city_layout_values['airport_name'] = airport.airport_name
+    city_layout_values['airport_code'] = airport.airport_code
+    city_layout_values['airport_address'] = airport.address
+    city_layout_values['airport_phone'] = airport.phone
+    city_layout_values['airport_email'] = airport.email
+    city_layout_values['airport_web'] = airport.website
+    sections = ["dom","int"]
+    sections.each do |section| 
+      query_type = section === "dom" ? "in (?)" : " not in (?) " 
+      country_type = section === "dom" ? "country_code=?" : "country_code!=?"
+      country_section = section === "dom" ? "(dep_country_code='#{country_code}' and arr_country_code='#{country_code}')" : "NOT(dep_country_code='#{country_code}' and arr_country_code='#{country_code}')"
+      top_airlines = FlightScheduleCollective.where("#{city_section}_city_code='#{city_code}' and #{other_section}_city_code!='#{city_code}' and  carrier_code #{query_type} and #{country_section}",@domestic_carrier_codes).group(:arr_city_code)
+      top_airlines_cc = top_airlines.map(&:carrier_code).uniq
+      city_layout_values["#{section}_airlines_count"] = top_airlines_cc.count
+      city_layout_values["#{section}_first_airline"] = I18n.t("airlines.#{top_airlines.first.carrier_code}")
+      city_layout_values["#{section}_first_dep_time"] = Time.strptime(top_airlines.first.dep_time,"%H:%M").to_time.strftime("%I:%M %p")
+      city_layout_values["#{section}_last_airline"] = I18n.t("airlines.#{top_airlines.last.carrier_code}")
+      city_layout_values["#{section}_last_dep_time"] = Time.strptime(top_airlines.last.dep_time,"%H:%M").to_time.strftime("%I:%M %p")
+      city_layout_values["#{section}_airlines_cc"] = AirlineBrand.where("carrier_code in (?) and country_code=?",top_airlines_cc,@country_code).map(&:carrier_code).take(3)
+      airlines_cc = AirlineBrand.where("carrier_code in (?) and #{country_type}",top_airlines_cc,@country_code).map(&:carrier_code).take(3)
+      city_layout_values["city_#{section}_airlines"] = airlines_cc.map{|cc| I18n.t("airlines.#{cc}")}.to_sentence
+      city_layout_values["#{section}_route_count"] = UniqueRoute.where("#{city_section}_city_code='#{city_code}' and #{other_section}_city_code!='#{city_code}' and #{country_section}").count
+    end
+
+    # sections.each do |section|
+    #   query_type = section=='dom' ? " ": " not "
+    #   country_query = section=='dom' ? " arr_country_code=? and dep_country_code=? " : " (arr_country_code!=? or dep_country_code!=?) "
+    #   section_query = " and (section='#{ENV['COUNTRY']}-dom' or section='#{ENV['COUNTRY']}-int')"
+    #   airlines_code = FlightRoute.find_by_sql(["select carrier_code,sum(flight_count) as flight_count FROM flight_routes where carrier_code #{query_type} in(select carrier_code from airline_brands where country_code=?) and #{city_section}_city_code=? and page_type='flight_brand' #{section_query} GROUP by carrier_code order by flight_count desc limit 3", ENV['COUNTRY'], city_code]).map(&:carrier_code)
+    #   airlines = AirlineBrand.where("carrier_code in (?)", airlines_code).map(&:carrier_name).take(3)
+    #   values["#{section}_airlines"] = airlines.to_sentence
+    #   values["#{section}_airline_count"] =  FlightRoute.find_by_sql(["select count(distinct carrier_code) as count from flight_routes where carrier_code #{query_type} in(select carrier_code from airline_brands where country_code=?) and #{city_section}_city_code=? and carrier_code is not null #{section_query}", ENV['COUNTRY'], city_code]).first.count
+    #   values["#{section}_route_count"] = FlightRoute.where("page_type='flight_schedule' and #{city_section}_city_code=? and #{country_query} #{section_query}", city_code, ENV['COUNTRY'], ENV['COUNTRY']).count
+    #   values["#{section}_flight_count"] = FlightRoute.find_by_sql(["select sum(flight_count) as count from flight_routes where page_type='flight_schedule' and #{city_section}_city_code=? and #{country_query} #{section_query}", city_code, ENV['COUNTRY'], ENV['COUNTRY']]).first.count
+    #   first_flight = PackageFlightSchedule.where("#{city_section}_city_code=? and #{country_query}", city_code, ENV['COUNTRY'], ENV['COUNTRY']).order("#{city_section}_time asc").limit(1).first
+    #   values["#{section}_first_time"] = first_flight.present? ? city_section=='dep' ? Time.parse(first_flight.dep_time[0...8]).strftime("%0l:%M %p") : Time.parse(first_flight.arr_time[0...8]).strftime("%l:%M %p") : ""
+    #   values["#{section}_first_airline"] = first_flight.present? ? first_flight.carrier_brand : ""
+    #   last_flight = PackageFlightSchedule.where("#{city_section}_city_code=? and #{country_query}", city_code, ENV['COUNTRY'], ENV['COUNTRY']).order("#{city_section}_time desc").limit(1).first
+    #   values["#{section}_last_time"] = last_flight.present? ? city_section=='dep' ? Time.parse(last_flight.dep_time[0...8]).strftime("%l:%M %p") : Time.parse(last_flight.arr_time[0...8]).strftime("%l:%M %p") : ""
+    #   values["#{section}_last_airline"] = last_flight.present? ? last_flight.carrier_brand : ""
+    # end
+    return city_layout_values
+  end
+
     def min_price_new_changes(dep_city_code,arr_city_code,carrier_code='')
     result={}
     date_res={}
@@ -352,6 +476,7 @@ class FlightScheduleService
         day_max_rate = calendar_data.max{|a,b| (a["pr"].to_f)<=>(b["pr"].to_f)} || {"pr"=>0}
       end
     end
+
     [day_least_rate["pr"].to_i,day_max_rate["pr"].to_i]
   end
 

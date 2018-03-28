@@ -5,7 +5,7 @@ namespace :package_flight_schedules do
 	desc "update dep and arr cities in package_flight_schedules"
 	task update_city_name: :environment do
 	 puts '--------Start adding Cities --------'
-   csv_file = "#{APP_ROOT}/public/updated_city_list.csv"
+   csv_file = "#{Rails.root}/public/updated_city_list.csv"
 
    csv_text = File.read(csv_file)
    csv = CSV.parse(csv_text, headers: :first_row, col_sep: ",")
@@ -14,17 +14,17 @@ namespace :package_flight_schedules do
 	    begin
 	      city_code = row[0]
 	      city_name_en = row[1]
-	      dep_cities = PackageFlightSchedule.where(dep_city_code: city_code)
-	      dep_cities.each do |dep_city|
-	      	dep_city.dep_city_name =  city_name_en
-	      	dep_city.save
-	      end
-	      arr_cities = PackageFlightSchedule.where(arr_city_code: city_code)
-	      arr_cities.each do |arr_city|
-	      	arr_city.arr_city_name = city_name_en
-	      	arr_city.save
-	      end
-	    puts "updated - #{city_code} with dep_cities = {dep_cities.count} and arr_cities = #{arr_cities.count}"
+	      dep_cities = PackageFlightSchedule.where(dep_city_code: city_code).update_all(dep_city_name: city_name_en)
+	      # dep_cities.each do |dep_city|
+	      # 	dep_city.dep_city_name =  city_name_en
+	      # 	dep_city.save
+	      # end
+	      arr_cities = PackageFlightSchedule.where(arr_city_code: city_code).update_all(arr_city_name: city_name_en)
+	      # arr_cities.each do |arr_city|
+	      # 	arr_city.arr_city_name = city_name_en
+	      # 	arr_city.save
+	      # end
+	    puts "updated - #{city_code} with dep_cities = #{dep_cities} and arr_cities = #{arr_cities}"
 	    rescue StandardError => e
 	    	binding.pry
 	    end

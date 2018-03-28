@@ -56,4 +56,23 @@ namespace :unique_routes_table do
       binding.pry
     end
   end
+
+  task get_city_codes: :environment do 
+    CSV.open("#{Rails.root}/update_calendar_routes.csv","w") do |csv|
+      attributes = %w( dep_city_code arr_city_code url)
+          csv << attributes
+      CSV.foreach("#{Rails.root}/public/to_update_calendar_routes.csv", :headers=>true).each_with_index do |row,index|
+        begin
+          url = row[0].split("/")[2].gsub("-flights.html",'')
+          route = UniqueRoute.find_by(schedule_route_url: url)
+          dep_city_code = route.dep_city_code
+          arr_city_code = route.arr_city_code
+          url = row[0]
+          csv << [dep_city_code,arr_city_code,url]
+        rescue 
+          binding.pry
+        end
+      end
+    end
+  end
 end 
