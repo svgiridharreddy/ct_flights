@@ -39,7 +39,7 @@ class FlightSchedulesController < ApplicationController
 												:route_type => @route_type,
 												:country_name => @country_name }
 		flight_schedule_service = FlightScheduleService.new @route_details	 
-		schedule_footer = flight_schedule_service.schedule_footer
+		@schedule_footer = flight_schedule_service.schedule_footer
 		@domestic_carrier_codes = AirlineBrand.where(country_code: @country_code).pluck("distinct(carrier_code)")
 		@all_carrier_codes = AirlineBrand.all.pluck(:carrier_code)
 
@@ -56,7 +56,7 @@ class FlightSchedulesController < ApplicationController
 		else
 			partial = "flight_schedule_routes/#{@language}/flight_schedule_int_#{@language.downcase}_#{@country_code.downcase}"
 		end
-		render  partial,locals: {schedule_layout_values: schedule_layout_values,dep_city_name: @dep_city_name,arr_city_name: @arr_city_name,dep_city_code: @route.dep_city_code,arr_city_code: @route.arr_city_code,schedule_header: header_values,schedule_footer: schedule_footer }
+		render  partial,locals: {schedule_layout_values: schedule_layout_values,dep_city_name: @dep_city_name,arr_city_name: @arr_city_name,dep_city_code: @route.dep_city_code,arr_city_code: @route.arr_city_code,schedule_header: header_values,schedule_footer: @schedule_footer }
 	end
 
 	def get_from_to(path)
@@ -73,7 +73,7 @@ class FlightSchedulesController < ApplicationController
 		host = @application_processor.host_name(@country_code)
 		flight_schedule_service = FlightScheduleService.new @values
 		from_to_values = flight_schedule_service.from_to_values(@city_code,@city_section)
-		city_layout_values = flight_schedule_service.city_layout_values(@city_code, @city_section)
+		city_layout_values = flight_schedule_service.city_layout_values(@city_code, @city_section,@city_name)
 		if @city_section === "from"
 			partial = "schedules/from_to/#{@language}/from_city_#{@country_code.downcase}_#{@language.downcase}"
 			
@@ -81,7 +81,7 @@ class FlightSchedulesController < ApplicationController
 			partial = "schedules/from_to/#{@language}/to_city_#{@country_code.downcase}_#{@language.downcase}"
 			
 		end
-		render partial, locals: {popular_routes: from_to_values,application_processor: @application_processor,page_type: "flight-schedule",first_file_name: file_name,city_layout_values: city_layout_values,host: host}
+		render partial, locals: {popular_routes: from_to_values,application_processor: @application_processor,page_type: "flight-schedule",first_file_name: file_name,city_layout_values: city_layout_values,host: host,schedule_footer: @schedule_footer}
 	end
 end
 

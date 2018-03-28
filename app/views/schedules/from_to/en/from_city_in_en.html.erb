@@ -145,7 +145,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <%#= render partial: "common/header", locals: { assets_path: assets_path, country_code: country_code, host: host, flight_file_name: flight_file_name, page_type: 'flight-schedule', application_processor: application_processor} %>
 
   <!--======Second Header Starts Here==========-->
-            <%#= render :partial => "new_flights/fromto_schedule_header",locals: {city_name: city_name,city_name_formated: city_name_formated,route_dom_airlines: route_dom_airlines,route_int_airlines: route_int_airlines,near_by_airport_hotels: near_by_airport_hotels,hotels_list: hotels_list,hotels_header_list: hotels_header_list,hotel_types: hotel_types,use_helper: use_helper,arr_city_weekend_getaway: arr_city_weekend_getaway,arr_featured_city: arr_featured_city,country_code: country_code,arr_city_package: arr_city_package,arr_events_city: arr_events_city ,section: section} %> 
+            <%= render :partial => "schedules/from_to/en/shared/from_to_header_en",locals: {city_name: @city_name,city_layout_values: city_layout_values,section: @city_section,country_code: @country_code} %> 
   <!--======Second Header Ends Here==========-->
 
   <!--/contnet Starts Here-->
@@ -198,12 +198,12 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
        
          <div class="content-desc">
           <h1><%= t('from_city.flight_from_city_name', city_name: @city_name) %></h1>
-          <% from_city_content = '' %>
-          <% if from_city_content.present? %>
-            <%= raw from_city_content %>
+          
+          <% if city_layout_values["city_from_content"].present? %>
+            <%= raw city_layout_values["city_from_content"] %>
           <% else %>
           <p>
-            <%= render partial: "schedules/from_to/en/in_en_from_city_templatized_content", locals: {city_name: @city_name, host: display_host(@country_code), airport_name: city_layout_values['airport_name'], airport_code: city_layout_values['airport_code'], dom_route_count: city_layout_values['dom_route_count'], dom_airline_count: city_layout_values['dom_airline_count'], flight_count: city_layout_values['dom_flight_count'], dom_airlines: city_layout_values['city_dom_airlines'], dom_first_airline: city_layout_values['dom_first_airline'], dom_first_time: city_layout_values['dom_first_dep_time'], dom_last_airline: city_layout_values['dom_last_airline'], dom_last_time: city_layout_values['dom_last_dep_time'],int_route_count: city_layout_values['int_route_count'], int_airline_count: city_layout_values['int_airline_count'], int_flight_count: city_layout_values['int_flight_count'], int_airlines: city_layout_values['city_int_airlines'], int_first_airline: city_layout_values['int_first_airline'], int_first_time: city_layout_values['int_first_dep_time'], int_last_airline: city_layout_values['int_last_airline'], int_last_time: city_layout_values['int_last_dep_time']} %>
+            <%= render partial: "schedules/from_to/en/in_en_from_city_templatized_content", locals: {city_name: @city_name, host: display_host(@country_code),city_layout_values: city_layout_values} %>
           </p>
           <% end %>
         </div>
