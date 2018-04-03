@@ -5,11 +5,9 @@ Rails.application.routes.draw do
 	
 	scope 'flight-schedule' do 
 		get '/:route' => "flight_schedules#schedule_values"
-		get '/:dep_city_name-:arr_city_name-flights.html' => "flight_schedules#schedule_values"
-		get '/:lang/:dep_city_name-:arr_city_name-flights.html' => "flight_schedules#schedule_values"
 	end	
 	scope ':lang/flight-schedule' do
-		get '/:dep_city_name-:arr_city_name-flights.html' => "flight_schedules#schedule_values"
+		get '/:route' => "flight_schedules#schedule_values"
 	end
 	scope 'flight-booking' do 
 		get '/:airline' => "overview_bookings#booking_values"

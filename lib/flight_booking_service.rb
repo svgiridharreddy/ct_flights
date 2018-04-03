@@ -10,12 +10,15 @@ class FlightBookingService
 	end
 
   def airline_popular_routes
+  	
+  	collecitves = "#{@country_code.downcase}_flight_schedule_collectives"
+  	collectives_symbol = collecitves.to_sym
+  		
+  	airline_dom_dom_routes =  UniqueRoute.joins(collectives_symbol).where(["#{collecitves}.carrier_code=? and #{collecitves}.dep_city_code!=#{collecitves}.arr_city_code and #{collecitves}.dep_country_code= ? and #{collecitves}.arr_country_code=?",@carrier_code,@country_code,@country_code]).group("#{collecitves}.dep_city_code,#{collecitves}.arr_city_code,unique_routes.weekly_flights_count,#{collecitves}.flight_no").order("unique_routes.weekly_flights_count desc").limit(30)
 
-  	airline_dom_dom_routes =  UniqueRoute.joins(:flight_schedule_collectives).where(["flight_schedule_collectives.carrier_code=? and flight_schedule_collectives.dep_city_code!=flight_schedule_collectives.arr_city_code and flight_schedule_collectives.dep_country_code= ? and flight_schedule_collectives.arr_country_code=?",@carrier_code,@country_code,@country_code]).group("flight_schedule_collectives.dep_city_code,flight_schedule_collectives.arr_city_code,unique_routes.weekly_flights_count,flight_schedule_collectives.flight_no").order("unique_routes.weekly_flights_count desc").limit(30)
+  	airline_dom_int_routes =  UniqueRoute.joins(collectives_symbol).where(["#{collecitves}.carrier_code=? and #{collecitves}.dep_city_code!=#{collecitves}.arr_city_code and (#{collecitves}.dep_country_code=? and #{collecitves}.arr_country_code!=?)OR(#{collecitves}.dep_country_code!=? and #{collecitves}.arr_country_code=?)",@carrier_code,@country_code,@country_code,@country_code,@country_code]).group("#{collecitves}.dep_city_code,#{collecitves}.arr_city_code,unique_routes.weekly_flights_count").order("unique_routes.weekly_flights_count desc").limit(30)
 
-  	airline_dom_int_routes =  UniqueRoute.joins(:flight_schedule_collectives).where(["flight_schedule_collectives.carrier_code=? and flight_schedule_collectives.dep_city_code!=flight_schedule_collectives.arr_city_code and (flight_schedule_collectives.dep_country_code=? and flight_schedule_collectives.arr_country_code!=?)OR(flight_schedule_collectives.dep_country_code!=? and flight_schedule_collectives.arr_country_code=?)",@carrier_code,@country_code,@country_code,@country_code,@country_code]).group("flight_schedule_collectives.dep_city_code,flight_schedule_collectives.arr_city_code,unique_routes.weekly_flights_count").order("unique_routes.weekly_flights_count desc").limit(30)
-
-	  airline_int_int_routes =  UniqueRoute.joins(:flight_schedule_collectives).where(["flight_schedule_collectives.carrier_code=? and flight_schedule_collectives.dep_city_code!=flight_schedule_collectives.arr_city_code and (flight_schedule_collectives.dep_country_code!=? and flight_schedule_collectives.arr_country_code!=?)",@carrier_code,@country_code,@country_code]).group("flight_schedule_collectives.dep_city_code,flight_schedule_collectives.arr_city_code,unique_routes.weekly_flights_count").order("unique_routes.weekly_flights_count desc").limit(30)
+	  airline_int_int_routes =  UniqueRoFute.joins(collectives_symbol).where(["#{collecitves}.carrier_code=? and #{collecitves}.dep_city_code!=#{collecitves}.arr_city_code and (#{collecitves}.dep_country_code!=? and #{collecitves}.arr_country_code!=?)",@carrier_code,@country_code,@country_code]).group("#{collecitves}.dep_city_code,#{collecitves}.arr_city_code,unique_routes.weekly_flights_count").order("unique_routes.weekly_flights_count desc").limit(30)
 		  popular_routes = {"dom_dom" => [],
 		  									"dom_int" => [],
 		  								  "int_int" => []}

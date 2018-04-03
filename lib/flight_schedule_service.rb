@@ -3,7 +3,7 @@ require 'net/http'
 
 class FlightScheduleService
 	def initialize(args={})
-	    @dep_city_code = args[:dep_city_code]
+	    @dep_city_code = args[:dep_city_code] || args[:city_code]
 	    @arr_city_code = args[:arr_city_code]
 	    @dep_city_name = args[:dep_city_name]
 	    @arr_city_name = args[:arr_city_name]
@@ -18,6 +18,7 @@ class FlightScheduleService
     end
 
     def schedule_airline_values
+      I18n.locale = @language.to_sym
     	route_values = {}
     	dep_city_name_formated = url_escape(@dep_city_name) rescue ""
     	arr_city_name_formated = url_escape(@arr_city_name) rescue ""
@@ -118,17 +119,24 @@ class FlightScheduleService
       more_routes =  {}
   		more_routes["dep_more_routes"] = UniqueRoute.where(dep_city_code: @dep_city_code).where.not(arr_city_code: @arr_city_code).order("weekly_flights_count desc").pluck(:arr_city_name).uniq.take(30)
   		more_routes["arr_more_routes"] = UniqueRoute.where(arr_city_code: @arr_city_code).where.not(dep_city_code: @dep_city_code).order("weekly_flights_count desc").pluck(:dep_city_name).uniq.take(30)
-  		return more_routes
-      
+      return more_routes
   	end
+
+    def get_more_arabic_routes 
+      more_routes =  {}
+      more_routes["dep_more_routes"] = UniqueRoute.where(dep_city_code: @dep_city_code).where.not(arr_city_code: @arr_city_code).order("weekly_flights_count desc").pluck(:arr_city_code).uniq.take(30).map{|city_code| CityName.find_by(city_code: city_code) rescue "" }
+      more_routes["arr_more_routes"] = UniqueRoute.where(arr_city_code: @arr_city_code).where.not(dep_city_code: @dep_city_code).order("weekly_flights_count desc").pluck(:dep_city_code).uniq.take(30).map{|city_code| CityName.find_by(city_code: city_code) rescue "" }
+      return more_routes
+    end
     def schedule_values(schedule_routes)
-     
+      I18n.locale = @language.to_sym
       weekly_flights = PackageFlightSchedule.where(dep_city_code: @route.dep_city_code,arr_city_code: @route.arr_city_code).pluck(:carrier_code)
       weekly_airlines_count = weekly_flights.each_with_object(Hash.new(0)) {|k,v| v[k]+= 1}
-      weekly_airlines_count = weekly_airlines_count.map{|k,v| I18n.t("airlines.#{k}") +"has #{v}"}.to_sentence
+      weekly_airlines_count = weekly_airlines_count.map{|k,v| I18n.t("airlines.#{k}") +"#{I18n.t('has')} #{v}"}.to_sentence
       weekly_flights_count = weekly_flights.count
+      lang_city_name = "city_name_#{@language.downcase}"
       # airline_count_list = weekly_flights.map{}
-      more_routes = get_more_routes
+      more_routes = @language == "en" ? get_more_routes : get_more_arabic_routes
       min_pr = min_price_new_changes(@dep_city_code,@arr_city_code)
       schedule_routes_with_price = []
       schedule_routes.each do |route|
@@ -148,7 +156,10 @@ class FlightScheduleService
       schedule_layout_values["schedule_routes"] = schedule_routes_with_price
       schedule_layout_values["dep_city_name"] = @route.dep_city_name
       schedule_layout_values["arr_city_name"] = @route.arr_city_name
-      schedule_layout_values["dep_city_name_formated"] = schedule_airline_values["dep_city_name_formated"]
+      schedule_layout_values["dep_city_name_#{@language.downcase}"] = CityName.find_by(city_code: @dep_city_code).send(lang_city_name)
+      schedule_layout_values["arr_city_name_#{@language.downcase}"] = CityName.find_by(city_code: @dep_city_code).send(lang_city_name)
+
+      schedule_layout_values["dep_city_name_formated`"] = schedule_airline_values["dep_city_name_formated"]
       schedule_layout_values["arr_city_name_formated"] = schedule_airline_values["arr_city_name_formated"]
       schedule_layout_values["arr_city_name"] = @route.arr_city_name
       schedule_layout_values["dep_city_code"] = @route.dep_city_code
@@ -222,36 +233,53 @@ class FlightScheduleService
     end
     def schedule_footer
         #Foooter links randamization code
-        footer_links = Footer.where(city_code: @dep_city_code)
-
-        if footer_links.present?
-          footer_links = footer_links.first
-          if footer_links.total_routes_count > 10
-            current_index =  footer_links.current_routes_count
-            if current_index == 0
-              footer_links.update(current_routes_count: current_index+1)
-            else
-              footer_links.update(current_routes_count: current_index+10)
-            end
-            if footer_links.current_routes_count <= footer_links.total_routes_count
-              if footer_links.current_routes_count == 0 || footer_links.total_routes_count <=10 || footer_links.current_routes_count <= 10
-                footer_links_data = eval(footer_links.routes_data).first(10)
+         footer_links = Footer.where(city_code: @dep_city_code)
+           if footer_links.present?
+            footer_links = footer_links.first
+            if footer_links.total_routes_count > 10
+              current_index =  footer_links.current_routes_count
+              if current_index == 0
+                footer_links.update(current_routes_count: current_index+1)
               else
-                footer_links_data = eval(footer_links.routes_data).drop(footer_links.current_routes_count-10).first(10)
+                footer_links.update(current_routes_count: current_index+10)
+              end
+              if footer_links.current_routes_count <= footer_links.total_routes_count
+                if footer_links.current_routes_count == 0 || footer_links.total_routes_count <=10 || footer_links.current_routes_count <= 10
+                  footer_links_data = eval(footer_links.routes_data).first(10)
+                  footer_links_data_ar = eval(footer_links.routes_data_ar).first(10)
+                else
+                  footer_links_data = eval(footer_links.routes_data).drop(footer_links.current_routes_count-10).first(10)
+                  footer_links_data_ar = eval(footer_links.routes_data_ar).drop(footer_links.current_routes_count-10).first(10)
+                end
+              else
+                footer_links.update(current_routes_count: 0)
+                footer_links_data = eval(footer_links.routes_data).first(10)
+                footer_links_data_ar = eval(footer_links.routes_data_ar).first(10)
+
               end
             else
-              footer_links.update(current_routes_count: 0)
-              footer_links_data = eval(footer_links.routes_data).first(10)
+              footer_links_data = eval(footer_links.routes_data)
+              footer_links_data_ar = eval(footer_links.routes_data_ar)
             end
-          else
-            footer_links_data = eval(footer_links.routes_data)
+            if footer_links_data.count < 5
+              footer_links_data = eval(footer_links.routes_data).first(10)
+              footer_links_data_ar = eval(footer_links.routes_data_ar).first(10)
+            end
+            footer_links_data_arabic =[]
+            if footer_links_data_ar.count == footer_links_data.count
+              footer_links_data.each_with_index  do |u,index|
+                if u[:arr_city_name].present? && u[:dep_city_name].present?
+                  url ="#{url_escape(u[:dep_city_name])}-#{url_escape(u[:arr_city_name])}-flights.html"
+                  arabic_cities =footer_links_data_ar[index]
+                  footer_links_data_arabic.push({dep_city_name:arabic_cities[:dep_city_name],arr_city_name:arabic_cities[:arr_city_name],url:url}) if arabic_cities.present?
+                end
+              end
+            end
           end
-        end
-
         dom_airlines = AirlineBrand.where(country_code: @country_code).order("brand_routes_count desc").limit(8).pluck(:carrier_code).uniq
         int_airlines = AirlineBrand.where.not(country_code: @country_code).order("brand_routes_count desc").limit(8).pluck(:carrier_code).uniq
         #Ending of footer randamization code
-        return {footer_links_data: footer_links_data,dom_airlines: dom_airlines,int_airlines: int_airlines}
+        return {footer_links_data: footer_links_data,footer_links_data_arabic: footer_links_data_arabic,dom_airlines: dom_airlines,int_airlines: int_airlines}
     end
 
   def from_to_values(city_code,section)
@@ -355,12 +383,13 @@ class FlightScheduleService
     city_layout_values["hotels_rhs_list"] = city_layout_values["hotels_list"].values_at(* city_layout_values["hotels_list"].each_index.select {|h| h.odd?})
     city_layout_values["city_name_formated"] = url_escape(city_name) rescue ""
     lan_city_name = "city_name_#{@language.downcase}"
+    country_schedule_model = "#{@country_code.titleize}FlightScheduleCollective".constantize
     sections = ["dom","int"]
     sections.each do |section| 
       query_type = section === "dom" ? "in (?)" : " not in (?) " 
       country_type = section === "dom" ? "country_code=?" : "country_code!=?"
       country_section = section === "dom" ? "(dep_country_code='#{country_code}' and arr_country_code='#{country_code}')" : "NOT(dep_country_code='#{country_code}' and arr_country_code='#{country_code}')"
-      top_airlines = FlightScheduleCollective.where("#{city_section}_city_code='#{city_code}' and #{other_section}_city_code!='#{city_code}' and  carrier_code #{query_type} and #{country_section}",@domestic_carrier_codes).group("#{other_section}_city_code")
+      top_airlines = country_schedule_model.where("#{city_section}_city_code='#{city_code}' and #{other_section}_city_code!='#{city_code}' and  carrier_code #{query_type} and #{country_section}",@domestic_carrier_codes).group("#{other_section}_city_code")
       city_layout_values["major_#{section}_sectors"] = top_airlines.first(3).map{|r| city_section=="from" ? CityName.find_by(city_code: r.arr_city_code).send(lan_city_name)  : CityName.find_by(city_code: r.dep_city_code).send(lan_city_name) } rescue ""
       top_airlines_cc = top_airlines.map(&:carrier_code).uniq
       city_layout_values["#{section}_airlines_count"] = top_airlines_cc.count

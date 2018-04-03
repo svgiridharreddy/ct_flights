@@ -31,7 +31,7 @@
 
 en:
   brand: 
-    
+  has: "has"
   button:
     book: "Book Now"
   breadcrumb:
@@ -62,6 +62,7 @@ en:
     breadcrumb_second_intl: "International Flight Schedules"
     breadcrumb_title: "%{dep_city_name} %{arr_city_name} Flight Schedule"
     header_1: "%{dep_city_name} (%{dep_city_code}) to %{arr_city_name} (%{arr_city_code}) Flights"
+    
     top_dom_airlines: "Top Domestic Airlines From"
     top_int_airlines: "Top International Airlines From"
     faq_new_changes_ques1: "Is it true that %{airline_name} takes less time on a direct %{dep_city_name} to %{arr_city_name} flight than other airlines?"

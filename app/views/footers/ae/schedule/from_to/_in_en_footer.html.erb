@@ -1,4 +1,4 @@
-
+<% city_name_formated = city_layout_values["city_name_formated"]%>
   <div>
     <div class="container-fluid">
       <div class="sixteen columns alpha">
@@ -100,7 +100,7 @@
           </a>
         </li>
         
-        <% if flights_header["arr_city_package"] == true %>
+        <% if city_layout_values["arr_city_package"] === "yes" %>
           <li>
             <a href="http://www.cleartrip.com/tourism/packages/<%= city_name_formated %>" title="<%= city_name %> Holiday Packages">
               <%= city_name %> Holiday Packages
@@ -108,7 +108,7 @@
           </li>
         <% end %>
         
-        <% if flights_header["arr_city_things_to_do"] == true %>
+        <% if city_layout_values["arr_city_things_todo"] == true %>
           <li>
             <a href="https://www.cleartrip.com/local/<%= city_name_formated %>/things-to-do-in-<%= arr_city_name.downcase %>" title="Things to do in <%= city_name %>">
              Things to do in <%= city_name %>
@@ -116,7 +116,7 @@
           </li>
         <% end %>
         
-        <% if flights_header["arr_city_weekend_gateway"] == true %>
+        <% if city_layout_values["arr_city_weekend_getaway"] == true %>
           <li>
             <a href="https://www.cleartrip.com/hotels/india/<%= city_name_formated %>/weekend-getaways/" title="Long weekend getaways from <%= city_name %>">
              Long weekend getaways from <%= city_name %>

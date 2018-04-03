@@ -3,19 +3,33 @@ class FlightSchedulesController < ApplicationController
 	def schedule_values
 		domain = request.domain
 		path = "#{request.fullpath}"
-		
 		url = params[:route].gsub("-flights","")
 		@application_processor = ApplicationProcessor.new
 		@country_code = @application_processor.host_country_code(domain)[0]
 		@country_name = @application_processor.host_country_code(domain)[1]
 		@language = params[:lang].nil? ? 'en' : params[:lang]
+
+		check_domain = check_domain(@language,@country_code)
+		if check_domain
+			host_name = @application_processor.host_name(@country_code)
+			lang = @language == "en" ? "" : "#{@language}"
+			if @country_code == "IN"
+					redirect_to "#{host_name}/flight-schedule/flight-schedules-domestic.html" and return
+			else
+				redirect_to "#{host_name}/#{lang}/flight-schedule/flight-schedules-domestic.html" and return
+			end
+		end
 		if path.include?("flights-from") || path.include?("flights-to")
 			get_from_to(path)
 			return
 		end
 		@route = UniqueRoute.find_by(schedule_route_url: url)
-		@dep_city_name  = CityName.find_by(city_code: @route.dep_city_code).city_name_en.titleize
-		@arr_city_name = CityName.find_by(city_code: @route.arr_city_code).city_name_en.titleize
+		dep_city = CityName.find_by(city_code: @route.dep_city_code)
+		arr_city = CityName.find_by(city_code: @route.arr_city_code)
+		@dep_city_name  = dep_city.city_name_en.titleize
+		@arr_city_name = arr_city.city_name_en.titleize
+		@dep_city_name_ar  = dep_city.city_name_ar.titleize
+		@arr_city_name_ar = arr_city.city_name_ar.titleize
 		# @route_type = @route.hop == 0 ? "non-stop" : "hop"
 		# binding.pry
 		@route_type = "non-stop"
@@ -39,7 +53,7 @@ class FlightSchedulesController < ApplicationController
 												:route_type => @route_type,
 												:country_name => @country_name }
 		flight_schedule_service = FlightScheduleService.new @route_details	 
-		@schedule_footer = flight_schedule_service.schedule_footer
+		schedule_footer = flight_schedule_service.schedule_footer
 		@domestic_carrier_codes = AirlineBrand.where(country_code: @country_code).pluck("distinct(carrier_code)")
 		@all_carrier_codes = AirlineBrand.all.pluck(:carrier_code)
 
@@ -48,15 +62,32 @@ class FlightSchedulesController < ApplicationController
     else
       inc_cc =  "carrier_code in ('#{@all_carrier_codes.join("\',\'")}')"
     end
-		@schedule_routes = @route.flight_schedule_collectives.where("#{inc_cc}").order("dep_time asc").limit(10)
+    case @country_code
+    when  "IN"
+    	@schedule_routes = @route.in_flight_schedule_collectives.where("#{inc_cc}").order("dep_time asc").limit(10)
+    when  "AE"
+    	@schedule_routes = @route.ae_flight_schedule_collectives.where("#{inc_cc}").order("dep_time asc").limit(10)
+    when  "SA"
+    	@schedule_routes = @route.sa_flight_schedule_collectives.where("#{inc_cc}").order("dep_time asc").limit(10)
+    when  "BH"
+    	@schedule_routes = @route.bh_flight_schedule_collectives.where("#{inc_cc}").order("dep_time asc").limit(10)
+    when  "QA"
+    	@schedule_routes = @route.qa_flight_schedule_collectives.where("#{inc_cc}").order("dep_time asc").limit(10)
+    when  "KW"
+    	@schedule_routes = @route.kw_flight_schedule_collectives.where("#{inc_cc}").order("dep_time asc").limit(10)
+    when  "OM"
+    	@schedule_routes = @route.om_flight_schedule_collectives.where("#{inc_cc}").order("dep_time asc").limit(10)
+    else
+    	@schedule_routes = @route.in_flight_schedule_collectives.where("#{inc_cc}").order("dep_time asc").limit(10)
+    end
 		header_values = flight_schedule_service.schedule_header_details
 		schedule_layout_values = flight_schedule_service.schedule_values(@schedule_routes)
 		if @section.include? ("dom") 
-			partial = "flight_schedule_routes/#{@language}/flight_schedule_dom_#{@language.downcase}_#{@country_code.downcase}"
+			partial = "schedules/routes/#{@language}/flight_schedule_dom_#{@language.downcase}_#{@country_code.downcase}"
 		else
-			partial = "flight_schedule_routes/#{@language}/flight_schedule_int_#{@language.downcase}_#{@country_code.downcase}"
+			partial = "schedules/routes/#{@language}/flight_schedule_int_#{@language.downcase}_#{@country_code.downcase}"
 		end
-		render  partial,locals: {schedule_layout_values: schedule_layout_values,dep_city_name: @dep_city_name,arr_city_name: @arr_city_name,dep_city_code: @route.dep_city_code,arr_city_code: @route.arr_city_code,schedule_header: header_values,schedule_footer: @schedule_footer }
+		render  partial,locals: {schedule_layout_values: schedule_layout_values,dep_city_name: @dep_city_name,arr_city_name: @arr_city_name,dep_city_name_ar: @dep_city_name_ar,arr_city_name_ar: @arr_city_name_ar,dep_city_code: @route.dep_city_code,arr_city_code: @route.arr_city_code,schedule_header: header_values,schedule_footer: schedule_footer }
 	end
 
 	def get_from_to(path)
@@ -68,12 +99,15 @@ class FlightSchedulesController < ApplicationController
 		file_name = path.split("/")[2]
 		@values = {country_code: @country_code,
 							 country_name: @country_name,
-							 language: @language
+							 language: @language,
+							 city_code: @city_code
 							}
 		host = @application_processor.host_name(@country_code)
 		flight_schedule_service = FlightScheduleService.new @values
 		from_to_values = flight_schedule_service.from_to_values(@city_code,@city_section)
 		city_layout_values = flight_schedule_service.city_layout_values(@city_code, @city_section,@city_name)
+		schedule_footer = flight_schedule_service.schedule_footer
+
 		if @city_section === "from"
 			partial = "schedules/from_to/#{@language}/from_city_#{@country_code.downcase}_#{@language.downcase}"
 			
@@ -81,7 +115,22 @@ class FlightSchedulesController < ApplicationController
 			partial = "schedules/from_to/#{@language}/to_city_#{@country_code.downcase}_#{@language.downcase}"
 			
 		end
-		render partial, locals: {popular_routes: from_to_values,application_processor: @application_processor,page_type: "flight-schedule",first_file_name: file_name,city_layout_values: city_layout_values,host: host,schedule_footer: @schedule_footer}
+		render partial, locals: {popular_routes: from_to_values,application_processor: @application_processor,page_type: "flight-schedule",first_file_name: file_name,city_layout_values: city_layout_values,host: host,schedule_footer: schedule_footer}
+	end
+
+	def check_domain(language,country_code)
+		country_codes = ["AE","SA","BH","QA","KW","OM"]
+		if language=="ar" && country_code=="IN"
+			return true
+		elsif language=="hi" && country_codes.include?(country_code)
+			if country_code=="AE" || country_code=="SA"
+				return true
+			else
+				return true
+			end
+		else
+			return false
+		end
 	end
 end
 
