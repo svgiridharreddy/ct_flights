@@ -1,7 +1,7 @@
 
 <p>Planning is of the essence when traveling for business or leisure. When traveling from <%= city_name %>, outlining your trip in advance will ensure a smooth traveling experience. Find out everything you need to know about booking your flight from <%= city_name %>.</p>
 <% if city_layout_values["dom_route_count"].present? && city_layout_values["dom_route_count"]!=0 %>
-<p>Flights depart from <%= city_layout_values["airport_name"]%>. The IATA code for this airport is <%= city_layout_values["airport_code"] %>.</p>
+<p>Flights depart from <%= city_layout_values["airport_name"] %>. The IATA code for this airport is <%= city_layout_values["airport_code"] %>.</p>
 <p>Flights from <%= city_layout_values["airport_name"]%> connect to <%= city_layout_values["dom_route_count"] %> domestic cities in the country. About <%= city_layout_values["dom_airlines_count"] %> domestic airlines depart from <%= city_layout_values["city_name"] %>. The major airlines include <%= city_layout_values["city_dom_airlines"] %>. A total of <%= city_layout_values["flight_count"] %> domestic flights fly from <%= city_layout_values["city_name"] %>. <%= city_layout_values["dom_first_airline"] %> is the first flight, departing at <%= city_layout_values["dom_first_dep_time"] %> and <%= city_layout_values["dom_last_airline"] %> is the last one, departing at <%= city_layout_values["dom_last_dep_time"] %>.</p>
 <% end %>
 <% if city_layout_values["int_route_count"].present? && city_layout_values["int_route_count"]!=0 %>

@@ -300,8 +300,10 @@ class FlightScheduleService
           "dep_city_name"=> pfs_data.dep_city_name,
           "dep_airport_code"=> pfs_data.dep_airport_code,
           "dep_city_code"=> pfs_data.dep_city_code,
+          "dep_city_name_ar" => CityName.find_by(city_code: pfs_data.dep_city_code).city_name_ar,
           "dep_country_code"=> pfs_data.dep_country_code,
           "arr_city_name"=> pfs_data.arr_city_name,
+          "arr_city_name_ar" => CityName.find_by(city_code: pfs_data.arr_city_code).city_name_ar,
           "arr_city_code"=> pfs_data.arr_city_code,
           "dep_time"=> Time.parse(pfs_data.dep_time[0...8]).strftime("%0l:%M %p"),
           "arr_time"=> Time.parse(pfs_data.arr_time[0...8]).strftime("%0l:%M %p"),
@@ -327,9 +329,11 @@ class FlightScheduleService
           "dep_city_name"=> pfs_data.dep_city_name,
           "dep_airport_code"=> pfs_data.dep_airport_code,
           "dep_city_code"=> pfs_data.dep_city_code,
+          "dep_city_name_ar" => CityName.find_by(city_code: pfs_data.dep_city_code).city_name_ar,
           "dep_country_code"=> pfs_data.dep_country_code,
           "arr_city_name"=> pfs_data.arr_city_name,
           "arr_city_code"=> pfs_data.arr_city_code,
+          "arr_city_name_ar" => CityName.find_by(city_code: pfs_data.arr_city_code).city_name_ar,
           "arr_airport_code"=> pfs_data.arr_airport_code,
           "arr_country_code"=> pfs_data.arr_country_code,
           "dep_time"=> Time.parse(pfs_data.dep_time[0...8]).strftime("%0l:%M %p"),
@@ -357,6 +361,7 @@ class FlightScheduleService
     end
     city_section = section == "from" ? "dep" : "arr"
     city_layout_values = {}
+    
     airport = Airport.find_by({:city_code=> city_code})
     city_layout_values["dom_airlines"] = schedule_airline_values["top_dom_airlines"]
     city_layout_values["int_airlines"] = schedule_airline_values["top_int_airlines"]

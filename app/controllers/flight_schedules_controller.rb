@@ -82,32 +82,29 @@ class FlightSchedulesController < ApplicationController
     end
 		header_values = flight_schedule_service.schedule_header_details
 		schedule_layout_values = flight_schedule_service.schedule_values(@schedule_routes)
-		if @section.include? ("dom") 
-			partial = "schedules/routes/#{@language}/flight_schedule_dom_#{@language.downcase}_#{@country_code.downcase}"
-		else
-			partial = "schedules/routes/#{@language}/flight_schedule_int_#{@language.downcase}_#{@country_code.downcase}"
-		end
+		partial = "schedules/routes/#{@language}/flight_schedule_#{@section[3..5]}_#{@language.downcase}_#{@country_code.downcase}"
 		render  partial,locals: {schedule_layout_values: schedule_layout_values,dep_city_name: @dep_city_name,arr_city_name: @arr_city_name,dep_city_name_ar: @dep_city_name_ar,arr_city_name_ar: @arr_city_name_ar,dep_city_code: @route.dep_city_code,arr_city_code: @route.arr_city_code,schedule_header: header_values,schedule_footer: schedule_footer }
 	end
 
 	def get_from_to(path)
 		@city_section = path.include?("from") ? "from" : "to"
-		@city_name = path.gsub("/flight-schedule/flights-#{@city_section}-",'').gsub('.html','').gsub('-','').titleize
+		lang= @language=="ar" ? "/ar" : ""
+		@city_name = path.gsub("#{lang}/flight-schedule/flights-#{@city_section}-",'').gsub('.html','').gsub('-','').titleize
 		city = UniqueRoute.find_by(dep_city_name: @city_name)
 		@city_code = city.dep_city_code
+		@city_name_ar = CityName.find_by(city_code: @city_code).city_name_ar
 		@city_country_code = city.dep_country_code
 		file_name = path.split("/")[2]
-		@values = {country_code: @country_code,
-							 country_name: @country_name,
-							 language: @language,
-							 city_code: @city_code
+		@values = { country_code: @country_code,
+							  country_name: @country_name,
+							  language: @language,
+							  city_code: @city_code
 							}
 		host = @application_processor.host_name(@country_code)
 		flight_schedule_service = FlightScheduleService.new @values
 		from_to_values = flight_schedule_service.from_to_values(@city_code,@city_section)
 		city_layout_values = flight_schedule_service.city_layout_values(@city_code, @city_section,@city_name)
 		schedule_footer = flight_schedule_service.schedule_footer
-
 		if @city_section === "from"
 			partial = "schedules/from_to/#{@language}/from_city_#{@country_code.downcase}_#{@language.downcase}"
 			

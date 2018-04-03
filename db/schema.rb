@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180403063126) do
+ActiveRecord::Schema.define(version: 20180403100327) do
 
   create_table "ae_airline_contents", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "carrier_code"
@@ -47,6 +47,17 @@ ActiveRecord::Schema.define(version: 20180403063126) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["unique_route_id"], name: "index_ae_flight_schedule_collectives_on_unique_route_id"
+  end
+
+  create_table "ae_from_to_contents", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string "city_code"
+    t.text "en_from_content"
+    t.text "en_to_content"
+    t.text "ar_from_content"
+    t.text "ar_to_content"
+    t.string "city_name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "airline_brand_collectives", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
@@ -174,6 +185,17 @@ ActiveRecord::Schema.define(version: 20180403063126) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["unique_route_id"], name: "index_bh_flight_schedule_collectives_on_unique_route_id"
+  end
+
+  create_table "bh_from_to_contents", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string "city_code"
+    t.text "en_from_content"
+    t.text "en_to_content"
+    t.text "ar_from_content"
+    t.text "ar_to_content"
+    t.string "city_name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "city_contents", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
@@ -411,6 +433,17 @@ ActiveRecord::Schema.define(version: 20180403063126) do
     t.index ["unique_route_id"], name: "index_kw_flight_schedule_collectives_on_unique_route_id"
   end
 
+  create_table "kw_from_to_contents", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string "city_code"
+    t.text "en_from_content"
+    t.text "en_to_content"
+    t.text "ar_from_content"
+    t.text "ar_to_content"
+    t.string "city_name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "om_airline_contents", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "carrier_code"
     t.string "carrier_name"
@@ -451,6 +484,17 @@ ActiveRecord::Schema.define(version: 20180403063126) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["unique_route_id"], name: "index_om_flight_schedule_collectives_on_unique_route_id"
+  end
+
+  create_table "om_from_to_contents", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string "city_code"
+    t.text "en_from_content"
+    t.text "en_to_content"
+    t.text "ar_from_content"
+    t.text "ar_to_content"
+    t.string "city_name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "package_flight_schedules", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
@@ -529,6 +573,17 @@ ActiveRecord::Schema.define(version: 20180403063126) do
     t.index ["unique_route_id"], name: "index_qa_flight_schedule_collectives_on_unique_route_id"
   end
 
+  create_table "qa_from_to_contents", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string "city_code"
+    t.text "en_from_content"
+    t.text "en_to_content"
+    t.text "ar_from_content"
+    t.text "ar_to_content"
+    t.string "city_name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "sa_airline_contents", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "carrier_code"
     t.string "carrier_name"
@@ -569,6 +624,17 @@ ActiveRecord::Schema.define(version: 20180403063126) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["unique_route_id"], name: "index_sa_flight_schedule_collectives_on_unique_route_id"
+  end
+
+  create_table "sa_from_to_contents", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string "city_code"
+    t.text "en_from_content"
+    t.text "en_to_content"
+    t.text "ar_from_content"
+    t.text "ar_to_content"
+    t.string "city_name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "unique_routes", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
