@@ -373,7 +373,7 @@ class FlightScheduleService
     city_layout_values['airport_web'] = airport.website
     model_name = "#{country_code.titleize}FromToContent".constantize
     city_content = model_name.find_by(city_code: city_code)
-    city_layout_values["city_#{section}_content"] = city_content.send("#{@language.downcase}_#{section}_content")
+    city_layout_values["city_#{section}_content"] = city_content.send("#{@language.downcase}_#{section}_content") rescue ""
     header_record = Header.find_by(arr_city_code: city_code)
     city_layout_values["arr_city_event"] = header_record.arr_city_event rescue ""
     city_layout_values["arr_city_weekend_getaway"]= header_record.arr_city_weekend_getaway rescue ""
