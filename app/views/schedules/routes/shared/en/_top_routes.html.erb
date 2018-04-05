@@ -5,7 +5,7 @@
 	<ul class="linklist list-inline">
 		<% flights_dep.each do |city_name|%>
 		
-		<li><a href="/flight-schedule/<%=dep_city_name%>-<%= url_escape(city_name)%>-flights.html" title="<%= dep_city_name %> <%= city_name %> Flights"><%= dep_city_name %> <%= city_name %> <%= t('flights.flights')%></a></li>
+		<li><a href="/flight-schedule/<%=url_escape(dep_city_name)%>-<%= url_escape(city_name)%>-flights.html" title="<%= dep_city_name %> <%= city_name %> Flights"><%= dep_city_name %> <%= city_name %> <%= t('flights.flights')%></a></li>
 		<% end %>
 	</ul>
 	<p class="more_link">
@@ -19,7 +19,7 @@
 	</h2>
 	<ul class="linklist list-inline">
 		<% flights_arr.each do |city_name|%>
-		<li><a href="/flight-schedule/<%=url_escape(city_name)%>-<%= arr_city_name%>-flights.html" title="<%= city_name %> <%= arr_city_name %> Flights"><%= city_name %> <%= arr_city_name %> <%= t('flights.flights')%></a></li>
+		<li><a href="/flight-schedule/<%=url_escape(city_name)%>-<%= url_escape(arr_city_name)%>-flights.html" title="<%= city_name %> <%= arr_city_name %> Flights"><%= city_name %> <%= arr_city_name %> <%= t('flights.flights')%></a></li>
 		<% end %>
 	</ul>
 	<p class="more_link">
