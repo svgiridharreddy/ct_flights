@@ -1,0 +1,285 @@
+# description for title in every page
+flight-schedule:
+  in_dom:
+    en:
+      title_without_price: "%{dep_city_name}  to  %{arr_city_name}  Flights,books tickets at discounted rates on cleartrip."
+      title_with_price: "%{dep_city_name}  to  %{arr_city_name}  Flights,Airfares @ ₹  %{price}  + ₹ 3000 cashback - cleartrip"
+      description: "Find the best deal for %{dep_city_name} to %{arr_city_name} flights on Cleartrip. Use Coupon code - PAYLESS & get amazing discounts on the flights from %{dep_city_name} to %{arr_city_name}. Hurry Now!"
+      keywords: "%{dep_city_name} %{arr_city_name} flights, cheap %{dep_city_name} %{arr_city_name} flight , flights from %{dep_city_name} to %{arr_city_name}, %{dep_city_name} %{arr_city_name} flights booking, schedule flights from %{dep_city_name} to %{arr_city_name} flights, %{dep_city_name} %{arr_city_name} flights schedule"
+    hi:
+      title_without_price: "%{dep_city_name}  to  %{arr_city_name}  Flights,books tickets at discounted rates on cleartrip."
+      title_with_price: "%{dep_city_name}  to  %{arr_city_name}  Flights,Airfares @ ₹  %{price}  + ₹ 3000 cashback - cleartrip"
+      description: "Find the best deal for %{dep_city_name} to %{arr_city_name} flights on Cleartrip. Use Coupon code - FLIGHT & get amazing discounts on the flights from %{dep_city_name} to %{arr_city_name}. Hurry Now!"
+      keywords: "%{dep_city_name} %{arr_city_name} flights, cheap %{dep_city_name} %{arr_city_name} flight , flights from %{dep_city_name} to %{arr_city_name}, %{dep_city_name} %{arr_city_name} flights booking, schedule flights from %{dep_city_name} to %{arr_city_name} flights, %{dep_city_name} %{arr_city_name} flights schedule"
+  in_int:  
+    en:
+      title_without_price: "%{dep_city_name}  to  %{arr_city_name}  Flights,books tickets at discounted rates on cleartrip."
+      title_with_price: "%{dep_city_name}  to  %{arr_city_name}  Flights,Airfares @ ₹  %{price}  + ₹ 17,500 cashback - cleartrip"
+      description: "Find the best deal for %{dep_city_name} to %{arr_city_name} flights on Cleartrip. Use Coupon code - FLIGHT & get amazing discounts on the flights from %{dep_city_name} to %{arr_city_name}. Hurry Now!"
+      keywords:  "%{dep_city_name} %{arr_city_name} flights, cheap %{dep_city_name} %{arr_city_name} flight , flights from %{dep_city_name} to %{arr_city_name}, %{dep_city_name} %{arr_city_name} flights booking, schedule flights from %{dep_city_name} to %{arr_city_name} flights, %{dep_city_name} %{arr_city_name} flights schedule"
+    hi:
+      title_without_price: "%{dep_city_name}  to  %{arr_city_name}  Flights,books tickets at discounted rates on cleartrip."
+      title_with_price: "%{dep_city_name}  to  %{arr_city_name}  Flights,Airfares @ ₹  %{price}  + ₹ 17,500 cashback - cleartrip"
+      description: "Find the best deal for %{dep_city_name} to %{arr_city_name} flights on Cleartrip. Use Coupon code - FLIGHT & get amazing discounts on the flights from %{dep_city_name} to %{arr_city_name}. Hurry Now!"
+      keywords:  "%{dep_city_name} %{arr_city_name} flights, cheap %{dep_city_name} %{arr_city_name} flight , flights from %{dep_city_name} to %{arr_city_name}, %{dep_city_name} %{arr_city_name} flights booking, schedule flights from %{dep_city_name} to %{arr_city_name} flights, %{dep_city_name} %{arr_city_name} flights schedule"
+  ae_dom:
+    en:
+      title_without_price: "%{dep_city_name}  to  %{arr_city_name}  Flights,books tickets at discounted rates on cleartrip."
+      title_with_price: "%{dep_city_name} to %{arr_city_name} Flights, Airfares @ AED %{price} + AED 150 off – Cleartrip"
+      description: "Find the best deal for %{dep_city_name} to %{arr_city_name} flights on Cleartrip. Use Coupon code - FLIGHT & get amazing discounts on the flights from %{dep_city_name} to %{arr_city_name}. Hurry Now!"
+      keywords: "%{dep_city_name} %{arr_city_name} flights, cheap %{dep_city_name} %{arr_city_name} flight , flights from %{dep_city_name} to %{arr_city_name}, %{dep_city_name} %{arr_city_name} flights booking, schedule flights from %{dep_city_name} to %{arr_city_name} flights, %{dep_city_name} %{arr_city_name} flights schedule"
+    ar: 
+      title_without_price: "%{dep_city_name} إلى %{arr_city_name} رحلات، حجز التذاكر بأسعار مخفضة على Cleartrip"
+      title_with_price: "%{dep_city_name} إلى %{arr_city_name} رحلات, اسعار الرحلات الجوية @ AED %{price} + AED 1000 استرداد النقود – Cleartrip"
+      description: "رحلات %{dep_city_name} إلى %{arr_city_name} رخيصة - يقدم %{host} أفضل العروض على %{dep_city_name} إلى %{arr_city_name} حجز الرحلة. تفقد لائحة رحلة%{dep_city_name} إلى %{arr_city_name} هنا وأحجز الآن. سهلة، سريعة وموثوق بها"
+      keywords: "الرحلات الجوية من %{dep_city_name} إلى  %{arr_city_name}، رحلة رخيصة من%{dep_city_name}  إلى %{arr_city_name} ، والرحلات الجوية من %{dep_city_name} إلى %{arr_city_name}، وحجز الرحلات الجوية من %{dep_city_name} إلى %{arr_city_name}، الرحلات الجوية من %{dep_city_name} إلى %{arr_city_name}، مواعيد الرحلات الجوية من %{dep_city_name} إلى %{arr_city_name}، الرحلات الجوية من %{dep_city_name} إلى %{arr_city_name}، حجز الرحلات الجوية من %{dep_city_name} إلى %{arr_city_name}، مواعيد الرحلات الجوية من %{dep_city_name} إلى %{arr_city_name}"
+  ae_int:  
+    en:
+      title_without_price: "%{dep_city_name}  to  %{arr_city_name}  Flights,books tickets at discounted rates on cleartrip."
+      title_with_price: "%{dep_city_name} to %{arr_city_name} Flights, Airfares @ AED %{price} + AED 1000 off – Cleartrip"
+      description: ""
+      keywords: "%{dep_city_name} %{arr_city_name} flights, cheap %{dep_city_name} %{arr_city_name} flight , flights from %{dep_city_name} to %{arr_city_name}, %{dep_city_name} %{arr_city_name} flights booking, schedule flights from %{dep_city_name} to %{arr_city_name} flights, %{dep_city_name} %{arr_city_name} flights schedule"
+    ar: 
+      title_without_price: "%{dep_city_name} إلى %{arr_city_name} رحلات، حجز التذاكر بأسعار مخفضة على Cleartrip"
+      title_with_price: "%{dep_city_name} إلى %{arr_city_name} رحلات, اسعار الرحلات الجوية @ AED %{price} + AED 1000 استرداد النقود – Cleartrip"
+      description: "رحلات %{dep_city_name} إلى %{arr_city_name} رخيصة - يقدم %{host} أفضل العروض على %{dep_city_name} إلى %{arr_city_name} حجز الرحلة. تفقد لائحة رحلة%{dep_city_name} إلى %{arr_city_name} هنا وأحجز الآن. سهلة، سريعة وموثوق بها"
+      keywords: "الرحلات الجوية من %{dep_city_name} إلى  %{arr_city_name}، رحلة رخيصة من%{dep_city_name}  إلى %{arr_city_name} ، والرحلات الجوية من %{dep_city_name} إلى %{arr_city_name}، وحجز الرحلات الجوية من %{dep_city_name} إلى %{arr_city_name}، الرحلات الجوية من %{dep_city_name} إلى %{arr_city_name}، مواعيد الرحلات الجوية من %{dep_city_name} إلى %{arr_city_name}، الرحلات الجوية من %{dep_city_name} إلى %{arr_city_name}، حجز الرحلات الجوية من %{dep_city_name} إلى %{arr_city_name}، مواعيد الرحلات الجوية من %{dep_city_name} إلى %{arr_city_name}"
+  sa_dom:
+    en:
+      title_without_price: "%{dep_city_name}  to  %{arr_city_name}  Flights,books tickets at discounted rates on cleartrip."
+      title_with_price: "%{dep_city_name} to %{arr_city_name} Flights, Airfares @ SAR %{price} + SAR 700 off – Cleartrip"
+      description: "Find the best deal for %{dep_city_name} to %{arr_city_name} flights on Cleartrip. Use Coupon code - FLIGHT & get amazing discounts on the flights from %{dep_city_name} to %{arr_city_name}. Hurry Now!"
+      keywords: "%{dep_city_name} %{arr_city_name} flights, cheap %{dep_city_name} %{arr_city_name} flight , flights from %{dep_city_name} to %{arr_city_name}, %{dep_city_name} %{arr_city_name} flights booking, schedule flights from %{dep_city_name} to %{arr_city_name} flights, %{dep_city_name} %{arr_city_name} flights schedule"
+    ar: 
+      title_without_price: "%{dep_city_name} إلى %{arr_city_name} رحلات، حجز التذاكر بأسعار مخفضة على Cleartrip"
+      title_with_price: "%{dep_city_name} إلى %{arr_city_name} رحلات, اسعار الرحلات الجوية @ AED %{price} + AED 1000 استرداد النقود – Cleartrip"
+      description: "رحلات %{dep_city_name} إلى %{arr_city_name} رخيصة - يقدم %{host} أفضل العروض على %{dep_city_name} إلى %{arr_city_name} حجز الرحلة. تفقد لائحة رحلة%{dep_city_name} إلى %{arr_city_name} هنا وأحجز الآن. سهلة، سريعة وموثوق بها"
+      keywords: "الرحلات الجوية من %{dep_city_name} إلى  %{arr_city_name}، رحلة رخيصة من%{dep_city_name}  إلى %{arr_city_name} ، والرحلات الجوية من %{dep_city_name} إلى %{arr_city_name}، وحجز الرحلات الجوية من %{dep_city_name} إلى %{arr_city_name}، الرحلات الجوية من %{dep_city_name} إلى %{arr_city_name}، مواعيد الرحلات الجوية من %{dep_city_name} إلى %{arr_city_name}، الرحلات الجوية من %{dep_city_name} إلى %{arr_city_name}، حجز الرحلات الجوية من %{dep_city_name} إلى %{arr_city_name}، مواعيد الرحلات الجوية من %{dep_city_name} إلى %{arr_city_name}"
+  sa_int:  
+    en:
+      title_without_price: "%{dep_city_name}  to  %{arr_city_name}  Flights,books tickets at discounted rates on cleartrip."
+      title_with_price: "%{dep_city_name} to %{arr_city_name} Flights, Airfares @ SAR %{price} + SAR 700 off – Cleartrip"
+      description: "Find the best deal for %{dep_city_name} to %{arr_city_name} flights on Cleartrip. Use Coupon code - FLIGHT & get amazing discounts on the flights from %{dep_city_name} to %{arr_city_name}. Hurry Now!"
+      keywords: "%{dep_city_name} %{arr_city_name} flights, cheap %{dep_city_name} %{arr_city_name} flight , flights from %{dep_city_name} to %{arr_city_name}, %{dep_city_name} %{arr_city_name} flights booking, schedule flights from %{dep_city_name} to %{arr_city_name} flights, %{dep_city_name} %{arr_city_name} flights schedule"
+    ar: 
+      title_without_price: "%{dep_city_name} إلى %{arr_city_name} رحلات، حجز التذاكر بأسعار مخفضة على Cleartrip"
+      title_with_price: "%{dep_city_name} إلى %{arr_city_name} رحلات, اسعار الرحلات الجوية @ SAR %{price} + SAR 700 استرداد النقود – Cleartrip"
+      description: "رحلات %{dep_city_name} إلى %{arr_city_name} رخيصة - يقدم %{host} أفضل العروض على %{dep_city_name} إلى %{arr_city_name} حجز الرحلة. تفقد لائحة رحلة%{dep_city_name} إلى %{arr_city_name} هنا وأحجز الآن. سهلة، سريعة وموثوق بها"
+      keywords: "الرحلات الجوية من %{dep_city_name} إلى  %{arr_city_name}، رحلة رخيصة من%{dep_city_name}  إلى %{arr_city_name} ، والرحلات الجوية من %{dep_city_name} إلى %{arr_city_name}، وحجز الرحلات الجوية من %{dep_city_name} إلى %{arr_city_name}، الرحلات الجوية من %{dep_city_name} إلى %{arr_city_name}، مواعيد الرحلات الجوية من %{dep_city_name} إلى %{arr_city_name}، الرحلات الجوية من %{dep_city_name} إلى %{arr_city_name}، حجز الرحلات الجوية من %{dep_city_name} إلى %{arr_city_name}، مواعيد الرحلات الجوية من %{dep_city_name} إلى %{arr_city_name}"
+  bh_dom:
+    en:
+      title_without_price: "%{dep_city_name}  to  %{arr_city_name}  Flights,books tickets at discounted rates on cleartrip."
+      title_with_price: "%{dep_city_name}  to  %{arr_city_name}  Flights,books tickets at discounted rates on cleartrip."
+      description: "Find the best deal for %{dep_city_name} to %{arr_city_name} flights on Cleartrip. Use Coupon code - FLIGHT & get amazing discounts on the flights from %{dep_city_name} to %{arr_city_name}. Hurry Now!"
+      keywords: "%{dep_city_name} %{arr_city_name} flights, cheap %{dep_city_name} %{arr_city_name} flight , flights from %{dep_city_name} to %{arr_city_name}, %{dep_city_name} %{arr_city_name} flights booking, schedule flights from %{dep_city_name} to %{arr_city_name} flights, %{dep_city_name} %{arr_city_name} flights schedule"
+    ar: 
+      title_without_price: "%{dep_city_name} إلى %{arr_city_name} رحلات، حجز التذاكر بأسعار مخفضة على Cleartrip"
+      title_with_price: "%{dep_city_name} إلى %{arr_city_name} رحلات، حجز التذاكر بأسعار مخفضة على Cleartrip"
+      description: "رحلات %{dep_city_name} إلى %{arr_city_name} رخيصة - يقدم %{host} أفضل العروض على %{dep_city_name} إلى %{arr_city_name} حجز الرحلة. تفقد لائحة رحلة%{dep_city_name} إلى %{arr_city_name} هنا وأحجز الآن. سهلة، سريعة وموثوق بها"
+      keywords: "الرحلات الجوية من %{dep_city_name} إلى  %{arr_city_name}، رحلة رخيصة من%{dep_city_name}  إلى %{arr_city_name} ، والرحلات الجوية من %{dep_city_name} إلى %{arr_city_name}، وحجز الرحلات الجوية من %{dep_city_name} إلى %{arr_city_name}، الرحلات الجوية من %{dep_city_name} إلى %{arr_city_name}، مواعيد الرحلات الجوية من %{dep_city_name} إلى %{arr_city_name}، الرحلات الجوية من %{dep_city_name} إلى %{arr_city_name}، حجز الرحلات الجوية من %{dep_city_name} إلى %{arr_city_name}، مواعيد الرحلات الجوية من %{dep_city_name} إلى %{arr_city_name}"
+  bh_int:  
+    en:
+      title_without_price: "%{dep_city_name}  to  %{arr_city_name}  Flights,books tickets at discounted rates on cleartrip."
+      title_with_price: "%{dep_city_name}   to  %{arr_city_name}  Flights,books tickets at discounted rates on cleartrip."
+      description: "Find the best deal for %{dep_city_name} to %{arr_city_name} flights on Cleartrip. Use Coupon code - FLIGHT & get amazing discounts on the flights from %{dep_city_name} to %{arr_city_name}. Hurry Now!"
+      keywords: "%{dep_city_name} %{arr_city_name} flights, cheap %{dep_city_name} %{arr_city_name} flight , flights from %{dep_city_name} to %{arr_city_name}, %{dep_city_name} %{arr_city_name} flights booking, schedule flights from %{dep_city_name} to %{arr_city_name} flights, %{dep_city_name} %{arr_city_name} flights schedule"
+    ar:
+      title_without_price: "%{dep_city_name} إلى %{arr_city_name} رحلات، حجز التذاكر بأسعار مخفضة على Cleartrip"
+      title_with_price: "%{dep_city_name} إلى %{arr_city_name} رحلات، حجز التذاكر بأسعار مخفضة على Cleartrip"
+      description: "رحلات %{dep_city_name} إلى %{arr_city_name} رخيصة - يقدم %{host} أفضل العروض على %{dep_city_name} إلى %{arr_city_name} حجز الرحلة. تفقد لائحة رحلة%{dep_city_name} إلى %{arr_city_name} هنا وأحجز الآن. سهلة، سريعة وموثوق بها"
+      keywords: "الرحلات الجوية من %{dep_city_name} إلى  %{arr_city_name}، رحلة رخيصة من%{dep_city_name}  إلى %{arr_city_name} ، والرحلات الجوية من %{dep_city_name} إلى %{arr_city_name}، وحجز الرحلات الجوية من %{dep_city_name} إلى %{arr_city_name}، الرحلات الجوية من %{dep_city_name} إلى %{arr_city_name}، مواعيد الرحلات الجوية من %{dep_city_name} إلى %{arr_city_name}، الرحلات الجوية من %{dep_city_name} إلى %{arr_city_name}، حجز الرحلات الجوية من %{dep_city_name} إلى %{arr_city_name}، مواعيد الرحلات الجوية من %{dep_city_name} إلى %{arr_city_name}"
+  kw_dom:
+    en:
+      title_without_price: "%{dep_city_name}  to  %{arr_city_name}  Flights,books tickets at discounted rates on cleartrip."
+      title_with_price: "%{dep_city_name}   to  %{arr_city_name}  Flights,books tickets at discounted rates on cleartrip."
+      description: "Find the best deal for %{dep_city_name} to %{arr_city_name} flights on Cleartrip. Use Coupon code - FLIGHT & get amazing discounts on the flights from %{dep_city_name} to %{arr_city_name}. Hurry Now!"
+      keywords: "%{dep_city_name} %{arr_city_name} flights, cheap %{dep_city_name} %{arr_city_name} flight , flights from %{dep_city_name} to %{arr_city_name}, %{dep_city_name} %{arr_city_name} flights booking, schedule flights from %{dep_city_name} to %{arr_city_name} flights, %{dep_city_name} %{arr_city_name} flights schedule"
+    ar:
+      title_without_price: "%{dep_city_name} إلى %{arr_city_name} رحلات، حجز التذاكر بأسعار مخفضة على Cleartrip"
+      title_with_price: "%{dep_city_name} إلى %{arr_city_name} رحلات، حجز التذاكر بأسعار مخفضة على Cleartrip"
+      description: "رحلات %{dep_city_name} إلى %{arr_city_name} رخيصة - يقدم %{host} أفضل العروض على %{dep_city_name} إلى %{arr_city_name} حجز الرحلة. تفقد لائحة رحلة%{dep_city_name} إلى %{arr_city_name} هنا وأحجز الآن. سهلة، سريعة وموثوق بها"
+      keywords: "الرحلات الجوية من %{dep_city_name} إلى  %{arr_city_name}، رحلة رخيصة من%{dep_city_name}  إلى %{arr_city_name} ، والرحلات الجوية من %{dep_city_name} إلى %{arr_city_name}، وحجز الرحلات الجوية من %{dep_city_name} إلى %{arr_city_name}، الرحلات الجوية من %{dep_city_name} إلى %{arr_city_name}، مواعيد الرحلات الجوية من %{dep_city_name} إلى %{arr_city_name}، الرحلات الجوية من %{dep_city_name} إلى %{arr_city_name}، حجز الرحلات الجوية من %{dep_city_name} إلى %{arr_city_name}، مواعيد الرحلات الجوية من %{dep_city_name} إلى %{arr_city_name}"
+  kw_int:  
+    en:
+      title_without_price: "%{dep_city_name}  to  %{arr_city_name}  Flights,books tickets at discounted rates on cleartrip."
+      title_with_price: "%{dep_city_name}   to  %{arr_city_name}  Flights,books tickets at discounted rates on cleartrip."
+      description: "Find the best deal for %{dep_city_name} to %{arr_city_name} flights on Cleartrip. Use Coupon code - FLIGHT & get amazing discounts on the flights from %{dep_city_name} to %{arr_city_name}. Hurry Now!"
+      keywords: "%{dep_city_name} %{arr_city_name} flights, cheap %{dep_city_name} %{arr_city_name} flight , flights from %{dep_city_name} to %{arr_city_name}, %{dep_city_name} %{arr_city_name} flights booking, schedule flights from %{dep_city_name} to %{arr_city_name} flights, %{dep_city_name} %{arr_city_name} flights schedule"
+    ar:
+      title_without_price: "%{dep_city_name} إلى %{arr_city_name} رحلات، حجز التذاكر بأسعار مخفضة على Cleartrip"
+      title_with_price: "%{dep_city_name} إلى %{arr_city_name} رحلات، حجز التذاكر بأسعار مخفضة على Cleartrip"
+      description: "رحلات %{dep_city_name} إلى %{arr_city_name} رخيصة - يقدم %{host} أفضل العروض على %{dep_city_name} إلى %{arr_city_name} حجز الرحلة. تفقد لائحة رحلة%{dep_city_name} إلى %{arr_city_name} هنا وأحجز الآن. سهلة، سريعة وموثوق بها"
+      keywords: "الرحلات الجوية من %{dep_city_name} إلى  %{arr_city_name}، رحلة رخيصة من%{dep_city_name}  إلى %{arr_city_name} ، والرحلات الجوية من %{dep_city_name} إلى %{arr_city_name}، وحجز الرحلات الجوية من %{dep_city_name} إلى %{arr_city_name}، الرحلات الجوية من %{dep_city_name} إلى %{arr_city_name}، مواعيد الرحلات الجوية من %{dep_city_name} إلى %{arr_city_name}، الرحلات الجوية من %{dep_city_name} إلى %{arr_city_name}، حجز الرحلات الجوية من %{dep_city_name} إلى %{arr_city_name}، مواعيد الرحلات الجوية من %{dep_city_name} إلى %{arr_city_name}"
+  qa_dom:
+    en:
+      title_without_price: "%{dep_city_name}  to  %{arr_city_name}  Flights,books tickets at discounted rates on cleartrip."
+      title_with_price: "%{dep_city_name}   to  %{arr_city_name}  Flights,books tickets at discounted rates on cleartrip."
+      description: "Find the best deal for %{dep_city_name} to %{arr_city_name} flights on Cleartrip. Use Coupon code - FLIGHT & get amazing discounts on the flights from %{dep_city_name} to %{arr_city_name}. Hurry Now!"
+      keywords: "%{dep_city_name} %{arr_city_name} flights, cheap %{dep_city_name} %{arr_city_name} flight , flights from %{dep_city_name} to %{arr_city_name}, %{dep_city_name} %{arr_city_name} flights booking, schedule flights from %{dep_city_name} to %{arr_city_name} flights, %{dep_city_name} %{arr_city_name} flights schedule"
+    ar:
+      title_without_price: "%{dep_city_name} إلى %{arr_city_name} رحلات، حجز التذاكر بأسعار مخفضة على Cleartrip"
+      title_with_price: "%{dep_city_name} إلى %{arr_city_name} رحلات، حجز التذاكر بأسعار مخفضة على Cleartrip"
+      description: "رحلات %{dep_city_name} إلى %{arr_city_name} رخيصة - يقدم %{host} أفضل العروض على %{dep_city_name} إلى %{arr_city_name} حجز الرحلة. تفقد لائحة رحلة%{dep_city_name} إلى %{arr_city_name} هنا وأحجز الآن. سهلة، سريعة وموثوق بها"
+      keywords: "الرحلات الجوية من %{dep_city_name} إلى  %{arr_city_name}، رحلة رخيصة من%{dep_city_name}  إلى %{arr_city_name} ، والرحلات الجوية من %{dep_city_name} إلى %{arr_city_name}، وحجز الرحلات الجوية من %{dep_city_name} إلى %{arr_city_name}، الرحلات الجوية من %{dep_city_name} إلى %{arr_city_name}، مواعيد الرحلات الجوية من %{dep_city_name} إلى %{arr_city_name}، الرحلات الجوية من %{dep_city_name} إلى %{arr_city_name}، حجز الرحلات الجوية من %{dep_city_name} إلى %{arr_city_name}، مواعيد الرحلات الجوية من %{dep_city_name} إلى %{arr_city_name}"
+  qa_int:  
+    en:
+      title_without_price: "%{dep_city_name}  to  %{arr_city_name}  Flights,books tickets at discounted rates on cleartrip."
+      title_with_price: "%{dep_city_name}   to  %{arr_city_name}  Flights,books tickets at discounted rates on cleartrip."
+      description: "Find the best deal for %{dep_city_name} to %{arr_city_name} flights on Cleartrip. Use Coupon code - FLIGHT & get amazing discounts on the flights from %{dep_city_name} to %{arr_city_name}. Hurry Now!"
+      keywords: "%{dep_city_name} %{arr_city_name} flights, cheap %{dep_city_name} %{arr_city_name} flight , flights from %{dep_city_name} to %{arr_city_name}, %{dep_city_name} %{arr_city_name} flights booking, schedule flights from %{dep_city_name} to %{arr_city_name} flights, %{dep_city_name} %{arr_city_name} flights schedule"
+    ar:
+      title_without_price: "%{dep_city_name} إلى %{arr_city_name} رحلات، حجز التذاكر بأسعار مخفضة على Cleartrip"
+      title_with_price: "%{dep_city_name} إلى %{arr_city_name} رحلات، حجز التذاكر بأسعار مخفضة على Cleartrip"
+      description: "رحلات %{dep_city_name} إلى %{arr_city_name} رخيصة - يقدم %{host} أفضل العروض على %{dep_city_name} إلى %{arr_city_name} حجز الرحلة. تفقد لائحة رحلة%{dep_city_name} إلى %{arr_city_name} هنا وأحجز الآن. سهلة، سريعة وموثوق بها"
+      keywords: "الرحلات الجوية من %{dep_city_name} إلى  %{arr_city_name}، رحلة رخيصة من%{dep_city_name}  إلى %{arr_city_name} ، والرحلات الجوية من %{dep_city_name} إلى %{arr_city_name}، وحجز الرحلات الجوية من %{dep_city_name} إلى %{arr_city_name}، الرحلات الجوية من %{dep_city_name} إلى %{arr_city_name}، مواعيد الرحلات الجوية من %{dep_city_name} إلى %{arr_city_name}، الرحلات الجوية من %{dep_city_name} إلى %{arr_city_name}، حجز الرحلات الجوية من %{dep_city_name} إلى %{arr_city_name}، مواعيد الرحلات الجوية من %{dep_city_name} إلى %{arr_city_name}"
+  om_dom:
+    en:
+      title_without_price: "%{dep_city_name}  to  %{arr_city_name}  Flights,books tickets at discounted rates on cleartrip."
+      title_with_price: "%{dep_city_name}   to  %{arr_city_name}  Flights,books tickets at discounted rates on cleartrip."
+      description: "Find the best deal for %{dep_city_name} to %{arr_city_name} flights on Cleartrip. Use Coupon code - FLIGHT & get amazing discounts on the flights from %{dep_city_name} to %{arr_city_name}. Hurry Now!"
+      keywords: "%{dep_city_name} %{arr_city_name} flights, cheap %{dep_city_name} %{arr_city_name} flight , flights from %{dep_city_name} to %{arr_city_name}, %{dep_city_name} %{arr_city_name} flights booking, schedule flights from %{dep_city_name} to %{arr_city_name} flights, %{dep_city_name} %{arr_city_name} flights schedule"
+    ar:
+      title_without_price: "%{dep_city_name} إلى %{arr_city_name} رحلات، حجز التذاكر بأسعار مخفضة على Cleartrip"
+      title_with_price: "%{dep_city_name} إلى %{arr_city_name} رحلات، حجز التذاكر بأسعار مخفضة على Cleartrip"
+      description: "رحلات %{dep_city_name} إلى %{arr_city_name} رخيصة - يقدم %{host} أفضل العروض على %{dep_city_name} إلى %{arr_city_name} حجز الرحلة. تفقد لائحة رحلة%{dep_city_name} إلى %{arr_city_name} هنا وأحجز الآن. سهلة، سريعة وموثوق بها"
+      keywords: "الرحلات الجوية من %{dep_city_name} إلى  %{arr_city_name}، رحلة رخيصة من%{dep_city_name}  إلى %{arr_city_name} ، والرحلات الجوية من %{dep_city_name} إلى %{arr_city_name}، وحجز الرحلات الجوية من %{dep_city_name} إلى %{arr_city_name}، الرحلات الجوية من %{dep_city_name} إلى %{arr_city_name}، مواعيد الرحلات الجوية من %{dep_city_name} إلى %{arr_city_name}، الرحلات الجوية من %{dep_city_name} إلى %{arr_city_name}، حجز الرحلات الجوية من %{dep_city_name} إلى %{arr_city_name}، مواعيد الرحلات الجوية من %{dep_city_name} إلى %{arr_city_name}"
+  om_int:  
+    en:
+      title_without_price: "%{dep_city_name}   to  %{arr_city_name}  Flights,books tickets at discounted rates on cleartrip."
+      title_with_price: "%{dep_city_name}   to  %{arr_city_name}  Flights,books tickets at discounted rates on cleartrip."
+      description: "Find the best deal for %{dep_city_name} to %{arr_city_name} flights on Cleartrip. Use Coupon code - FLIGHT & get amazing discounts on the flights from %{dep_city_name} to %{arr_city_name}. Hurry Now!"
+      keywords: "%{dep_city_name} %{arr_city_name} flights, cheap %{dep_city_name} %{arr_city_name} flight , flights from %{dep_city_name} to %{arr_city_name}, %{dep_city_name} %{arr_city_name} flights booking, schedule flights from %{dep_city_name} to %{arr_city_name} flights, %{dep_city_name} %{arr_city_name} flights schedule"
+    ar:
+      title_without_price: "%{dep_city_name} إلى %{arr_city_name} رحلات، حجز التذاكر بأسعار مخفضة على Cleartrip"
+      title_with_price: "%{dep_city_name} إلى %{arr_city_name} رحلات، حجز التذاكر بأسعار مخفضة على Cleartrip"
+      description: "رحلات %{dep_city_name} إلى %{arr_city_name} رخيصة - يقدم %{host} أفضل العروض على %{dep_city_name} إلى %{arr_city_name} حجز الرحلة. تفقد لائحة رحلة%{dep_city_name} إلى %{arr_city_name} هنا وأحجز الآن. سهلة، سريعة وموثوق بها"
+      keywords: "الرحلات الجوية من %{dep_city_name} إلى  %{arr_city_name}، رحلة رخيصة من%{dep_city_name}  إلى %{arr_city_name} ، والرحلات الجوية من %{dep_city_name} إلى %{arr_city_name}، وحجز الرحلات الجوية من %{dep_city_name} إلى %{arr_city_name}، الرحلات الجوية من %{dep_city_name} إلى %{arr_city_name}، مواعيد الرحلات الجوية من %{dep_city_name} إلى %{arr_city_name}، الرحلات الجوية من %{dep_city_name} إلى %{arr_city_name}، حجز الرحلات الجوية من %{dep_city_name} إلى %{arr_city_name}، مواعيد الرحلات الجوية من %{dep_city_name} إلى %{arr_city_name}"
+from:
+  in_from:
+    en:
+      title: "Flights from %{city_name}, book your air tickets from %{city_name} & get up to 70%% cashback on Cleartrip"
+      description: "Planning to fly from %{city_name}? With Cleartrip you can book flight tickets from %{city_name} from anywhere based on flight schedule, timings &amp; airfare break-up. We also provide cashback of up to 70%% on flight tickets."
+      keywords: "flights from %{city_name},%{city_name} flights"
+    hi:
+      title: "Flights from %{city_name}, book your air tickets from %{city_name} & get up to 70%% cashback on Cleartrip"
+      description: "Planning to fly from %{city_name}? With Cleartrip you can book flight tickets from %{city_name} from anywhere based on flight schedule, timings &amp; airfare break-up. We also provide cashback of up to 70%% on flight tickets."
+      keywords: "flights from %{city_name},%{city_name} flights"
+  ae_from:
+    en:
+      title: "Flights from %{city_name}, book your air tickets from %{city_name} & get up to 70%% cashback on Cleartrip"
+      description: "Planning to fly from %{city_name}? With Cleartrip you can book flight tickets from %{city_name} from anywhere based on flight schedule, timings &amp; airfare break-up. We also provide cashback of up to 70%% on flight tickets."
+      keywords: "flights from %{city_name},%{city_name} flights"
+    ar:
+      title: "رحلات طيران من %{city_name}, إحجز تذاكر الطيران الخاصة بك من %{city_name} & الحصول على ما يصل الى 70%% كاشباك على كليرتريب"
+      description: "التخطيط للسفر من %{city_name}? فلتلقي نظرة على لوائح الرحلات وحجز السفر فقط على Cleartrip من عند %{city_name} من أي مكان على أساس جدول الرحلات الجوية، وتوقيت الرحلات الجوية. نحن نقدم أيضا استرداد النقود تصل إلى 70%% على تذاكر الطيران."
+      keywords: ""
+
+  sa_from:
+    en:
+      title: "Flights from %{city_name}, book your air tickets from %{city_name} & get up to 70%% cashback on Cleartrip"
+      description: "Planning to fly from %{city_name}? With Cleartrip you can book flight tickets from %{city_name} from anywhere based on flight schedule, timings &amp; airfare break-up. We also provide cashback of up to 70%% on flight tickets."
+      keywords: "flights from %{city_name},%{city_name} flights"
+    ar:
+      title: "رحلات طيران من %{city_name}, إحجز تذاكر الطيران الخاصة بك من %{city_name} & الحصول على ما يصل الى 70%% كاشباك على كليرتريب"
+      description: "التخطيط للسفر من %{city_name}? فلتلقي نظرة على لوائح الرحلات وحجز السفر فقط على Cleartrip من عند %{city_name} من أي مكان على أساس جدول الرحلات الجوية، وتوقيت الرحلات الجوية. نحن نقدم أيضا استرداد النقود تصل إلى 70%% على تذاكر الطيران."
+      keywords: ""
+  bh_from:
+    en:
+      title: "Flights from %{city_name}, book your air tickets from %{city_name} & get up to 70%% cashback on Cleartrip"
+      description: "Planning to fly from %{city_name}? With Cleartrip you can book flight tickets from %{city_name} from anywhere based on flight schedule, timings &amp; airfare break-up. We also provide cashback of up to 70%% on flight tickets."
+      keywords: "flights from %{city_name},%{city_name} flights"
+    ar:
+      title: "رحلات طيران من %{city_name}, إحجز تذاكر الطيران الخاصة بك من %{city_name} & الحصول على ما يصل الى 70%% كاشباك على كليرتريب"
+      description: "التخطيط للسفر من %{city_name}? فلتلقي نظرة على لوائح الرحلات وحجز السفر فقط على Cleartrip من عند %{city_name} من أي مكان على أساس جدول الرحلات الجوية، وتوقيت الرحلات الجوية. نحن نقدم أيضا استرداد النقود تصل إلى 70%% على تذاكر الطيران."
+      keywords: ""
+  kw_from:
+    en:
+      title: "Flights from %{city_name}, book your air tickets from %{city_name} & get up to 70%% cashback on Cleartrip"
+      description: "Planning to fly from %{city_name}? With Cleartrip you can book flight tickets from %{city_name} from anywhere based on flight schedule, timings &amp; airfare break-up. We also provide cashback of up to 70%% on flight tickets."
+      keywords: "flights from %{city_name},%{city_name} flights"
+    ar:
+      title: "رحلات طيران من %{city_name}, إحجز تذاكر الطيران الخاصة بك من %{city_name} & الحصول على ما يصل الى 70%% كاشباك على كليرتريب"
+      description: "التخطيط للسفر من %{city_name}? فلتلقي نظرة على لوائح الرحلات وحجز السفر فقط على Cleartrip من عند %{city_name} من أي مكان على أساس جدول الرحلات الجوية، وتوقيت الرحلات الجوية. نحن نقدم أيضا استرداد النقود تصل إلى 70%% على تذاكر الطيران."
+      keywords: ""
+  qa_from:
+    en:
+      title: "Flights from %{city_name}, book your air tickets from %{city_name} & get up to 70%% cashback on Cleartrip"
+      description: "Planning to fly from %{city_name}? With Cleartrip you can book flight tickets from %{city_name} from anywhere based on flight schedule, timings &amp; airfare break-up. We also provide cashback of up to 70%% on flight tickets."
+      keywords: "flights from %{city_name},%{city_name} flights"
+    ar:
+      title: "رحلات طيران من %{city_name}, إحجز تذاكر الطيران الخاصة بك من %{city_name} & الحصول على ما يصل الى 70%% كاشباك على كليرتريب"
+      description: "التخطيط للسفر من %{city_name}? فلتلقي نظرة على لوائح الرحلات وحجز السفر فقط على Cleartrip من عند %{city_name} من أي مكان على أساس جدول الرحلات الجوية، وتوقيت الرحلات الجوية. نحن نقدم أيضا استرداد النقود تصل إلى 70%% على تذاكر الطيران."
+      keywords: ""
+  om_from:
+    en:
+      title: "Flights from %{city_name}, book your air tickets from %{city_name} & get up to 70%% cashback on Cleartrip"
+      description: "Planning to fly from %{city_name}? With Cleartrip you can book flight tickets from %{city_name} from anywhere based on flight schedule, timings &amp; airfare break-up. We also provide cashback of up to 70%% on flight tickets."
+      keywords: "flights from %{city_name},%{city_name} flights"
+    ar:
+      title: "رحلات طيران من %{city_name}, إحجز تذاكر الطيران الخاصة بك من %{city_name} & الحصول على ما يصل الى 70%% كاشباك على كليرتريب"
+      description: "التخطيط للسفر من %{city_name}? فلتلقي نظرة على لوائح الرحلات وحجز السفر فقط على Cleartrip من عند %{city_name} من أي مكان على أساس جدول الرحلات الجوية، وتوقيت الرحلات الجوية. نحن نقدم أيضا استرداد النقود تصل إلى 70%% على تذاكر الطيران."
+      keywords: ""
+to: 
+  in_to:
+    en:
+      title: "Flights to %{city_name}, book your air tickets from %{city_name} & get up to 70%% cashback on Cleartrip"
+      description: "Planning to fly to %{city_name}? With Cleartrip you can book flight tickets from %{city_name} from anywhere based on flight schedule, timings &amp; airfare break-up. We also provide cashback of up to 70%% on flight tickets."
+      keywords: "flights from %{city_name},%{city_name} flights"
+    hi:
+      title: ""
+      description: ""
+      keywords: ""
+  ae_to:
+    en:
+      title: "Flights to %{city_name}, book your air tickets from %{city_name} & get up to 70%% cashback on Cleartrip"
+      description: "Planning to fly to %{city_name}? With Cleartrip you can book flight tickets from %{city_name} from anywhere based on flight schedule, timings &amp; airfare break-up. We also provide cashback of up to 70%% on flight tickets."
+      keywords: "flights from %{city_name},%{city_name} flights"
+    ar:
+      title: "رحلات جوية إلى %{city_name}, حجز تذاكر الطيران الخاصة بك إلى %{city_name} & الحصول على ما يصل الى 70%% كاشباك على كليرتريب"
+      description: "التخطيط للسفر إلى %{city_name}? فلتلقي نظرة على لوائح الرحلات وحجز السفر فقط على Cleartrip إلى %{city_name} من أي مكان على أساس جدول الرحلات الجوية، وتوقيت الرحلات الجوية. نحن نقدم أيضا استرداد النقود تصل إلى 70%% على تذاكر الطيران."
+      keywords: ""
+  sa_to:
+    en:
+      title: "Flights to %{city_name}, book your air tickets from %{city_name} & get up to 70%% cashback on Cleartrip"
+      description: "Planning to fly to %{city_name}? With Cleartrip you can book flight tickets from %{city_name} from anywhere based on flight schedule, timings &amp; airfare break-up. We also provide cashback of up to 70%% on flight tickets."
+      keywords: "flights from %{city_name},%{city_name} flights"
+    ar:
+      title: "رحلات جوية إلى %{city_name}, حجز تذاكر الطيران الخاصة بك إلى %{city_name} & الحصول على ما يصل الى 70%% كاشباك على كليرتريب"
+      description: "التخطيط للسفر إلى %{city_name}? فلتلقي نظرة على لوائح الرحلات وحجز السفر فقط على Cleartrip إلى %{city_name} من أي مكان على أساس جدول الرحلات الجوية، وتوقيت الرحلات الجوية. نحن نقدم أيضا استرداد النقود تصل إلى 70%% على تذاكر الطيران."
+      keywords: " "
+  bh_to:
+    en:
+      title: "Flights to %{city_name}, book your air tickets from %{city_name} & get up to 70%% cashback on Cleartrip"
+      description: "Planning to fly to %{city_name}? With Cleartrip you can book flight tickets from %{city_name} from anywhere based on flight schedule, timings &amp; airfare break-up. We also provide cashback of up to 70%% on flight tickets."
+      keywords: "flights from %{city_name},%{city_name} flights"
+    ar:
+      title: "رحلات جوية إلى %{city_name}, حجز تذاكر الطيران الخاصة بك إلى %{city_name} & الحصول على ما يصل الى 70%% كاشباك على كليرتريب"
+      description: "التخطيط للسفر إلى %{city_name}? فلتلقي نظرة على لوائح الرحلات وحجز السفر فقط على Cleartrip إلى %{city_name} من أي مكان على أساس جدول الرحلات الجوية، وتوقيت الرحلات الجوية. نحن نقدم أيضا استرداد النقود تصل إلى 70%% على تذاكر الطيران."
+      keywords: ""
+  kw_to:
+    en:
+      title: "Flights to %{city_name}, book your air tickets from %{city_name} & get up to 70%% cashback on Cleartrip"
+      description: "Planning to fly to %{city_name}? With Cleartrip you can book flight tickets from %{city_name} from anywhere based on flight schedule, timings &amp; airfare break-up. We also provide cashback of up to 70%% on flight tickets."
+      keywords: "flights from %{city_name},%{city_name} flights"
+    ar:
+      title: "رحلات جوية إلى %{city_name}, حجز تذاكر الطيران الخاصة بك إلى %{city_name} & الحصول على ما يصل الى 70%% كاشباك على كليرتريب"
+      description: "التخطيط للسفر إلى %{city_name}? فلتلقي نظرة على لوائح الرحلات وحجز السفر فقط على Cleartrip إلى %{city_name} من أي مكان على أساس جدول الرحلات الجوية، وتوقيت الرحلات الجوية. نحن نقدم أيضا استرداد النقود تصل إلى 70%% على تذاكر الطيران."
+      keywords: ""
+  qa_to:
+    en:
+      title: "Flights to %{city_name}, book your air tickets from %{city_name} & get up to 70%% cashback on Cleartrip"
+      description: "Planning to fly to %{city_name}? With Cleartrip you can book flight tickets from %{city_name} from anywhere based on flight schedule, timings &amp; airfare break-up. We also provide cashback of up to 70%% on flight tickets."
+      keywords: "flights from %{city_name},%{city_name} flights"
+    ar:
+      title: "رحلات جوية إلى %{city_name}, حجز تذاكر الطيران الخاصة بك إلى %{city_name} & الحصول على ما يصل الى 70%% كاشباك على كليرتريب"
+      description: "التخطيط للسفر إلى %{city_name}? فلتلقي نظرة على لوائح الرحلات وحجز السفر فقط على Cleartrip إلى %{city_name} من أي مكان على أساس جدول الرحلات الجوية، وتوقيت الرحلات الجوية. نحن نقدم أيضا استرداد النقود تصل إلى 70%% على تذاكر الطيران."
+      keywords: ""
+  om_to:
+    en:
+      title: "Flights to %{city_name}, book your air tickets from %{city_name} & get up to 70%% cashback on Cleartrip"
+      description: "Planning to fly to %{city_name}? With Cleartrip you can book flight tickets from %{city_name} from anywhere based on flight schedule, timings &amp; airfare break-up. We also provide cashback of up to 70%% on flight tickets."
+      keywords: "flights from %{city_name},%{city_name} flights"
+    ar:
+      title: "رحلات جوية إلى %{city_name}, حجز تذاكر الطيران الخاصة بك إلى %{city_name} & الحصول على ما يصل الى 70%% كاشباك على كليرتريب"
+      description: "التخطيط للسفر إلى %{city_name}? فلتلقي نظرة على لوائح الرحلات وحجز السفر فقط على Cleartrip إلى %{city_name} من أي مكان على أساس جدول الرحلات الجوية، وتوقيت الرحلات الجوية. نحن نقدم أيضا استرداد النقود تصل إلى 70%% على تذاكر الطيران."
+      keywords: ""

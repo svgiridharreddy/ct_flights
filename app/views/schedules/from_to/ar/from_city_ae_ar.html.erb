@@ -3,129 +3,13 @@
    assets_path = "https://d2w5af8s1781.cloudfront.net/waytogo-staging"
    page_number = 1
 %>
-<!DOCTYPE html>
-<html lang="ar" dir="rtl">
-<head>
-  
-<!-- Google Tag Manager -->
-<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-})(window,document,'script','dataLayer','GTM-T9S432');</script>
-<!-- End Google Tag Manager -->
-  <!-- Og implementation starts -->
-
-<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
-<meta name="robots" content="noodp,noydir"/>
-
-<script src="https://cdn.optimizely.com/js/6878940622.js"></script>
-<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"> 
-<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
-
-
-  <script src="https://cdn.optimizely.com/js/6878940622.js"></script>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/> 
-  <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
-
-  <title><%= t("from_city.title_from_html", city_name: @city_name_ar) %></title>
-  <!-- <meta name="description" content="<%#= t('from_city.description_from', city_name: @city_name) %>" /> -->
-
-
-<!--   <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bxslider/4.2.5/jquery.bxslider.css">
-  <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-  <link rel="stylesheet" href="<%= assets_path%>/stylesheets/jquery-ui.min.css"/>
-  <link rel="stylesheet" href="<%= assets_path%>/stylesheets/ct_style.css"/> -->
-  <link rel="stylesheet" href="https://d2w5af8s1781.cloudfront.net/waytogo-staging/stylesheets/application.css"/>
-  <!--[if lt IE 9]>
-  <script src="https://html5shim.googlecode.com/svn/trunk/html5.js"></script>
-  <![endif]-->
-  <link rel="shortcut icon" href='<%="#{assets_path}/images/cleartrip32x32.ico" %>'>
-  <link rel="apple-touch-icon" href='<%="#{assets_path}/images/57x57.png" %>'>
-  <link rel="apple-touch-icon" sizes="72x72" href='<%="#{assets_path}/images/72x72.png" %>' >
-  <link rel="apple-touch-icon" sizes="114x114" href='<%="#{assets_path}/images/114x114.png" %>'>
-  <% lang = {
-    "calender"=>{
-      "airfare"=>t('calender.airfare'),
-      "today"=>t('calender.today'),
-      "cheapest"=>t('calender.cheapest'),
-      "calendar_note"=>t('calender.calendar_note')
-      },
-      "flight_schedule"=>{
-        "mo"=>t('flight_schedule.mo'),
-        "tu"=>t('flight_schedule.tu'),
-        "we"=>t('flight_schedule.we'),
-        "th"=>t('flight_schedule.th'),
-        "fr"=>t('flight_schedule.fr'),
-        "sa"=>t('flight_schedule.sa'),
-        "su"=>t('flight_schedule.su')
-        },
-        "currency"=>application_processor.currency_name(country_code),
-        "month": ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
-      } 
-      %>
-  <script type="text/javascript">
-    var lang = <%= lang.to_json.html_safe %>;
-    var country_code='<%= @country_code.downcase%>';
-    var section_type='<%= @country_code=="IN" ? "domestic" : "international" %>';
-    var page_type="flight-schedule";
-    var languageType='<%=I18n.locale.to_s.downcase%>';
-  </script>
-
-  <script type="text/javascript" src="<%= assets_path%>/javascripts/date_format.js"></script>
-
-  <% if page_number == 1 %>
-  <link rel="alternate" hreflang="x-default" href="https://www.cleartrip.com" >
-  <link rel="canonical" href="<%= "#{application_processor.host_name(country_code)}/ar/flight-schedule/#{first_file_name}" %>">
-  <link rel="alternate" hreflang="en-kw" href="https://kw.cleartrip.com/flight-schedule/<%= "#{first_file_name}" %>">
-  <link rel="alternate" hreflang="ar-kw" href="https://kw.cleartrip.com/ar/flight-schedule/<%= "#{first_file_name}" %>">
-  <link rel="alternate" hreflang="en-qa" href="https://qa.cleartrip.com/flight-schedule/<%= "#{first_file_name}" %>">
-  <link rel="alternate" hreflang="ar-qa" href="https://qa.cleartrip.com/ar/flight-schedule/<%= "#{first_file_name}" %>">
-  <link rel="alternate" hreflang="en-in" href="https://www.cleartrip.com/flight-schedule/<%= "#{first_file_name}" %>">
-  <link rel="alternate" hreflang="hi-in" href="https://www.cleartrip.com/flight-schedule/hi/<%= "#{first_file_name}" %>">
-  <link rel="alternate" hreflang="en-ae" href="https://www.cleartrip.ae/flight-schedule/<%= "#{first_file_name}" %>">
-  <link rel="alternate" hreflang="ar-ae" href="https://www.cleartrip.ae/flight-schedule/ar/<%= "#{first_file_name}" %>">
-  <link rel="alternate" hreflang="en-bh" href="https://bh.cleartrip.com/flight-schedule/<%= "#{first_file_name}" %>">
-  <link rel="alternate" hreflang="ar-bh" href="https://bh.cleartrip.com/ar/flight-schedule/<%= "#{first_file_name}" %>">
-  <link rel="alternate" hreflang="en-om" href="https://om.cleartrip.com/flight-schedule/<%= "#{first_file_name}" %>">
-  <link rel="alternate" hreflang="ar-om" href="https://om.cleartrip.com/ar/flight-schedule/<%= "#{first_file_name}" %>">
-  <link rel="alternate" hreflang="en-sa" href="https://www.cleartrip.sa/flight-schedule/<%= "#{first_file_name}" %>">
-  <link rel="alternate" hreflang="ar-sa" href="https://www.cleartrip.sa/ar/flight-schedule/<%= "#{first_file_name}" %>">
-  <%else%>
-  <link rel="canonical" href="<%= "#{application_processor.host_name(country_code)}/flight-schedule/ar/#{first_file_name}" %>">
-  <% end %>
-  <!-- Crazyegg Tracking Code for cleartrip.com -->
-  <script type="text/javascript">
-  setTimeout(function(){var a=document.createElement("script");
-  var b=document.getElementsByTagName("script")[0];
-  a.src=document.location.protocol+"//script.crazyegg.com/pages/scripts/0011/6454.js?"+Math.floor(new Date().getTime()/3600000);
-  a.async=true;a.type="text/javascript";b.parentNode.insertBefore(a,b)}, 1);
-  </script>
-   
-  <!-- Hotjar Tracking Code for cleartrip.com -->
-  <script>
-      (function(h,o,t,j,a,r){
-          h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
-          h._hjSettings={hjid:332967,hjsv:5};
-          a=o.getElementsByTagName('head')[0];
-          r=o.createElement('script');r.async=1;
-          r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
-          a.appendChild(r);
-      })(window,document,'//static.hotjar.com/c/hotjar-','.js?sv=');
-  </script>
-</head>
 <body id="arabic">
+  <%= render partial: "common/google_tag_manager" %>
 
-<!--Google Tag Manager (noscript) -->
-<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-T9S432"
-height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-<!-- End Google Tag Manager (noscript) -->
-
-  <%#= render partial: "common/header", locals: { assets_path: assets_path, country_code: country_code, host: host, flight_file_name: flight_file_name, page_type: 'flight-schedule', application_processor: application_processor} %>
+  <%= render partial: "common/top_header", locals: { assets_path: assets_path, country_code: country_code, host: host, flight_file_name: @file_name, page_type: 'flight-schedule', application_processor: application_processor} %>
 
   <!--======Second Header Starts Here==========-->
-            <%= render :partial => "schedules/from_to/ar/shared/from_to_header_ar",locals: {city_name: @city_name_ar,city_layout_values: city_layout_values,section: @city_section,country_code: @country_code} %> 
+    <%= render :partial => "schedules/from_to/ar/shared/from_to_header_ar",locals: {city_name: @city_name_ar,city_layout_values: city_layout_values,section: @city_section,country_code: @country_code} %> 
   <!--======Second Header Ends Here==========-->
 
   <!--/contnet Starts Here-->
@@ -214,7 +98,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           <%= render :partial=>"schedules/from_to/ar/shared/from_to_airport_ar",:locals=>{:airport=>city_layout_values } %>
         <% end %>
         <div class="blocks banner-section">
-          <%#= render :partial=>"new_flights/banner",:locals=>{:country_code=>country_code, application_processor: application_processor} %>
+          <%= render :partial=>"common/banner",:locals=>{:country_code=> country_code, application_processor: application_processor} %>
         </div>
         <div class="clearfix"></div>
       </div>
@@ -241,17 +125,34 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <script type="text/javascript" src="https://d2w5af8s1781.cloudfront.net/waytogo-staging/javascripts/ct_custom.js"></script>
   <script type="text/javascript" src="https://d2w5af8s1781.cloudfront.net/waytogo-staging/javascripts/banner.js"></script>
   <%= render :partial=>"shared/#{country_code.downcase}/#{country_code.downcase}_gac"%>
-  <script>
-    var _comscore = _comscore || [];
-    _comscore.push({ c1: "2", c2: "7561529" });
-    (function() {
-      var s = document.createElement("script"), el = document.getElementsByTagName("script")[0]; s.async = true;
-      s.src = (document.location.protocol == "https:" ? "https://sb" : "http://b") + ".scorecardresearch.com/beacon.js";
-      el.parentNode.insertBefore(s, el);
-    })();
-  </script>
+  <%= render partial: "common/comscore" %>
   <noscript>
     <img src="https://b.scorecardresearch.com/p?c1=2&c2=7561529&cv=2.0&cj=1" />
   </noscript>
+  <% lang = {
+    "calender"=>{
+      "airfare"=>t('calender.airfare'),
+      "today"=>t('calender.today'),
+      "cheapest"=>t('calender.cheapest'),
+      "calendar_note"=>t('calender.calendar_note')
+      },
+      "flight_schedule"=>{
+        "mo"=>t('flight_schedule.mo'),
+        "tu"=>t('flight_schedule.tu'),
+        "we"=>t('flight_schedule.we'),
+        "th"=>t('flight_schedule.th'),
+        "fr"=>t('flight_schedule.fr'),
+        "sa"=>t('flight_schedule.sa'),
+        "su"=>t('flight_schedule.su')
+        },
+        "currency"=>application_processor.currency_name(country_code),
+        "month": ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+      } 
+      %>
+  <script type="text/javascript">
+    var lang = <%= lang.to_json.html_safe %>;
+    var country_code='<%= country_code.downcase%>';
+    var section_type='<%= country_code=="IN" ? "domestic" : "international" %>';
+    var page_type="flight-schedule";
+  </script>
 </body>
-</html> 

@@ -1,4 +1,3 @@
-require_relative './support/constants.rb'
 require 'net/http'
 
 class FlightScheduleService
@@ -40,7 +39,7 @@ class FlightScheduleService
     				"dep_city_content" => "",
     				"arr_city_content" => ""}
     	
-    	if I18n.t("flight_schedule_content.#{@dep_city_name}-#{@arr_city_name}-Flights").index("translation missing").nil? 
+    	if I18n.t("flight_schedule_content.#{@country_code.downcase}.#{@dep_city_name}-#{@arr_city_name}-Flights").index("translation missing").nil? 
     		unique_route_content = I18n.t("flight_schedule_content.#{@dep_city_name}-#{@arr_city_name}-Flights")
     		content["unique_route_content"] = unique_route_content 
     	else
@@ -233,7 +232,8 @@ class FlightScheduleService
     end
     def schedule_footer
         #Foooter links randamization code
-         footer_links = Footer.where(city_code: @dep_city_code)
+        model_name = "#{@country_code.titleize}Footer".constantize
+         footer_links = model_name.where(city_code: @dep_city_code)
            if footer_links.present?
             footer_links = footer_links.first
             if footer_links.total_routes_count > 10
@@ -350,16 +350,15 @@ class FlightScheduleService
     routes["int"] = routes["int"].sort {|a,b| a["min_price"] <=> b["min_price"]}
     return routes
   end
-  def city_layout_values(city_code, section,city_name)
+  def city_layout_values(city_code, url_section,city_name)
      country_code = @country_code
-    if section == "from"
+    if url_section == "from"
       city_section = "dep"
       other_section = "arr"
     else
       city_section = "arr"
       other_section = "dep"
     end
-    city_section = section == "from" ? "dep" : "arr"
     city_layout_values = {}
     
     airport = Airport.find_by({:city_code=> city_code})
@@ -373,7 +372,7 @@ class FlightScheduleService
     city_layout_values['airport_web'] = airport.website
     model_name = "#{country_code.titleize}FromToContent".constantize
     city_content = model_name.find_by(city_code: city_code)
-    city_layout_values["city_#{section}_content"] = city_content.send("#{@language.downcase}_#{section}_content") rescue ""
+    city_layout_values["city_#{url_section}_content"] = city_content.send("#{@language.downcase}_#{url_section}_content") rescue ""
     header_record = Header.find_by(arr_city_code: city_code)
     city_layout_values["arr_city_event"] = header_record.arr_city_event rescue ""
     city_layout_values["arr_city_weekend_getaway"]= header_record.arr_city_weekend_getaway rescue ""
@@ -405,10 +404,10 @@ class FlightScheduleService
       city_layout_values["#{section}_airlines_cc"] = AirlineBrand.where("carrier_code in (?) and country_code=?",top_airlines_cc,@country_code).map(&:carrier_code).take(3)
       airlines_cc = AirlineBrand.where("carrier_code in (?) and #{country_type}",top_airlines_cc,@country_code).map(&:carrier_code).take(3)
       city_layout_values["city_#{section}_airlines"] = airlines_cc.map{|cc| I18n.t("airlines.#{cc}")}.to_sentence rescue ""
+      city_layout_values["#{url_section}_more_routes"] = UniqueRoute.where("#{city_section}_city_code='#{city_code}' and #{other_section}_city_code!='#{city_code}'").limit(45)
       city_layout_values["#{section}_route_count"] = UniqueRoute.where("#{city_section}_city_code='#{city_code}' and #{other_section}_city_code!='#{city_code}' and #{country_section}").count
     end
     city_layout_values["major_sectors"] = (city_layout_values["major_dom_sectors"] + city_layout_values["major_int_sectors"]).flatten.shuffle.take(3).to_sentence rescue ""
-
     return city_layout_values
   end
 

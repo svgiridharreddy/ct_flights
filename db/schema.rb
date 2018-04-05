@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180403100327) do
+ActiveRecord::Schema.define(version: 20180404140401) do
 
   create_table "ae_airline_contents", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "carrier_code"
@@ -47,6 +47,20 @@ ActiveRecord::Schema.define(version: 20180403100327) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["unique_route_id"], name: "index_ae_flight_schedule_collectives_on_unique_route_id"
+  end
+
+  create_table "ae_footers", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string "city_code"
+    t.string "city_name"
+    t.string "city_name_ar"
+    t.string "country_code"
+    t.string "country_name"
+    t.integer "total_routes_count"
+    t.integer "current_routes_count"
+    t.text "routes_data"
+    t.text "routes_data_ar"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "ae_from_to_contents", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
@@ -185,6 +199,20 @@ ActiveRecord::Schema.define(version: 20180403100327) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["unique_route_id"], name: "index_bh_flight_schedule_collectives_on_unique_route_id"
+  end
+
+  create_table "bh_footers", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string "city_code"
+    t.string "city_name"
+    t.string "city_name_ar"
+    t.string "country_code"
+    t.string "country_name"
+    t.integer "total_routes_count"
+    t.integer "current_routes_count"
+    t.text "routes_data"
+    t.text "routes_data_ar"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "bh_from_to_contents", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
@@ -374,7 +402,7 @@ ActiveRecord::Schema.define(version: 20180403100327) do
     t.string "country_name"
     t.integer "total_routes_count"
     t.text "routes_data"
-    t.text "current_routes_count"
+    t.integer "current_routes_count"
     t.text "routes_data_ar"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -433,6 +461,20 @@ ActiveRecord::Schema.define(version: 20180403100327) do
     t.index ["unique_route_id"], name: "index_kw_flight_schedule_collectives_on_unique_route_id"
   end
 
+  create_table "kw_footers", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string "city_code"
+    t.string "city_name"
+    t.string "city_name_ar"
+    t.string "country_code"
+    t.string "country_name"
+    t.integer "total_routes_count"
+    t.integer "current_routes_count"
+    t.text "routes_data"
+    t.text "routes_data_ar"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "kw_from_to_contents", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "city_code"
     t.text "en_from_content"
@@ -484,6 +526,20 @@ ActiveRecord::Schema.define(version: 20180403100327) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["unique_route_id"], name: "index_om_flight_schedule_collectives_on_unique_route_id"
+  end
+
+  create_table "om_footers", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string "city_code"
+    t.string "city_name"
+    t.string "city_name_ar"
+    t.string "country_code"
+    t.string "country_name"
+    t.integer "total_routes_count"
+    t.integer "current_routes_count"
+    t.text "routes_data"
+    t.text "routes_data_ar"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "om_from_to_contents", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
@@ -573,6 +629,20 @@ ActiveRecord::Schema.define(version: 20180403100327) do
     t.index ["unique_route_id"], name: "index_qa_flight_schedule_collectives_on_unique_route_id"
   end
 
+  create_table "qa_footers", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string "city_code"
+    t.string "city_name"
+    t.string "city_name_ar"
+    t.string "country_code"
+    t.string "country_name"
+    t.integer "total_routes_count"
+    t.integer "current_routes_count"
+    t.text "routes_data"
+    t.text "routes_data_ar"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "qa_from_to_contents", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "city_code"
     t.text "en_from_content"
@@ -624,6 +694,20 @@ ActiveRecord::Schema.define(version: 20180403100327) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["unique_route_id"], name: "index_sa_flight_schedule_collectives_on_unique_route_id"
+  end
+
+  create_table "sa_footers", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string "city_code"
+    t.string "city_name"
+    t.string "city_name_ar"
+    t.string "country_code"
+    t.string "country_name"
+    t.integer "total_routes_count"
+    t.integer "current_routes_count"
+    t.text "routes_data"
+    t.text "routes_data_ar"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "sa_from_to_contents", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|

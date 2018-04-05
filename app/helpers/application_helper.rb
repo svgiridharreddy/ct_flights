@@ -1,43 +1,78 @@
   module ApplicationHelper
-  def convert_time(duration)
+
+    def seo_header
+      meta_title = meta_keywords = meta_description = ""
+      meta_info = SEO_META[@page_type]
+      host = get_domain
+      case @page_type 
+      when "flight-schedule"
+        if @language == "ar"
+          title = (@title_min_price.present? && @title_min_price!=0) ? "title_with_price" : "title_without_price"
+          meta_title = meta_info["#{@country_code.downcase}_#{@section[3..5]}"]["#{@language.downcase}"]["#{title}"] %{dep_city_name: @dep_city_name_ar,arr_city_name: @arr_city_name_ar,price: @title_min_price}
+          meta_description = meta_info["#{@country_code.downcase}_#{@section[3..5]}"]["#{@language.downcase}"]["description"] %{dep_city_name: @dep_city_name_ar,arr_city_name: @arr_city_name_ar,host: host}
+          meta_keywords = meta_info["#{@country_code.downcase}_#{@section[3..5]}"]["#{@language.downcase}"]["keywords"] %{dep_city_name: @dep_city_name_ar,arr_city_name: @arr_city_name_ar}
+        else
+          title = (@title_min_price.present? && @title_min_price!=0) ? "title_with_price" : "title_without_price"
+          meta_title = meta_info["#{@country_code.downcase}_#{@section[3..5]}"]["#{@language.downcase}"]["#{title}"] %{dep_city_name: @dep_city_name,arr_city_name: @arr_city_name,price: @title_min_price}
+          meta_description = meta_info["#{@country_code.downcase}_#{@section[3..5]}"]["#{@language.downcase}"]["description"] %{dep_city_name: @dep_city_name,arr_city_name: @arr_city_name}
+          meta_keywords = meta_info["#{@country_code.downcase}_#{@section[3..5]}"]["#{@language.downcase}"]["keywords"] %{dep_city_name: @dep_city_name,arr_city_name: @arr_city_name}
+        end
+      when "from"
+        if @language == "ar"
+          meta_title = meta_info["#{@country_code.downcase}_from"]["#{@language.downcase}"]["title"] %{city_name: @city_name_ar}
+          meta_description = meta_info["#{@country_code.downcase}_from"]["#{@language.downcase}"]["description"] %{city_name: @city_name_ar}
+          meta_keywords = meta_info["#{@country_code.downcase}_from"]["#{@language.downcase}"]["keywords"] %{city_name: @city_name_ar} rescue ""
+        else 
+          meta_title = meta_info["#{@country_code.downcase}_from"]["#{@language.downcase}"]["title"] %{city_name: @city_name}
+          meta_description = meta_info["#{@country_code.downcase}_from"]["#{@language.downcase}"]["description"] %{city_name: @city_name}
+          meta_keywords = meta_info["#{@country_code.downcase}_from"]["#{@language.downcase}"]["keywords"] %{city_name: @city_name} rescue ""
+        end
+      when "to"
+        if @language == "ar"
+          meta_title = meta_info["#{@country_code.downcase}_to"]["#{@language.downcase}"]["title"] %{city_name: @city_name_ar}
+          meta_description = meta_info["#{@country_code.downcase}_to"]["#{@language.downcase}"]["description"] %{city_name: @city_name_ar}
+          meta_keywords = meta_info["#{@country_code.downcase}_to"]["#{@language.downcase}"]["keywords"] %{city_name: @city_name_ar} rescue ""
+        else
+          meta_title = meta_info["#{@country_code.downcase}_to"]["#{@language.downcase}"]["title"] %{city_name: @city_name}
+          meta_description = meta_info["#{@country_code.downcase}_to"]["#{@language.downcase}"]["description"] %{city_name: @city_name}
+          meta_keywords = meta_info["#{@country_code.downcase}_to"]["#{@language.downcase}"]["keywords"] %{city_name: @city_name} rescue ""
+        end
+      end
+      {:title =>meta_title,:keywords=>meta_keywords,:description=>meta_description}
+    end
+
+  def og_tags
+    lang_countries = ["en-IN","hi-IN","ar-AE","en-AE","ar-SA","en-SA","ar-BH","en-BH","ar-KW","en-KW","ar-OM","en-OM","ar-QA","en-QA"]
+    main_content = "#{@language.downcase}-#{@country_code}"
+    alts = []
+    lang_countries.each do |l|
+      unless main_content === l
+        alts << l
+      end
+    end
+      {main_content: main_content, alts: alts}
+  end
+  def language_meta_tags
     
   end
-  def to_time(timeObj)
-    begin 
-      timeObj.strftime("%H:%M %p")
-    rescue 
-      ""
+
+  def get_domain
+    protocol = request.protocol
+    unless protocol.include? "s"
+        protocol = "https://"
     end
+    hostname = request.host
+    "#{protocol}#{hostname}"
   end
-  def retrieve_days(days)
-	if !days.nil?
-	  if days.delete(" ").length == 7
-	    return I18n.t("daily")
-	  else
-      day_names = I18n.t('date.abbr_day_names')
-	    days = days.delete(" ")
-	    str = ""
-	    i = 1
-	    days.each_char  do |day|
-		  if (i == 1)
-		    if ((day.to_i) == 7)
-		      str  = (day_names[0])
-		    else
-		      str  = (day_names[(day.to_i)])
-		    end
-		  else
-		    if ((day.to_i) == 7)
-		      str  = str + ", " + (day_names[0])
-		    else
-		      str  = str + ", " + (day_names[(day.to_i)])
-		    end
-		  end
-	      i = i  + 1
-	    end
-	    return str
-	  end
-	end
-  end
+
+    def to_time(timeObj)
+      begin 
+        timeObj.strftime("%H:%M %p")
+      rescue 
+        ""
+      end
+    end
+    
 
   def url_escape(url_string)
     unless url_string.blank?
@@ -48,39 +83,39 @@
       result = result.gsub(/[ \-]+/i,      '-') # No more than one of the separator in a row.
       result = result.gsub(/^\-|\-$/i,      '') # Remove leading/trailing separator.
       result = result.downcase
-     
+
     end
   end
 
   def format_overview_link(carrier_name, locale = nil)
   	unless carrier_name.blank?
-  	  if(carrier_name.downcase.include?('airlines') || carrier_name.downcase.include?('airline')|| carrier_name.downcase.include?('air lines'))
-  	    result = carrier_name.downcase
-  	    result = result.gsub("airlines","")
-  	    result = result.gsub("airline","")
-  	    result = result.gsub("air lines","")
-  	    result = result.strip.downcase.gsub(" ", "-")
-  	    result = result+"-airlines"
-  	  else
-  	    result = carrier_name.downcase.gsub(" ","-")+ "-airlines"
-  	  end
-  	end
-  end
+     if(carrier_name.downcase.include?('airlines') || carrier_name.downcase.include?('airline')|| carrier_name.downcase.include?('air lines'))
+       result = carrier_name.downcase
+       result = result.gsub("airlines","")
+       result = result.gsub("airline","")
+       result = result.gsub("air lines","")
+       result = result.strip.downcase.gsub(" ", "-")
+       result = result+"-airlines"
+     else
+       result = carrier_name.downcase.gsub(" ","-")+ "-airlines"
+     end
+   end
+ end
 
-     def format_baggage_link(carrier_name)
-      unless carrier_name.blank?
-        if(carrier_name.downcase.include?('airlines') || carrier_name.downcase.include?('airline')|| carrier_name.downcase.include?('air lines'))
-          result = carrier_name.downcase
-          result = result.gsub("airlines","")
-          result = result.gsub("airline","")
-          result = result.gsub("air lines","")
-          result = result.strip.downcase.gsub(" ", "-")
-          result = result+"-baggages"
-        else
-          result = carrier_name.downcase.gsub(" ","-")+ "-baggages"
-        end
-      end
+ def format_baggage_link(carrier_name)
+  unless carrier_name.blank?
+    if(carrier_name.downcase.include?('airlines') || carrier_name.downcase.include?('airline')|| carrier_name.downcase.include?('air lines'))
+      result = carrier_name.downcase
+      result = result.gsub("airlines","")
+      result = result.gsub("airline","")
+      result = result.gsub("air lines","")
+      result = result.strip.downcase.gsub(" ", "-")
+      result = result+"-baggages"
+    else
+      result = carrier_name.downcase.gsub(" ","-")+ "-baggages"
     end
+  end
+end
 
   # def translate_airport(code)
   #   begin
@@ -112,7 +147,7 @@
         end
 
       else
-      result = carrier_name + " Airlines"
+        result = carrier_name + " Airlines"
       end
       if locale == :hi
         if(result.include?('एयरलाइंस') || result.include?('एयरलाइन')|| result.include?('एयर लाइन') || result.include?('एयर लाइन्स')) || result.include?('Airlines')
@@ -165,6 +200,7 @@
     end
   end
 
+  
   def display_host(country_code)
     # puts "country_code - #{country_code}"
     if country_code == 'AE'
@@ -223,6 +259,36 @@
       return 'Rs.'
     else
       ''
+    end
+  end
+
+  def retrieve_days(days)
+     if !days.nil?
+       if days.delete(" ").length == 7
+         return I18n.t("daily")
+       else
+        day_names = I18n.t('date.abbr_day_names')
+        days = days.delete(" ")
+        str = ""
+        i = 1
+        days.each_char  do |day|
+          if (i == 1)
+            if ((day.to_i) == 7)
+              str  = (day_names[0])
+            else
+              str  = (day_names[(day.to_i)])
+            end
+          else
+            if ((day.to_i) == 7)
+              str  = str + ", " + (day_names[0])
+            else
+              str  = str + ", " + (day_names[(day.to_i)])
+            end
+          end
+          i = i  + 1
+        end
+        return str
+      end
     end
   end
 end

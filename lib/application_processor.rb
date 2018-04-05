@@ -1,4 +1,3 @@
-require_relative './support/constants.rb'
 
 class ApplicationProcessor
 
@@ -12,7 +11,6 @@ class ApplicationProcessor
     populer_hotels = Array.new
     if !destination_country_code.blank?
       hotels_data = PackageHotel.where("city_name = ? and country_code = ? and tar_rating >= ? and hotel_image != ''",city_name, destination_country_code, 3.5).select("distinct hotel_id, hotel_name, hotel_area, tar_rating, country_code, tar_reviews, hotel_image, image_full_path, city_name, hotel_area, star").order("tar_rating desc, tar_reviews desc, hotel_name")
-
       hotels_count = PackageHotel.where("city_name = ? and country_code = ? and image_full_path != ''", city_name, destination_country_code).select("distinct hotel_id")
     else
       hotels_data = PackageHotel.where("city_name = ? and tar_rating >= ? and hotel_image != ''",city_name, 3.5).select("distinct hotel_id, hotel_name, hotel_area, tar_rating, country_code, tar_reviews, hotel_image, image_full_path, city_name, hotel_area, star").order("tar_rating desc, tar_reviews desc, hotel_name")
@@ -144,7 +142,7 @@ class ApplicationProcessor
     end
   end
 
-    def host_country_code(host)
+  def host_country_code(host)
     # host = host || ""
     # puts "country_code - #{country_code}"
     if host == 'https://www.cleartrip.ae'
@@ -162,7 +160,7 @@ class ApplicationProcessor
     elsif host == 'https://www.cleartrip.com'
       return ['IN',"India"]
     else
-      return ['IN',"India"]
+      return ['AE',"United Arab Emirates"]
     end
   end
 

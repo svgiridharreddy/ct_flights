@@ -3,12 +3,13 @@ class FlightSchedulesController < ApplicationController
 	def schedule_values
 		domain = request.domain
 		path = "#{request.fullpath}"
+		@file_name = params[:route] + ".html"
 		url = params[:route].gsub("-flights","")
 		@application_processor = ApplicationProcessor.new
 		@country_code = @application_processor.host_country_code(domain)[0]
 		@country_name = @application_processor.host_country_code(domain)[1]
 		@language = params[:lang].nil? ? 'en' : params[:lang]
-
+		@page_type="flight-schedule"
 		check_domain = check_domain(@language,@country_code)
 		if check_domain
 			host_name = @application_processor.host_name(@country_code)
@@ -82,12 +83,14 @@ class FlightSchedulesController < ApplicationController
     end
 		header_values = flight_schedule_service.schedule_header_details
 		schedule_layout_values = flight_schedule_service.schedule_values(@schedule_routes)
+		@title_min_price = schedule_layout_values["route_min_price"]
 		partial = "schedules/routes/#{@language}/flight_schedule_#{@section[3..5]}_#{@language.downcase}_#{@country_code.downcase}"
 		render  partial,locals: {schedule_layout_values: schedule_layout_values,dep_city_name: @dep_city_name,arr_city_name: @arr_city_name,dep_city_name_ar: @dep_city_name_ar,arr_city_name_ar: @arr_city_name_ar,dep_city_code: @route.dep_city_code,arr_city_code: @route.arr_city_code,schedule_header: header_values,schedule_footer: schedule_footer }
 	end
 
 	def get_from_to(path)
 		@city_section = path.include?("from") ? "from" : "to"
+		@page_type = @city_section
 		lang= @language=="ar" ? "/ar" : ""
 		@city_name = path.gsub("#{lang}/flight-schedule/flights-#{@city_section}-",'').gsub('.html','').gsub('-','').titleize
 		city = UniqueRoute.find_by(dep_city_name: @city_name)
@@ -107,10 +110,8 @@ class FlightSchedulesController < ApplicationController
 		schedule_footer = flight_schedule_service.schedule_footer
 		if @city_section === "from"
 			partial = "schedules/from_to/#{@language}/from_city_#{@country_code.downcase}_#{@language.downcase}"
-			
 		else
 			partial = "schedules/from_to/#{@language}/to_city_#{@country_code.downcase}_#{@language.downcase}"
-			
 		end
 		render partial, locals: {popular_routes: from_to_values,application_processor: @application_processor,page_type: "flight-schedule",first_file_name: file_name,city_layout_values: city_layout_values,host: host,schedule_footer: schedule_footer}
 	end

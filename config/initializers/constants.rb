@@ -221,3 +221,5 @@ INTERNATIONAL_AIRLINES = {'IN'=> ["AK","EK","BA","QR","SQ","EY"],
 'AE' => ["EY","9W","SV","AI","QR","GF"],
 'SA' => ["EY","9W","AI","EK","QR","FZ","G9"]}
 CALENDAR_COUNTRIES = ["IN","AE"]
+
+SEO_META = YAML.load_file(Rails.root.join("config","seo.yml"))

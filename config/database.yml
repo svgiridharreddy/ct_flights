@@ -9,14 +9,14 @@ development:
   <<: *default
   # when  deploying use database air_development_testing
   # In local, use database air_development_dev
-  # database: air_development_dev 
-  # host: localhost
-  # username: root
-  # password: root
-  database: air_development_testing
-  host: 54.169.165.81
-  username: flights
-  password: ClearTripCalendar
+  database: air_development_dev 
+  host: localhost
+  username: root
+  password: root
+  # database: air_development_testing
+  # host: 54.169.165.81
+  # username: flights
+  # password: ClearTripCalendars
   port: 3306
   encoding: utf8
   # socket: /var/run/mysqld/mysqld.sock

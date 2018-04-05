@@ -6,7 +6,8 @@ class OverviewBookingsController < ApplicationController
 		@country_code = application_processor.host_country_code(domain)[0]
 		@country_name = application_processor.host_country_code(domain)[1]
 		@language = params[:lang].nil? ? 'en' : params[:lang]
-		airline_name = params[:airline]
+		@page_type = "flight-booking"
+		airline_name = params[:airline] 
 		carrier_name = params[:airline].gsub("-",' ').gsub("airlines",'').titleize.strip
 		carrier_name_with_airline = carrier_name + " Airlines"			
 		airline = AirlineBrand.find_by("carrier_name='#{carrier_name}' OR carrier_name ='#{carrier_name_with_airline}'")
