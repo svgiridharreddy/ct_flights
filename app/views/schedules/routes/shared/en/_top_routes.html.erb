@@ -5,11 +5,11 @@
 	<ul class="linklist list-inline">
 		<% flights_dep.each do |city_name|%>
 		
-		<li><a href="/flight-schedule/<%= %>" title="<%= dep_city_name %> <%= city_name %> Flights"><%= dep_city_name %> <%= city_name %> <%= t('flights.flights')%></a></li>
+		<li><a href="/flight-schedule/<%=dep_city_name%>-<%= url_escape(city_name)%>-flights.html" title="<%= dep_city_name %> <%= city_name %> Flights"><%= dep_city_name %> <%= city_name %> <%= t('flights.flights')%></a></li>
 		<% end %>
 	</ul>
 	<p class="more_link">
-	 	<a href="/flight-schedule<%="/"+I18n.locale.to_s unless I18n.locale.to_s == "en"%>/flights-from-<%=use_helper.url_escape(dep_city_name)%>.html"><%= t('flights.more_flights_from')%> <%= dep_city_name%></a>
+	 	<a href="/flight-schedule/flights-from-<%=url_escape(dep_city_name)%>.html"><%= t('flights.more_flights_from')%> <%= dep_city_name%></a>
 	</p>
 </div>
 <p class="bottom-br">&nbsp;</p>
@@ -19,11 +19,11 @@
 	</h2>
 	<ul class="linklist list-inline">
 		<% flights_arr.each do |city_name|%>
-		<li><a href="/flight-schedule<%="/"+I18n.locale.to_s unless I18n.locale.to_s == "en" %>/<%= %>" title="<%= city_name %> <%= arr_city_name %> Flights"><%= city_name %> <%= arr_city_name %> <%= t('flights.flights')%></a></li>
+		<li><a href="/flight-schedule/<%=url_escape(city_name)%>-<%= arr_city_name%>-flights.html" title="<%= city_name %> <%= arr_city_name %> Flights"><%= city_name %> <%= arr_city_name %> <%= t('flights.flights')%></a></li>
 		<% end %>
 	</ul>
 	<p class="more_link">
-		 <a href="/flight-schedule<%="/"+I18n.locale.to_s unless I18n.locale.to_s == "en" %>/flights-to-<%=use_helper.url_escape(arr_city_name)%>.html"><%= t('flights.more_flights_to')%> <%= arr_city_name%></a>
+		 <a href="/flight-schedule/flights-to-<%=use_helper.url_escape(arr_city_name)%>.html"><%= t('flights.more_flights_to')%> <%= arr_city_name%></a>
 	</p>
 	<div class="clearfix"></div>
 </div>

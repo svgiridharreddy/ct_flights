@@ -16,7 +16,7 @@ development:
   # database: air_development_testing
   # host: 54.169.165.81
   # username: flights
-  # password: ClearTripCalendars
+  # password: ClearTripCalendar
   port: 3306
   encoding: utf8
   # socket: /var/run/mysqld/mysqld.sock

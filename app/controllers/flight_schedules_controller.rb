@@ -11,13 +11,13 @@ class FlightSchedulesController < ApplicationController
 		@language = params[:lang].nil? ? 'en' : params[:lang]
 		@page_type="flight-schedule"
 		check_domain = check_domain(@language,@country_code)
+		@host_name = @application_processor.host_name(@country_code)
 		if check_domain
-			host_name = @application_processor.host_name(@country_code)
 			lang = @language == "en" ? "" : "#{@language}"
 			if @country_code == "IN"
-					redirect_to "#{host_name}/flight-schedule/flight-schedules-domestic.html" and return
+					redirect_to "#{@host_name}/flight-schedule/flight-schedules-domestic.html" and return
 			else
-				redirect_to "#{host_name}/#{lang}/flight-schedule/flight-schedules-domestic.html" and return
+				redirect_to "#{@host_name}/#{lang}/flight-schedule/flight-schedules-domestic.html" and return
 			end
 		end
 		if path.include?("flights-from") || path.include?("flights-to")
@@ -25,6 +25,9 @@ class FlightSchedulesController < ApplicationController
 			return
 		end
 		@route = UniqueRoute.find_by(schedule_route_url: url)
+		if @route.nil? || !@route.present?
+			redirect_to "#{@host_name}/flight-schedule/flight-schedules-domestic.html" and return
+		end
 		dep_city = CityName.find_by(city_code: @route.dep_city_code)
 		arr_city = CityName.find_by(city_code: @route.arr_city_code)
 		@dep_city_name  = dep_city.city_name_en.titleize
@@ -94,6 +97,9 @@ class FlightSchedulesController < ApplicationController
 		lang= @language=="ar" ? "/ar" : ""
 		@city_name = path.gsub("#{lang}/flight-schedule/flights-#{@city_section}-",'').gsub('.html','').gsub('-','').titleize
 		city = UniqueRoute.find_by(dep_city_name: @city_name)
+		if !city.present? || city.nil?
+			redirect_to "#{@host_name}/flight-schedule/flight-schedules-domestic.html" and return
+		end
 		@city_code = city.dep_city_code
 		@city_name_ar = CityName.find_by(city_code: @city_code).city_name_ar
 		@city_country_code = city.dep_country_code
