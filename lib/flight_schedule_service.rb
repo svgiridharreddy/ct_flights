@@ -429,7 +429,7 @@ class FlightScheduleService
     headers = {"user-agent" => "seo-codingmart"}
     calendar_url = "https://www.cleartrip.com/flights/calendar/calendarstub.json?from=#{dep_city_code}&to=#{arr_city_code}&start_date=#{today}&end_date=#{next_thirty_days}"
     calendar_url_response = HTTParty.get(calendar_url,:headers => headers)
-    calendar_data_30 = JSON.parse(calendar_url_response.body.gsub('\"','"')) if calendar_url_response.present? && calendar_url_response.code == 200    
+    calendar_data_30 = JSON.parse(calendar_url_response.body.gsub('\"','"')) if calendar_url_response.present? && calendar_url_response.code == 200   rescue ""
     calendar_data_90 = FareCalendar.where({source_city_code: @dep_city_code, destination_city_code: @arr_city_code,:section=>@country_code}).first rescue {}
     if calendar_data_90.present? && calendar_data_90.calendar_json.present? &&  calendar_data_30.present? 
       calendar_json_90 = JSON.parse(calendar_data_90.calendar_json)['calendar_json']

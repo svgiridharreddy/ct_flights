@@ -1,8 +1,8 @@
 <div class="blocks">
-	<% if schedule_layout_values["dep_country_code"] == schedule_layout_values["country_code"] &&    schedule_layout_values["arr_country_code"] == schedule_layout_values["country_code"]   %>
-		<h2><%= t('brand.top_dom_airlines_from')%> <%= dep_city_name%></h2>
+	<% if schedule_layout_values["dep_country_code"] == @country &&    schedule_layout_values["arr_country_code"] == @country   %>
+		<h2><%= I18n.t('flight_schedule.top_dom_airlines_from')%> <%= dep_city_name%></h2>
 	<% else %>
-		<h2><%= t('brand.top_int_airlines_from')%> <%= dep_city_name%></h2>
+		<h2><%= I18n.t('flight_schedule.top_int_airlines_from')%> <%= dep_city_name%></h2>
 	<% end %>
 	<ul class="list-unstyled top-airlines">
 		<% top_airlines.each do |cc| %>
