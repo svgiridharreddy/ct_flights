@@ -60,15 +60,20 @@
            <%= render :partial=>"schedules/from_to/ar/shared/from_to_city_table_ar",:locals=>{:routes=> popular_routes["int"], section: "int", :country_code=> @country_code, :use_helper=>use_helper, :assets_path=>assets_path,city_name: @city_name_ar} %><!--/normal-list-view-->
         <% end %>
        
-         <div class="content-desc">
+        <div class="content-desc">
           <h1><%= t('from_city.flight_from_city_name', city_name: @city_name_ar) %></h1>
           
           <% if city_layout_values["city_from_content"].present? %>
             <%= raw city_layout_values["city_from_content"] %>
           <% else %>
-          <p>
-            <%= render partial: "schedules/from_to/ar/ae_ar_from_city_templatized_content", locals: {city_name: @city_name_ar, host: display_host(@country_code),city_layout_values: city_layout_values} %>
-          </p>
+            <p>
+              <%= render partial: "schedules/from_to/ar/contents/from/ae_ar_from_city_templatized_content", locals: {city_name: @city_name_ar, host: display_host(@country_code),city_layout_values: city_layout_values} %>
+            </p>
+          <% end %>
+          <% if city_layout_values["from_more_routes"].present? %>
+            <h2><%= I18n.t("from_city.flights_from")%> <%= @city_name_ar %></h2>
+            <%= render :partial=>"schedules/from_to/ar/shared/from_to_more_routes_ar", locals: { top_routes: city_layout_values["from_more_routes"],section: "from"} %>
+            <div class="clearfix"></div>
           <% end %>
         </div>
       </div>

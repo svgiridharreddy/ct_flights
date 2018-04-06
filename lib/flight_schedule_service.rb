@@ -127,6 +127,7 @@ class FlightScheduleService
       more_routes["arr_more_routes"] = UniqueRoute.where(arr_city_code: @arr_city_code).where.not(dep_city_code: @dep_city_code).order("weekly_flights_count desc").pluck(:dep_city_code).uniq.take(30).map{|city_code| CityName.find_by(city_code: city_code) rescue "" }
       return more_routes
     end
+
     def schedule_values(schedule_routes)
       I18n.locale = @language.to_sym
       weekly_flights = PackageFlightSchedule.where(dep_city_code: @route.dep_city_code,arr_city_code: @route.arr_city_code).pluck(:carrier_code)
@@ -350,6 +351,15 @@ class FlightScheduleService
     routes["int"] = routes["int"].sort {|a,b| a["min_price"] <=> b["min_price"]}
     return routes
   end
+  def from_to_more_routes(url_section,city_section,other_section,city_code)
+    routes = UniqueRoute.where("#{city_section}_city_code='#{city_code}' and #{other_section}_city_code!='#{city_code}'").limit(45)
+    if @language == "ar"
+      more_routes = routes.pluck("#{other_section}_city_code").map{|cc| CityName.find_by(city_code:  cc)}
+    else
+      more_routes = routes
+    end
+    return more_routes
+  end
   def city_layout_values(city_code, url_section,city_name)
      country_code = @country_code
     if url_section == "from"
@@ -360,7 +370,7 @@ class FlightScheduleService
       other_section = "dep"
     end
     city_layout_values = {}
-    
+    city_layout_values["#{url_section}_more_routes"] = from_to_more_routes(url_section,city_section,other_section,city_code)
     airport = Airport.find_by({:city_code=> city_code})
     city_layout_values["dom_airlines"] = schedule_airline_values["top_dom_airlines"]
     city_layout_values["int_airlines"] = schedule_airline_values["top_int_airlines"]
@@ -404,7 +414,6 @@ class FlightScheduleService
       city_layout_values["#{section}_airlines_cc"] = AirlineBrand.where("carrier_code in (?) and country_code=?",top_airlines_cc,@country_code).map(&:carrier_code).take(3)
       airlines_cc = AirlineBrand.where("carrier_code in (?) and #{country_type}",top_airlines_cc,@country_code).map(&:carrier_code).take(3)
       city_layout_values["city_#{section}_airlines"] = airlines_cc.map{|cc| I18n.t("airlines.#{cc}")}.to_sentence rescue ""
-      city_layout_values["#{url_section}_more_routes"] = UniqueRoute.where("#{city_section}_city_code='#{city_code}' and #{other_section}_city_code!='#{city_code}'").limit(45)
       city_layout_values["#{section}_route_count"] = UniqueRoute.where("#{city_section}_city_code='#{city_code}' and #{other_section}_city_code!='#{city_code}' and #{country_section}").count
     end
     city_layout_values["major_sectors"] = (city_layout_values["major_dom_sectors"] + city_layout_values["major_int_sectors"]).flatten.shuffle.take(3).to_sentence rescue ""

@@ -67,8 +67,13 @@
             <%= raw city_layout_values["city_from_content"] %>
           <% else %>
           <p>
-            <%= render partial: "schedules/from_to/ar/ae_ar_to_city_templatized_content", locals: {city_name: @city_name_ar, host: display_host(@country_code),city_layout_values: city_layout_values} %>
+            <%= render partial: "schedules/from_to/ar/contents/to/ae_ar_to_city_templatized_content", locals: {city_name: @city_name_ar, host: display_host(@country_code),city_layout_values: city_layout_values} %>
           </p>
+          <% end %>
+          <% if city_layout_values["to_more_routes"].present? %>
+            <h2> <%= I18n.t("from_city.flights_to")%>  <%= @city_name_ar %></h2>
+            <%= render :partial=>"schedules/from_to/ar/shared/from_to_more_routes_ar", locals: { top_routes: city_layout_values["to_more_routes"],section: "to"} %>
+            <div class="clearfix"></div>
           <% end %>
         </div>
       </div>

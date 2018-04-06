@@ -38,7 +38,7 @@
   	</section>
     <!--======Second Header Starts Here==========-->
       
-        <%= render :partial => "flight_schedule_routes/shared/en/schedule_header",locals: { dep_city_name: dep_city_name,arr_city_name: arr_city_name,route_dom_airlines: schedule_header["dom_airlines"],route_int_airlines: schedule_header["int_airlines"],near_by_airport_hotels: schedule_header["near_by_airport_hotels"],hotels_list: schedule_header["hotels_list"],hotels_header_list: schedule_header["hotels_header_list"],hotel_types: schedule_header["hotel_types"],train_details: schedule_header["train_details"] ,dep_city_name_formated: schedule_layout_values["dep_city_name_formated"],arr_city_name_formated: schedule_layout_values["arr_city_name_formated"],use_helper: use_helper,arr_city_weekend_getaway: schedule_header["arr_city_weekend_getaway"],arr_featured_city: schedule_header["arr_featured_city"],arr_country_code: schedule_layout_values["arr_country_code"],dep_country_code: schedule_layout_values["dep_country_code"],arr_city_package: schedule_header["arr_city_package"],arr_events_city: schedule_header["arr_events_city"],section: schedule_layout_values["section"],country_code: schedule_layout_values["country_code"]} %> 
+        <%= render :partial => "schedules/routes/shared/en/schedule_header",locals: { dep_city_name: dep_city_name,arr_city_name: arr_city_name,route_dom_airlines: schedule_header["dom_airlines"],route_int_airlines: schedule_header["int_airlines"],near_by_airport_hotels: schedule_header["near_by_airport_hotels"],hotels_list: schedule_header["hotels_list"],hotels_header_list: schedule_header["hotels_header_list"],hotel_types: schedule_header["hotel_types"],train_details: schedule_header["train_details"] ,dep_city_name_formated: schedule_layout_values["dep_city_name_formated"],arr_city_name_formated: schedule_layout_values["arr_city_name_formated"],use_helper: use_helper,arr_city_weekend_getaway: schedule_header["arr_city_weekend_getaway"],arr_featured_city: schedule_header["arr_featured_city"],arr_country_code: schedule_layout_values["arr_country_code"],dep_country_code: schedule_layout_values["dep_country_code"],arr_city_package: schedule_header["arr_city_package"],arr_events_city: schedule_header["arr_events_city"],section: schedule_layout_values["section"],country_code: schedule_layout_values["country_code"]} %> 
      <!--======Second Header Ends Here==========-->
   	<section id="content">
       <div class="container-fluid">
@@ -89,7 +89,7 @@
                   </div>
                 </div>
               </div><!--/calendar-new-->
-  	  			<%= render :partial=> "flight_schedule_routes/shared/en/schedule_routes_table",locals: {schedule_layout_values: schedule_layout_values,dep_city_name: dep_city_name,arr_city_name: arr_city_name}%>
+  	  			<%= render :partial=> "schedules/routes/shared/en/schedule_routes_table",locals: {schedule_layout_values: schedule_layout_values,dep_city_name: dep_city_name,arr_city_name: arr_city_name}%>
   					<div class="return_link">
   			      Get airfare and schedule for return <a href="/flight-schedule/<%= schedule_layout_values["return_url"] %>"> <%= arr_city_name %> <%= dep_city_name %></a> flights.
   			  	</div>
@@ -139,13 +139,7 @@
         <%= render partial: "footers/#{country_code.downcase}/schedule/routes/en/en_schedule_footer", locals: {country_code: country_code,dep_city_name: dep_city_name,arr_city_name: arr_city_name,dep_city_name_formated: schedule_layout_values["dep_city_name_formated"],arr_city_name_formated: schedule_layout_values["arr_city_name_formated"],page_type: 'schedule-routes',footer_links_data: schedule_footer[:footer_links_data],top_airlines: schedule_footer[:int_airlines],flights_header: schedule_header,section: @section} %>
       </div>
     </div>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-    <script src="https://d2w5af8s1781.cloudfront.net/waytogo-staging/javascripts/jquery-ui.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bxslider/4.2.5/jquery.bxslider.min.js"></script>
-    <script type="text/javascript" src="https://d2w5af8s1781.cloudfront.net/waytogo-staging/javascripts/date_format.js"></script>
-    <script type="text/javascript" src="https://d2w5af8s1781.cloudfront.net/waytogo-staging/javascripts/ct_custom.js"></script>
-    <script type="text/javascript" src="https://d2w5af8s1781.cloudfront.net/waytogo-staging/javascripts/banner_tool_v1.js"></script>
+    
     <script>
         var country_code= "<%= @country_code.downcase %>";
         var section_type= "<%= @section.include?("dom") ? "domestic" : "international" %>";

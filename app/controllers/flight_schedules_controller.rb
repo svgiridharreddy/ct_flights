@@ -103,6 +103,7 @@ class FlightSchedulesController < ApplicationController
 		@city_code = city.dep_city_code
 		@city_name_ar = CityName.find_by(city_code: @city_code).city_name_ar
 		@city_country_code = city.dep_country_code
+		@section = @city_country_code == @country_code ? "dom" : "int"
 		file_name = path.split("/")[2]
 		@values = { country_code: @country_code,
 							  country_name: @country_name,

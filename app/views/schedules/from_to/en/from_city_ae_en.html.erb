@@ -66,14 +66,15 @@
             <%= raw city_layout_values["city_from_content"] %>
           <% else %>
             <p>
-              <%= render partial: "schedules/from_to/en/in_en_from_city_templatized_content", locals: {city_name: @city_name, host: display_host(@country_code),city_layout_values: city_layout_values} %>
+              <%= render partial: "schedules/from_to/en/contents/from/ae_en_from_city_templatized_content", locals: {city_name: @city_name, host: display_host(@country_code),city_layout_values: city_layout_values} %>
             </p>
           <% end %>
           <% if city_layout_values["from_more_routes"].present? %>
-            <h2>Flights From <%= @city_name %></h2>
+            <h2>Flights From <%= @city_name_ar %></h2>
+            <% binding.pry %>
             <%= render :partial=>"schedules/from_to/en/shared/top_more_routes", locals: { top_routes: city_layout_values["from_more_routes"] } %>
-          <div class="clearfix"></div>
-        <% end %>
+            <div class="clearfix"></div>
+          <% end %>
         </div>
       </div>
     </div>

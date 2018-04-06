@@ -13,6 +13,13 @@
     </title>
     <meta name="description" content="<%= seo[:description] %>">
     <meta name="keywords" content="<%= seo[:keywords] %>">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="https://d2w5af8s1781.cloudfront.net/waytogo-staging/javascripts/jquery-ui.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bxslider/4.2.5/jquery.bxslider.min.js"></script>
+    <script type="text/javascript" src="https://d2w5af8s1781.cloudfront.net/waytogo-staging/javascripts/date_format.js"></script>
+    <script type="text/javascript" src="https://d2w5af8s1781.cloudfront.net/waytogo-staging/javascripts/ct_custom.js"></script>
+    <script type="text/javascript" src="https://d2w5af8s1781.cloudfront.net/waytogo-staging/javascripts/banner_tool_v1.js"></script>
     <%# if @page_type== "flight-schedule" && @country_code="IN" %>
       <!-- <meta itemprop="name" content="<%@dep_city_name %> to <%= @arr_city_name %> Flights, Airfares @ ₹ <%= @title_min_price%> + 30% cashback - Cleartrip"> -->
       <!-- <meta itemprop="description" content="Find the best deal for <%@dep_city_name %> to <%= @arr_city_name %> flights on Cleartrip. Use Coupon code - BESTBUY &amp; get amazing discounts on the flights from <%@dep_city_name %> to <%= @arr_city_name %>. Hurry Now!">  -->
@@ -89,4 +96,5 @@
     
   </head>
     <%= yield %>
+
 </html>

@@ -24,7 +24,7 @@
           <div class="airline">
 
             <div class="col-xs-2 no-padding">
-              <a data-route="<%=route['dep_airport_code']%>-<%= route['arr_airport_code']%>-<%= route['carrier_code'] %>" data-section="<%= section.include?('int') ? 'int' : 'dom' %>" class="booking flight-schedule-booking">
+              <a data-route="<%=route['dep_airport_code']%>-<%= route['arr_airport_code']%>-<%= route['carrier_code'] %>" data-section="<%= @section.include?('int') ? 'int' : 'dom' %>" class="booking flight-schedule-booking">
                 <% if (route['min_price'].present? && route['min_price']!=0) || ['IN', 'AE'].include?(country_code)==false %>
                   <%= I18n.t('button.book_now')%>
                 <% else %>
@@ -93,7 +93,7 @@
       <li>
         <div class="airline">
           <div class="col-xs-2 no-padding">
-            <a data-route="<%=route['dep_airport_code']%>-<%= route['arr_airport_code']%>-<%= route['carrier_code'] %><%= section.include?('dom') ? '-int' : '' %>" class="booking flight-schedule-booking">
+            <a data-route="<%=route['dep_airport_code']%>-<%= route['arr_airport_code']%>-<%= route['carrier_code'] %><%= @section.include?('dom') ? '-int' : '' %>" class="booking flight-schedule-booking">
               <% if (route['min_price'].present? && route['min_price']!=0) || ['IN', 'AE'].include?(country_code)==false %>
                 <%= t('brand.book_now')%>
               <% else %>

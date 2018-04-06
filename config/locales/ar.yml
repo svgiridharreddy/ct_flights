@@ -256,6 +256,9 @@ ar:
     rate: "معدل"
     per_adult: "لكل بالغ"
   from_city:
+    flights_from: " رحلات من"
+    flights_to: " رحلات الى"
+    flights: "رحلات"
     international_flights_from: "رحلات دولية من"
     domestic_flights_from: "الرحلات الداخلية من"
     international_flights_to: "رحلات دولية إلى"

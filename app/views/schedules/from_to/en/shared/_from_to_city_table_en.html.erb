@@ -1,10 +1,10 @@
 <div class="normal-list">
   <div class="sort-bar">
     <div class="items text-center">
-      <div class="col-xs-2"><a href=""><%= t('route')%></a></div>
-      <div class="col-xs-2"><a class="sortAsc" href=""><%= t('airline')%></a></div>
-      <div class="col-xs-2"><a href=""><%= t('departure')%></a></div>
-      <div class="col-xs-2"><a class="sortDes" href=""><%= t('arrival')%></a></div>
+      <div class="col-xs-2"><a href="">Route</a></div>
+      <div class="col-xs-2"><a class="sortAsc" href="">Airline</a></div>
+      <div class="col-xs-2"><a href="">Departure</a></div>
+      <div class="col-xs-2"><a class="sortDes" href="">Arrival</a></div>
       <% if ['IN', 'AE'].include?(country_code) %>
       <div class="col-xs-2">
         <a class="sortDes" href="">
@@ -28,22 +28,22 @@
             </div>
             <div class="col-xs-2 no-padding">
               <% if country_code=='IN' && section.include?('dom') %>
-              <span class="Domairlogo go">
-                <img src="<%= assets_path%>/new_images/airlines/<%= route['carrier_code']%>.png" alt="">
-              </span>
-              <span class="name">
-                <%= route['carrier_code'] %><%= route['flight_no'] %> |
-                <% airline_name = link_to( t("airlines.#{route['carrier_code']}"), "/flight-booking/" + format_airline_name(I18n.with_locale(:en) { t("airlines.#{route['carrier_code']}") }).downcase.gsub(" ", "-").gsub("--","-") + ".html") %>
-                <%= airline_name %>
-              </span>
+                <span class="Domairlogo go">
+                  <img src="<%= assets_path%>/new_images/airlines/<%= route['carrier_code']%>.png" alt="">
+                </span>
+                <span class="name">
+                  <%= route['carrier_code'] %><%= route['flight_no'] %> |
+                  <% airline_name = link_to( t("airlines.#{route['carrier_code']}"), "/flight-booking/" + format_airline_name(I18n.with_locale(:en) { t("airlines.#{route['carrier_code']}") }).downcase.gsub(" ", "-").gsub("--","-") + ".html") %>
+                  <%= airline_name %>
+                </span>
               <% else %>
-              <span class="name mt-15">
-                <%= route['carrier_code'] %><%= route['flight_no'] %>
-              </span>
-              <span class="name mt-5">
-                <% airline_name = link_to( t("airlines.#{route['carrier_code']}"), "/flight-booking/" + format_airline_name(I18n.with_locale(:en) { t("airlines.#{route['carrier_code']}") }).downcase.gsub(" ", "-").gsub("--","-") + ".html") %>
-                <%= airline_name %>
-              </span>
+                <span class="name mt-15">
+                  <%= route['carrier_code'] %><%= route['flight_no'] %>
+                </span>
+                <span class="name mt-5">
+                  <% airline_name = link_to( t("airlines.#{route['carrier_code']}"), "/flight-booking/" + format_airline_name(I18n.with_locale(:en) { t("airlines.#{route['carrier_code']}") }).downcase.gsub(" ", "-").gsub("--","-") + ".html") %>
+                  <%= airline_name %>
+                </span>
               <% end %>
               <br>
             </div>
