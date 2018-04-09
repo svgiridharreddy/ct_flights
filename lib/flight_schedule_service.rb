@@ -72,9 +72,11 @@ class FlightScheduleService
 
   	def schedule_header_details 
       flights_header = {}  
+      hop  =  @route_type =="non-stop" ? '' : "Hop"
+      model_name = "PackageFlight#{hop}Schedule".constantize
       top_dom_cc = AirlineBrand.where(country_code: @country_code).order("brand_routes_count desc").limit(8).pluck(:carrier_code)
-      route_dom_airlines = PackageFlightSchedule.where(dep_city_code: @dep_city_code,arr_city_code: @arr_city_code,carrier_code: top_dom_cc).pluck(:carrier_code).uniq
-      route_int_airlines = PackageFlightSchedule.where(dep_city_code: @dep_city_code,arr_city_code: @arr_city_code).where.not(carrier_code: top_dom_cc).pluck(:carrier_code).uniq
+      route_dom_airlines = model_name.where(dep_city_code: @dep_city_code,arr_city_code: @arr_city_code,carrier_code: top_dom_cc).pluck(:carrier_code).uniq
+      route_int_airlines = model_name.where(dep_city_code: @dep_city_code,arr_city_code: @arr_city_code).where.not(carrier_code: top_dom_cc).pluck(:carrier_code).uniq
       flights_header["dom_airlines"] = route_dom_airlines
       flights_header["int_airlines"] = route_int_airlines
       
@@ -115,16 +117,20 @@ class FlightScheduleService
       return flights_header      
     end
   	def get_more_routes
+      hop = @route_type == "one-hop" ? 'Hop' : ''
+      model_name = "Unique#{hop}Route".constantize
       more_routes =  {}
-  		more_routes["dep_more_routes"] = UniqueRoute.where(dep_city_code: @dep_city_code).where.not(arr_city_code: @arr_city_code).order("weekly_flights_count desc").pluck(:arr_city_name).uniq.take(30)
-  		more_routes["arr_more_routes"] = UniqueRoute.where(arr_city_code: @arr_city_code).where.not(dep_city_code: @dep_city_code).order("weekly_flights_count desc").pluck(:dep_city_name).uniq.take(30)
+  		more_routes["dep_more_routes"] = model_name.where(dep_city_code: @dep_city_code).where.not(arr_city_code: @arr_city_code).order("weekly_flights_count desc").pluck(:arr_city_name).uniq.take(30)
+  		more_routes["arr_more_routes"] = model_name.where(arr_city_code: @arr_city_code).where.not(dep_city_code: @dep_city_code).order("weekly_flights_count desc").pluck(:dep_city_name).uniq.take(30)
       return more_routes
   	end
 
     def get_more_arabic_routes 
+      hop = @route_type == "one-hop" ? 'Hop' : ''
+      model_name = "Unique#{hop}Route".constantize
       more_routes =  {}
-      more_routes["dep_more_routes"] = UniqueRoute.where(dep_city_code: @dep_city_code).where.not(arr_city_code: @arr_city_code).order("weekly_flights_count desc").pluck(:arr_city_code).uniq.take(30).map{|city_code| CityName.find_by(city_code: city_code) rescue "" }
-      more_routes["arr_more_routes"] = UniqueRoute.where(arr_city_code: @arr_city_code).where.not(dep_city_code: @dep_city_code).order("weekly_flights_count desc").pluck(:dep_city_code).uniq.take(30).map{|city_code| CityName.find_by(city_code: city_code) rescue "" }
+      more_routes["dep_more_routes"] = model_name.where(dep_city_code: @dep_city_code).where.not(arr_city_code: @arr_city_code).order("weekly_flights_count desc").pluck(:arr_city_code).uniq.take(30).map{|city_code| CityName.find_by(city_code: city_code) rescue "" }
+      more_routes["arr_more_routes"] = model_name.where(arr_city_code: @arr_city_code).where.not(dep_city_code: @dep_city_code).order("weekly_flights_count desc").pluck(:dep_city_code).uniq.take(30).map{|city_code| CityName.find_by(city_code: city_code) rescue "" }
       return more_routes
     end
 
@@ -204,6 +210,83 @@ class FlightScheduleService
       schedule_layout_values["airport_details"] = get_airport_deatils
       return schedule_layout_values
     end
+
+    def schedule_hop_values(schedule_routes)
+      I18n.locale = @language.to_sym
+      weekly_flights = PackageFlightHopSchedule.where(dep_city_code: @route.dep_city_code,arr_city_code: @route.arr_city_code).pluck(:carrier_code)
+      weekly_airlines_count = weekly_flights.each_with_object(Hash.new(0)) {|k,v| v[k]+= 1}
+      weekly_airlines_count = weekly_airlines_count.map{|k,v| I18n.t("airlines.#{k}") +"#{I18n.t('has')} #{v}"}.to_sentence
+      weekly_flights_count = weekly_flights.count
+      lang_city_name = "city_name_#{@language.downcase}"
+      # airline_count_list = weekly_flights.map{}
+      more_routes = @language == "en" ? get_more_routes : get_more_arabic_routes
+      min_pr = min_price_new_changes(@dep_city_code,@arr_city_code)
+      schedule_routes_with_price = []
+      schedule_routes.each do |route|
+        route_json = eval(route.to_json)
+        route_json[:cc_min_price] = min_pr[:cc][route.carrier_code]
+        schedule_routes_with_price << route_json 
+      end
+      operational_airline_codes = schedule_routes.group_by{|al| al.carrier_code}.map{|k,v| [k,v.count]}.to_h
+      operational_airline_names = operational_airline_codes.map{|k,v| I18n.t("airlines.#{k}")}
+      airport_details = get_airport_deatils
+      @calendar_dates = min_pr[:dt]
+        @min30 = min_pr[:cc1]
+        @min90 = min_pr[:cc2]
+        main_min30 = @min30.values.min{ |a,b| (a["pr"].to_f)<=>(b["pr"].to_f) }  if @min30.values.present?
+        main_min90 = @min90.values.min{ |a,b| (a["pr"].to_f)<=>(b["pr"].to_f) }  if @min90.values.present?
+      schedule_layout_hop_values = {}
+      schedule_layout_hop_values["schedule_routes"] = schedule_routes_with_price
+      schedule_layout_hop_values["dep_city_name"] = @route.dep_city_name
+      schedule_layout_hop_values["arr_city_name"] = @route.arr_city_name
+      schedule_layout_hop_values["dep_city_name_#{@language.downcase}"] = CityName.find_by(city_code: @dep_city_code).send(lang_city_name)
+      schedule_layout_hop_values["arr_city_name_#{@language.downcase}"] = CityName.find_by(city_code: @dep_city_code).send(lang_city_name)
+      schedule_layout_hop_values["dep_city_name_formated`"] = schedule_airline_values["dep_city_name_formated"]
+      schedule_layout_hop_values["arr_city_name_formated"] = schedule_airline_values["arr_city_name_formated"]
+      schedule_layout_hop_values["arr_city_name"] = @route.arr_city_name
+      schedule_layout_hop_values["dep_city_code"] = @route.dep_city_code
+      schedule_layout_hop_values["arr_city_code"] = @route.arr_city_code
+      schedule_layout_hop_values["dep_airport_code"] = @route.dep_airport_code
+      schedule_layout_hop_values["arr_airport_code"] = @route.arr_airport_code
+      schedule_layout_hop_values["section"] = @section
+      schedule_layout_hop_values["dep_airport_name"] = Airport.find_by(airport_code: @route.dep_airport_code).airport_name
+      schedule_layout_hop_values["arr_airport_name"] = Airport.find_by(airport_code: @route.arr_airport_code).airport_name
+      schedule_layout_hop_values["country_code"] = @country_code
+      schedule_layout_hop_values["country_name"] = @country_name
+      schedule_layout_hop_values["dep_country_code"] = @route.dep_country_code
+      schedule_layout_hop_values["arr_country_code"] = @route.arr_country_code
+      schedule_layout_hop_values["first_dep_airline"]  =  I18n.t("airlines.#{schedule_routes.first[:carrier_code]}")
+      schedule_layout_hop_values["first_dep_airline_no"] = schedule_routes.first[:flight_no]
+      schedule_layout_hop_values["first_dep_time"] = Time.strptime(schedule_routes.first[:dep_time],"%H:%M").to_time.strftime("%I:%M %p")
+      schedule_layout_hop_values["last_dep_airline"] = I18n.t("airlines.#{schedule_routes.last[:carrier_code]}")
+      schedule_layout_hop_values["last_dep_time"]  = Time.strptime(schedule_routes.last[:dep_time],"%H:%M").to_time.strftime("%I:%M %p")
+      schedule_layout_hop_values["last_dep_airline_no"] = schedule_routes.last[:flight_no]
+      min_max_duration = schedule_routes.collect{|r| r[:duration]}.minmax
+      schedule_layout_hop_values["min_duration"] = if min_max_duration[0].include? (":") then min_max_duration[0].to_time.strftime("%Hh %Mm") else Time.at(min_max_duration[0].to_i*60).utc.strftime("%Hh %Mm") end
+      schedule_layout_hop_values["max_duration"] = if min_max_duration[1].include? (":") then min_max_duration[1].to_time.strftime("%Hh %Mm") else Time.at(min_max_duration[1].to_i*60).utc.strftime("%Hh %Mm") end
+      schedule_layout_hop_values["return_url"]  = schedule_airline_values["return_url"]
+      schedule_layout_hop_values["top_dom_airlines"] = schedule_airline_values["top_dom_airlines"]
+      schedule_layout_hop_values["top_int_airlines"] = schedule_airline_values["top_int_airlines"]
+      schedule_layout_hop_values["distance"] = @route.distance
+      schedule_layout_hop_values["weekly_flights_count"] = weekly_flights_count
+      schedule_layout_hop_values["operational_airlines"] = operational_airline_names.to_sentence
+      schedule_layout_hop_values["operational_airlines_count"] =  operational_airline_names.count
+      schedule_layout_hop_values['airline_count_list'] = weekly_airlines_count
+      content = fetch_route_content
+      schedule_layout_hop_values["dep_city_content"] = content["dep_city_content"]
+      schedule_layout_hop_values["arr_city_content"] = content["arr_city_content"]
+      schedule_layout_hop_values["unique_route_content"] = content["unique_route_content"] %{airlines_list: schedule_layout_hop_values["operational_airlines"],weekly_flights_count: schedule_layout_hop_values["weekly_flights_count"],airline_count_list: schedule_layout_hop_values["operational_airlines"],first_dep_airline_name: schedule_layout_hop_values["first_dep_airline"],first_dep_time: schedule_layout_hop_values["first_dep_time"],first_dep_flight_no: schedule_layout_hop_values["first_dep_airline_no"],last_dep_flight_no: schedule_layout_hop_values["last_dep_airline_no"],last_dep_airline_name: schedule_layout_hop_values["last_dep_airline"],last_dep_time: schedule_layout_hop_values["last_dep_time"]}
+      schedule_layout_hop_values['max_price'] = min_pr[:max]
+      schedule_layout_hop_values['route_min_price'] = min_pr[:min]
+      schedule_layout_hop_values["min30"] = main_min30
+      schedule_layout_hop_values["min90"] = main_min90
+      schedule_layout_hop_values["flight_timings"] = @min90
+      schedule_layout_hop_values["more_flights_from_dep"] = more_routes["dep_more_routes"]
+      schedule_layout_hop_values["more_flights_to_arr"] = more_routes["arr_more_routes"]
+      schedule_layout_hop_values["airport_details"] = get_airport_deatils
+      return schedule_layout_hop_values
+    end
+
     def schedule_hotel_api_content
       # to get hotel star data , local cities randamized  data and property data from table 
       hotel_api_content = HotelApi.where(city_name: arr_city_name_formated.titleize)

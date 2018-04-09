@@ -75,4 +75,13 @@ namespace :unique_routes_table do
       end
     end
   end
+  task :compare_hop_routes => :environment do
+    routes = UniqueHopRoute.all
+    routes.each_with_index do |r,index|
+      route=UniqueRoute.find_by(schedule_route_url: r.url)
+      if route.nil? || !route.present?
+        puts "#{index}-#{r.url},dep_city_code='#{r.dep_city_code}' and arr_city_code='#{r.arr_city_code}'"
+      end
+    end
+  end
 end 

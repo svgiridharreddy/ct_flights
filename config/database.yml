@@ -12,7 +12,7 @@ development:
   database: air_development_dev 
   host: localhost
   username: root
-  password: root
+  password: root 
   # database: air_development_testing
   # host: 54.169.165.81
   # username: flights

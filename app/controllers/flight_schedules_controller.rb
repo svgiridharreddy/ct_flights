@@ -24,16 +24,23 @@ class FlightSchedulesController < ApplicationController
 			get_from_to(path)
 			return
 		end
+
 		@route = UniqueRoute.find_by(schedule_route_url: url)
+		
 		if @route.nil? || !@route.present?
-			redirect_to "#{@host_name}/flight-schedule/flight-schedules-domestic.html" and return
+			@route = UniqueHopRoute.find_by(url: url)	
+			if @route.nil? || !@route.present?
+				redirect_to "#{@host_name}/flight-schedule/flight-schedules-domestic.html" and return
+			end
+			hop_schedule_values = get_hop_schedule_values
+			return
 		end
 		dep_city = CityName.find_by(city_code: @route.dep_city_code)
 		arr_city = CityName.find_by(city_code: @route.arr_city_code)
 		@dep_city_name  = dep_city.city_name_en.titleize
 		@arr_city_name = arr_city.city_name_en.titleize
-		@dep_city_name_ar  = dep_city.city_name_ar.titleize
-		@arr_city_name_ar = arr_city.city_name_ar.titleize
+		@dep_city_name_ar  = dep_city.city_name_ar rescue ""
+		@arr_city_name_ar = arr_city.city_name_ar rescue ""
 		# @route_type = @route.hop == 0 ? "non-stop" : "hop"
 		# binding.pry
 		@route_type = "non-stop"
@@ -123,6 +130,67 @@ class FlightSchedulesController < ApplicationController
 		render partial, locals: {popular_routes: from_to_values,application_processor: @application_processor,page_type: "flight-schedule",first_file_name: file_name,city_layout_values: city_layout_values,host: host,schedule_footer: schedule_footer}
 	end
 
+	def get_hop_schedule_values
+		@route_details = {  :dep_city_code => @route.dep_city_code,
+											  :arr_city_code => @route.arr_city_code,
+											  :dep_airport_code => @route.dep_airport_code,
+											  :arr_airport_code => @route.arr_airport_code,
+											  :dep_country_code => @route.dep_country_code,
+												:arr_country_code => @route.arr_country_code,
+												:dep_city_name => @dep_city_name,
+												:arr_city_name => @arr_city_name,
+												:country_code => @country_code,
+												:section => @section,
+												:language => @language,
+												:route => @route,
+												:route_type => @route_type,
+												:country_name => @country_name }
+		dep_city = CityName.find_by(city_code: @route.dep_city_code)
+		arr_city = CityName.find_by(city_code: @route.arr_city_code)
+		@dep_city_name  = dep_city.city_name_en.titleize
+		@arr_city_name = arr_city.city_name_en.titleize
+		@dep_city_name_ar  = dep_city.city_name_ar rescue ""
+		@arr_city_name_ar = arr_city.city_name_ar rescue ""
+		if @route.dep_country_code == @country_code &&  @route.arr_country_code == @country_code
+			@section = @country_code + "-dom"
+		else
+			@section = @country_code + "-int"
+		end
+		flight_schedule_service = FlightScheduleService.new @route_details	 
+		schedule_footer = flight_schedule_service.schedule_footer
+		@domestic_carrier_codes = AirlineBrand.where(country_code: @country_code).pluck("distinct(carrier_code)")
+		@all_carrier_codes = AirlineBrand.all.pluck(:carrier_code)
+
+		unless (@section.include? "int")
+      inc_cc = "carrier_code in ('#{@domestic_carrier_codes.join("\',\'")}')"
+    else
+      inc_cc =  "carrier_code in ('#{@all_carrier_codes.join("\',\'")}')"
+    end
+    case @country_code
+    when  "IN"
+    	@schedule_routes = @route.in_flight_hop_schedule_collectives.where("#{inc_cc}").order("dep_time asc").limit(10)
+    when  "AE"
+    	@schedule_routes = @route.ae_flight_schedule_collectives.where("#{inc_cc}").order("dep_time asc").limit(10)
+    when  "SA"
+    	@schedule_routes = @route.sa_flight_hop_schedule_collectives.where("#{inc_cc}").order("dep_time asc").limit(10)
+    when  "BH"
+    	@schedule_routes = @route.bh_flight_hop_schedule_collectives.where("#{inc_cc}").order("dep_time asc").limit(10)
+    when  "QA"
+    	@schedule_routes = @route.qa_flight_hop_schedule_collectives.where("#{inc_cc}").order("dep_time asc").limit(10)
+    when  "KW"
+    	@schedule_routes = @route.kw_flight_hop_schedule_collectives.where("#{inc_cc}").order("dep_time asc").limit(10)
+    when  "OM"
+    	@schedule_routes = @route.om_flight_hop_schedule_collectives.where("#{inc_cc}").order("dep_time asc").limit(10)
+    else
+    	@schedule_routes = @route.in_flight_hop_schedule_collectives.where("#{inc_cc}").order("dep_time asc").limit(10)
+    end
+		header_values = flight_schedule_service.schedule_header_details
+		schedule_layout_values = flight_schedule_service.schedule_hop_values(@schedule_routes)
+		@title_min_price = schedule_layout_values["route_min_price"]
+		partial = "schedules/routes/#{@language}/hops/flight_schedule_hop_#{@country_code.downcase}_#{@language.downcase}_#{@section[3..5]}"
+		render  partial,locals: {schedule_layout_values: schedule_layout_values,dep_city_name: @dep_city_name,arr_city_name: @arr_city_name,dep_city_name_ar: @dep_city_name_ar,arr_city_name_ar: @arr_city_name_ar,dep_city_code: @route.dep_city_code,arr_city_code: @route.arr_city_code,schedule_header: header_values,schedule_footer: schedule_footer }
+
+	end
 	def check_domain(language,country_code)
 		country_codes = ["AE","SA","BH","QA","KW","OM"]
 		if language=="ar" && country_code=="IN"

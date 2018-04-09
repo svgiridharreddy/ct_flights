@@ -160,7 +160,7 @@ class ApplicationProcessor
     elsif host == 'https://www.cleartrip.com'
       return ['IN',"India"]
     else
-      return ['AE',"United Arab Emirates"]
+      return ['IN',"India"]
     end
   end
 

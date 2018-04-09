@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class FlightScheduleCollectiveTest < ActiveSupport::TestCase
+class InFlightHopScheduleCollectiveTest < ActiveSupport::TestCase
   # test "the truth" do
   #   assert true
   # end
