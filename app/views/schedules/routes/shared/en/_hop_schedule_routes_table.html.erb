@@ -52,12 +52,13 @@
 	        </div>
 	        <div class="col-xs-2 no-padding pad-10">
 	        	<span>
-	        		<% if route[:cc_min_price].present? && route[:cc_min_price]!=0 && schedule_layout_values["country_code"]=='IN' %>
-	        		<i class='fa fa-inr'></i>
-	        		<% elsif route[:cc_min_price].present? && route[:cc_min_price]!=0 && schedule_layout_values["country_code"]=='AE' %>
-	        		AED 
-	        		<% end %>
-	        		<%= route[:cc_min_price].present? ? route[:cc_min_price].to_i : "--NA--"%>
+	        		<%# if route[:cc_min_price].present? && route[:cc_min_price]!=0 && schedule_layout_values["country_code"]=='IN' %>
+	        		<!-- <i class='fa fa-inr'></i> -->
+	        		<%# elsif route[:cc_min_price].present? && route[:cc_min_price]!=0 && schedule_layout_values["country_code"]=='AE' %>
+	        		<!-- AED  -->
+	        		<%# end %>
+	        		<%#= route[:cc_min_price].present? ? route[:cc_min_price].to_i : "--NA--"%>
+	        		--NA--
 	        	</span>
         	</div>
 		      <div class="col-xs-2 no-padding">

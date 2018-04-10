@@ -219,22 +219,23 @@ class FlightScheduleService
       # airline_count_list = weekly_flights.map{}
       more_routes = @language == "ar" ? get_more_arabic_routes : get_more_routes  
       min_pr = min_price_new_changes(@dep_city_code,@arr_city_code)
-      schedule_routes_with_price = []
-      schedule_routes.each do |route|
-        route_json = eval(route.to_json)
-        route_json[:cc_min_price] = min_pr[:cc][route.carrier_code]
-        schedule_routes_with_price << route_json 
-      end
+      # schedule_routes_with_price = []
+      # schedule_routes.each do |route|
+      #   route_json = eval(route.to_json)
+      #   route_json[:cc_min_price] = min_pr[:cc][route.carrier_code]
+      #   schedule_routes_with_price << route_json 
+      # end
       operational_airline_codes = schedule_routes.group_by{|al| al.carrier_code}.map{|k,v| [k,v.count]}.to_h
       operational_airline_names = operational_airline_codes.map{|k,v| I18n.t("airlines.#{k}")}
       airport_details = get_airport_deatils
-      @calendar_dates = min_pr[:dt]
-        @min30 = min_pr[:cc1]
-        @min90 = min_pr[:cc2]
-        main_min30 = @min30.values.min{ |a,b| (a["pr"].to_f)<=>(b["pr"].to_f) }  if @min30.values.present?
-        main_min90 = @min90.values.min{ |a,b| (a["pr"].to_f)<=>(b["pr"].to_f) }  if @min90.values.present?
+      # @calendar_dates = min_pr[:dt]
+      #   @min30 = min_pr[:cc1]
+      #   @min90 = min_pr[:cc2]
+      #   main_min30 = @min30.values.min{ |a,b| (a["pr"].to_f)<=>(b["pr"].to_f) }  if @min30.values.present?
+      #   main_min90 = @min90.values.min{ |a,b| (a["pr"].to_f)<=>(b["pr"].to_f) }  if @min90.values.present?
       schedule_layout_hop_values = {}
-      schedule_layout_hop_values["schedule_routes"] = schedule_routes_with_price
+      # schedule_layout_hop_values["schedule_routes"] = schedule_routes_with_price
+      schedule_layout_hop_values["schedule_routes"] = schedule_routes
       schedule_layout_hop_values["dep_city_name"] = @route.dep_city_name
       schedule_layout_hop_values["arr_city_name"] = @route.arr_city_name
       schedule_layout_hop_values["dep_city_name_#{@language.downcase}"] = CityName.find_by(city_code: @dep_city_code).send(lang_city_name)
@@ -274,11 +275,11 @@ class FlightScheduleService
       schedule_layout_hop_values["dep_city_content"] = content["dep_city_content"]
       schedule_layout_hop_values["arr_city_content"] = content["arr_city_content"]
       schedule_layout_hop_values["unique_route_content"] = content["unique_route_content"] %{airlines_list: schedule_layout_hop_values["operational_airlines"],weekly_flights_count: schedule_layout_hop_values["weekly_flights_count"],airline_count_list: schedule_layout_hop_values["operational_airlines"],first_dep_airline_name: schedule_layout_hop_values["first_dep_airline"],first_dep_time: schedule_layout_hop_values["first_dep_time"],first_dep_flight_no: schedule_layout_hop_values["first_dep_airline_no"],last_dep_flight_no: schedule_layout_hop_values["last_dep_airline_no"],last_dep_airline_name: schedule_layout_hop_values["last_dep_airline"],last_dep_time: schedule_layout_hop_values["last_dep_time"]}
-      schedule_layout_hop_values['max_price'] = min_pr[:max]
-      schedule_layout_hop_values['route_min_price'] = min_pr[:min]
-      schedule_layout_hop_values["min30"] = main_min30
-      schedule_layout_hop_values["min90"] = main_min90
-      schedule_layout_hop_values["flight_timings"] = @min90
+      # schedule_layout_hop_values['max_price'] = min_pr[:max]
+      # schedule_layout_hop_values['route_min_price'] = min_pr[:min]
+      # schedule_layout_hop_values["min30"] = main_min30
+      # schedule_layout_hop_values["min90"] = main_min90
+      # schedule_layout_hop_values["flight_timings"] = @min90
       schedule_layout_hop_values["more_flights_from_dep"] = more_routes["dep_more_routes"]
       schedule_layout_hop_values["more_flights_to_arr"] = more_routes["arr_more_routes"]
       schedule_layout_hop_values["airport_details"] = get_airport_deatils

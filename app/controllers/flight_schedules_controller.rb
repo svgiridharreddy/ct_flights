@@ -192,7 +192,7 @@ class FlightSchedulesController < ApplicationController
     @schedule_routes = @route.in_flight_hop_schedule_collectives.where("#{inc_cc}").order("dep_time asc").limit(10)
 		header_values = flight_schedule_service.schedule_header_details
 		schedule_layout_values = flight_schedule_service.schedule_hop_values(@schedule_routes)
-		@title_min_price = schedule_layout_values["route_min_price"]
+		@title_min_price = 0 #schedule_layout_values["route_min_price"]
 		@dep_city_name_formated = schedule_layout_values["dep_city_name_formated"]
 		@arr_city_name_formated = schedule_layout_values["arr_city_name_formated"]
 		partial = "schedules/routes/#{@language}/hops/flight_schedule_hop_#{@country_code.downcase}_#{@language.downcase}_#{@section[3..5]}"
