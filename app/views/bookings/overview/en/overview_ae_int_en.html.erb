@@ -1,110 +1,6 @@
 <% use_helper = self.extend ApplicationHelper %>
-<% if I18n.locale.to_s == 'en' %>
-<% locale = ''%>
-<% else %>
-<% locale = "#{I18n.locale.to_s}/" %>
-<% end %>
-<!DOCTYPE html>
 
-<html lang="en"> 
-<head>
- 
- <!-- Google Tag Manager -->
- <script>
-   (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-   j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
- })(window,document,'script','dataLayer','GTM-T9S432');
-</script>
-<!-- End Google Tag Manager -->
-
-<title><%= I18n.t("brand.title",airline_name: @carrier_name)%></title>
-<meta name="description" content="<%= t('brand.description', airline_name: @arrier_name) %>"/>
-
-<!-- Robot tags-->
-<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
-<meta name="robots" content="noodp,noydir"/>
-<!-- Robot tags ends-->
-
-
-
-<meta name="keywords" content="<%= t('brand.keywords', airline_name: @carrier_name) %>" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bxslider/4.2.5/jquery.bxslider.css">
-<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-<link rel="stylesheet" href="https://s3-ap-southeast-1.amazonaws.com/waytogo-assets/waytogo-staging/stylesheets/application.css"/>
-<link rel="shortcut icon" href='<%="#{@assets_path}/images/cleartrip32x32.ico" %>'>
-<link rel="apple-touch-icon" href='<%="#{@assets_path}/images/57x57.png" %>'>
-<link rel="apple-touch-icon" sizes="72x72" href='<%="#{@assets_path}/images/72x72.png" %>' >
-<link rel="apple-touch-icon" sizes="114x114" href='<%="#{@assets_path}/images/114x114.png" %>'>
-<!-- Latest compiled and minified CSS -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/rateYo/2.3.2/jquery.rateyo.min.css">
-<link rel="amphtml" href="<%= "#{application_processor.host_name(@country_code)}/#{page_type}/amp/#{flight_file_name}" %>">
-<!-- Latest compiled and minified JavaScript -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/rateYo/2.3.2/jquery.rateyo.min.js"></script>
-
-
-<!-- Crazyegg Tracking Code for cleartrip.com -->
-  <script type="text/javascript">
-    setTimeout(function(){var a=document.createElement("script");
-    var b=document.getElementsByTagName("script")[0];
-    a.src=document.location.protocol+"//script.crazyegg.com/pages/scripts/0011/6454.js?"+Math.floor(new Date().getTime()/3600000);
-    a.async=true;a.type="text/javascript";b.parentNode.insertBefore(a,b)}, 1);
-  </script>
-  <!-- Hotjar Tracking Code for cleartrip.com -->
-  <script>
-    (function(h,o,t,j,a,r){
-      h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
-      h._hjSettings={hjid:332967,hjsv:5};
-      a=o.getElementsByTagName('head')[0];
-      r=o.createElement('script');r.async=1;
-      r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
-      a.appendChild(r);
-    })(window,document,'//static.hotjar.com/c/hotjar-','.js?sv=');
-  </script>
-  <script type="text/javascript">
-    var section_type="<%= @section.include?("dom")? "domestic" : "international" %>";
-  </script>
-  
-  <style type="text/css">
-  #content .content-desc, .airline-desc {
-    padding:  0!important; 
-    color: rgb(68, 68, 68);
-    font-size: 14px;
-    line-height: 24px;
-  }
-  .top-routes .linklist-btn a.no-link:hover {
-    background-color: #eee;
-    border: 1px solid #ddd;
-  }
-  #banner img {
-    width: 100%;
-  }
-</style>
-</head>
 <body>
- <script>
-  $(document).ready(function(){
-    $('.Menuicon').click(function(){
-       // $('#Second-menu').css("right", "0");
-       $("#Second-menu").animate({right: '0'});
-     })
-
-    $('.close').click(function(){
-       // $('#slide-header').css("right", "-300px")
-       $("#Second-menu").animate({right: '-450px'});
-
-     })
-  })
-</script>
-<!-- Google Tag Manager (noscript) -->
-<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-T9S432"
-  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-  <!-- End Google Tag Manager (noscript) -->
-  <%#= render partial: "common/header", locals: { assets_path: @assets_path, country_code: country_code, host: host, flight_file_name: flight_file_name, page_type: 'flight-booking', application_processor: application_processor} %>
   <section id="flights-nav">
     <div class="container-fluid">
       <div class="ctCol ctProducts mview-header">
@@ -199,9 +95,7 @@
           <div class="clearfix"></div>
           <div class="top-routes">
             <h2><%= t('brand.top_route' , airline_name: @carrier_name) %></h2>
-            <%#= render :partial=>"airline_brands/brand_top_routes", locals: { top_routes: top_routes, t_helper: t_helper, page_number: page_number, airline_name: @carrier_name} %>
-            <%#= will_paginate top_routes %>
-            <%# end %>
+            <%= render :partial=>"bookings/overview/en/shared/airline_more_routes", locals: { top_routes: popular_routes["more_routes"] }  %>
           </div>
         </div><!--list-box-->
       </div>
@@ -216,7 +110,7 @@
           <%= render :partial=>"bookings/shared/en/rhs_top_routes",:locals=>{:routes=>rhs_schedule_routes[:dom_routes], page_type: 'flight-booking', application_processor: application_processor, :carrier_code=> @carrier_code, :section=>"dom" } %>
           <%= render :partial=>"bookings/shared/en/rhs_top_airports",:locals=>{:top_airports=>header_airports["int_airports"], use_helper: use_helper, application_processor: application_processor } %>
           <div class="blocks banner-section">
-            <%#= render :partial=>"common/banner",:locals=>{:country_code=>@country_code, application_processor: application_processor} %>
+            <%= render :partial=>"common/banner",:locals=>{:country_code=>@country_code} %>
           </div>
         </div>
       </div><!--/Rside-bar-->
@@ -230,11 +124,10 @@
       <%= render partial: "footers/#{country_code.downcase}/booking/dom_footer", locals: {country_code: country_code,top_airlines: booking_footer[:int_airlines],section: @section}%>
     </div>
   </div>
-  <%= render :partial=>"shared/#{@country_code.downcase}/#{@country_code.downcase}_gac"%>
-  <%= render partial: "common/comscore" %>
-  <noscript>  
-    <img src="http://b.scorecardresearch.com/p?c1=2&c2=7561529&cv=2.0&cj=1" />
-  </noscript>
+  <%= render "shared/ae/ae_gac"%>
+  <%= render "common/comscore" %>
+  <%= render "common/mobile_header_flexislider" %> 
+  
   <script type="text/javascript">
   var country_code='<%= @country_code.downcase%>';
   var section_type='<%= @section.include?("dom") ? "domestic" : "international" %>';
@@ -245,11 +138,4 @@
   var page_sub_type= "Airline overview";
   var sub_section= 'overview';
 </script>
-  <script src="https://d2w5af8s1781.cloudfront.net/waytogo-staging/javascripts/jquery-ui.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bxslider/4.2.5/jquery.bxslider.min.js"></script>
-  <script type="text/javascript" src="https://d2w5af8s1781.cloudfront.net/waytogo-staging/javascripts/date_format.js"></script>
-  <script type="text/javascript" src="https://d2w5af8s1781.cloudfront.net/waytogo-staging/javascripts/ct_custom.js"></script>
-  <script type="text/javascript" src="https://d2w5af8s1781.cloudfront.net/waytogo-staging/javascripts/banner_tool_v1.js"></script>
 </body>
-</html>
