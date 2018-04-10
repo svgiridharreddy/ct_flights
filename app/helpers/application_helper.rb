@@ -43,6 +43,18 @@
           meta_keywords = meta_info["#{@country_code.downcase}_to"]["#{@language.downcase}"]["keywords"] %{city_name: @city_name} rescue ""
           amp_url = ""
         end
+      when "booking-overview"
+        if @language == "ar"
+          meta_title = meta_info["#{@country_code.downcase}"]["#{@language.downcase}"]["#{@section[3..5]}"]["title"] %{carrier_name: @carrier_name}
+          meta_description = meta_info["#{@country_code.downcase}_to"]["#{@language.downcase}"]["description"] %{carrier_name: @carrier_name}
+          meta_keywords = meta_info["#{@country_code.downcase}_to"]["#{@language.downcase}"]["keywords"] %{carrier_name: @carrier_name} rescue ""
+          amp_url = meta_info["#{@country_code.downcase}_to"]["#{@language.downcase}"]["amp_url"] %{file_name: @file_name}
+        else
+          meta_title = meta_info["#{@country_code.downcase}"]["#{@language.downcase}"]["#{@section[3..5]}"]["title"] %{carrier_name: @carrier_name}
+          meta_description = meta_info["#{@country_code.downcase}"]["#{@language.downcase}"]["#{@section[3..5]}"]["description"] %{carrier_name: @carrier_name}
+          meta_keywords = meta_info["#{@country_code.downcase}"]["#{@language.downcase}"]["#{@section[3..5]}"]["keywords"] %{carrier_name: @carrier_name} rescue ""
+          amp_url = meta_info["#{@country_code.downcase}"]["#{@language.downcase}"]["amp_url"] %{file_name: @file_name}
+        end
       end
       {:title =>meta_title,:keywords=>meta_keywords,:description=>meta_description,amp_url: amp_url}
     end
@@ -79,7 +91,20 @@
       end
     end
     
-
+  def check_domain(language,country_code)
+    country_codes = ["AE","SA","BH","QA","KW","OM"]
+    if language=="ar" && country_code=="IN"
+      return true
+    elsif language=="hi" && country_codes.include?(country_code)
+      if country_code=="AE" || country_code=="SA"
+        return true
+      else
+        return true
+      end
+    else
+      return false
+    end
+  end
   def url_escape(url_string)
     unless url_string.blank?
       result = url_string.encode("UTF-8", :invalid => :replace, :undef => :replace).to_s

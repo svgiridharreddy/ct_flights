@@ -1,16 +1,31 @@
 class OverviewBookingsController < ApplicationController
-
+	include ApplicationHelper
 	def booking_values
 		domain = request.domain
 		application_processor = ApplicationProcessor.new
 		@country_code = application_processor.host_country_code(domain)[0]
 		@country_name = application_processor.host_country_code(domain)[1]
 		@language = params[:lang].nil? ? 'en' : params[:lang]
-		@page_type = "flight-booking"
+		@host_name = application_processor.host_name(@country_code)
+		@page_type = "booking-overview"
 		airline_name = params[:airline] 
 		carrier_name = params[:airline].gsub("-",' ').gsub("airlines",'').titleize.strip
 		carrier_name_with_airline = carrier_name + " Airlines"			
 		airline = AirlineBrand.find_by("carrier_name='#{carrier_name}' OR carrier_name ='#{carrier_name_with_airline}'")
+		if airline.nil? || !airline.present?
+			redirect_to "#{@host_name}/flight-booking/domestic-airlines.html" and return
+		end
+		check_domain = check_domain(@language,@country_code)
+		binding.pry
+		if check_domain
+			lang = @language == "en" ? "" : "#{@language}"
+			if @country_code == "IN"
+					redirect_to "#{@host_name}/flight-schedule/flight-schedules-domestic.html" and return
+			else
+				redirect_to "#{@host_name}/#{lang}/flight-schedule/flight-schedules-domestic.html" and return
+			end
+		end
+
 		@carrier_name = airline.carrier_name
 		@carrier_code = airline.carrier_code
 		file_paths = YAML.load(File.read('config/application.yml'))[Rails.env]
@@ -34,8 +49,9 @@ class OverviewBookingsController < ApplicationController
 		rhs_schedule_routes = flight_booking_service.rhs_top_schedule_routes
 		booking_footer = flight_booking_service.booking_footer
 	  section =  @section.include?("dom") ? "dom" : "int"
+	  @file_name = airline_name+".html"
 		partial = "bookings/overview/#{@language}/overview_#{@country_code.downcase}_#{section}_#{@language.downcase}"
-		render partial,locals: {popular_routes: popular_routes,flight_file_name: airline_name+".html",application_processor: application_processor,page_type: 'flight-booking',header_airports: header_airports,customer_support: customer_support,baggages: baggages,rhs_airlines: rhs_airlines,rhs_schedule_routes: rhs_schedule_routes,content: content,booking_footer: booking_footer}
+		render partial,locals: {popular_routes: popular_routes,flight_file_name: @file_name,application_processor: application_processor,page_type: 'flight-booking',header_airports: header_airports,customer_support: customer_support,baggages: baggages,rhs_airlines: rhs_airlines,rhs_schedule_routes: rhs_schedule_routes,content: content,booking_footer: booking_footer}
 	end
 
 	def url_escape(url_string)

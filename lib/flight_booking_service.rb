@@ -18,9 +18,10 @@ class FlightBookingService
   	airline_dom_int_routes =  UniqueRoute.joins(collectives_symbol).where(["#{collecitves}.carrier_code=? and #{collecitves}.dep_city_code!=#{collecitves}.arr_city_code and (#{collecitves}.dep_country_code=? and #{collecitves}.arr_country_code!=?)OR(#{collecitves}.dep_country_code!=? and #{collecitves}.arr_country_code=?)",@carrier_code,@country_code,@country_code,@country_code,@country_code]).group("#{collecitves}.dep_city_code,#{collecitves}.arr_city_code,unique_routes.weekly_flights_count").order("unique_routes.weekly_flights_count desc").limit(30)
 
 	  airline_int_int_routes =  UniqueRoute.joins(collectives_symbol).where(["#{collecitves}.carrier_code=? and #{collecitves}.dep_city_code!=#{collecitves}.arr_city_code and (#{collecitves}.dep_country_code!=? and #{collecitves}.arr_country_code!=?)",@carrier_code,@country_code,@country_code]).group("#{collecitves}.dep_city_code,#{collecitves}.arr_city_code,unique_routes.weekly_flights_count").order("unique_routes.weekly_flights_count desc").limit(30)
-		  popular_routes = {"dom_dom" => [],
+		  @popular_routes = {"dom_dom" => [],
 		  									"dom_int" => [],
-		  								  "int_int" => []}
+		  								  "int_int" => [],
+		  									"more_routes" => []}
 		  flight_schedule_service = FlightScheduleService.new {}
 		  unless airline_dom_dom_routes.nil? || airline_dom_dom_routes.count==0
 
@@ -28,8 +29,8 @@ class FlightBookingService
 
 			  	record = AirlineBrandCollective.find_by(carrier_code: @carrier_code,unique_route_id: route.id)
 			  	if record.present? && record !=nil
-				  	min_price,max_price = flight_schedule_service.get_price(route.dep_city_code,route.arr_city_code,@carrier_code,@carrier_name)
-				  	popular_routes["dom_dom"] << {
+				  	# min_price,max_price = flight_schedule_service.get_price(route.dep_city_code,route.arr_city_code,@carrier_code,@carrier_name)
+				  	@popular_routes["dom_dom"] << {
 			  			"carrier_code" => @carrier_code,
 			  			"carrier_name" => @carrier_name,
 			  			"dep_city_name" => route.dep_city_name,
@@ -41,9 +42,9 @@ class FlightBookingService
 			  			"dep_time" => record.dep_time ,
 			  			"arr_time" => record.arr_time ,
 			  			"op_days" => record.days_of_operation,
-			  			"flight_no"=> record.flight_no,
-			  			"min_price" => min_price,
-			  			"max_price" => max_price
+			  			"flight_no"=> record.flight_no
+			  			# "min_price" => min_price,
+			  			# "max_price" => max_price
 				  	}
 				  end
 			  end
@@ -52,8 +53,8 @@ class FlightBookingService
 			  airline_dom_int_routes.each do |route|
 			  	record = AirlineBrandCollective.find_by(carrier_code: @carrier_code,unique_route_id: route.id)
 			  	if record.present? && record !=nil
-				  	min_price,max_price = flight_schedule_service.get_price(route.dep_city_code,route.arr_city_code,@carrier_code,@carrier_name)
-				  	popular_routes["dom_int"] << {
+				  	# min_price,max_price = flight_schedule_service.get_price(route.dep_city_code,route.arr_city_code,@carrier_code,@carrier_name)
+				  	@popular_routes["dom_int"] << {
 			  			"carrier_code" => @carrier_code,
 			  			"carrier_name" => @carrier_name,
 			  			"dep_city_name" => route.dep_city_name,
@@ -65,9 +66,9 @@ class FlightBookingService
 			  			"dep_time" => record.dep_time ,
 			  			"arr_time" => record.arr_time ,
 			  			"op_days" => record.days_of_operation,
-			  			"flight_no"=> record.flight_no,	
-			  			"min_price" => min_price,
-			  			"max_price" => max_price
+			  			"flight_no"=> record.flight_no
+			  			# "min_price" => min_price,
+			  			# "max_price" => max_price
 				  	}
 				  end
 			  end
@@ -77,8 +78,8 @@ class FlightBookingService
 			  airline_int_int_routes.each do |route|
 			  	record = AirlineBrandCollective.find_by(carrier_code: @carrier_code,unique_route_id: route.id)
 			  	if record.present? && record !=nil
-				  	min_price,max_price = flight_schedule_service.get_price(route.dep_city_code,route.arr_city_code,@carrier_code,@carrier_name)
-				  	popular_routes["int_int"] << {
+				  	# min_price,max_price = flight_schedule_service.get_price(route.dep_city_code,route.arr_city_code,@carrier_code,@carrier_name)
+				  	@popular_routes["int_int"] << {
 			  			"carrier_code" => @carrier_code,
 			  			"carrier_name" => @carrier_name,
 			  			"dep_city_name" => route.dep_city_name,
@@ -90,19 +91,20 @@ class FlightBookingService
 			  			"dep_time" => record.dep_time,
 			  			"arr_time" => record.arr_time,
 			  			"op_days" => record.days_of_operation,
-			  			"flight_no"=> record.flight_no,
-			  			"min_price" => min_price,
-			  			"max_price" => max_price
+			  			"flight_no"=> record.flight_no
+			  			# "min_price" => min_price,
+			  			# "max_price" => max_price
 				  	}
 				  end
 				end
 			end
-			if popular_routes['dom_int'].count == 0 || popular_routes['dom_int'].nil?
-      	popular_routes['dom_int'] = popular_routes['int_int'] 
-    	elsif popular_routes['dom_int'].count > 0 
-      	popular_routes['dom_int'] = popular_routes['dom_int'] + popular_routes['int_int']
+			if @popular_routes['dom_int'].count == 0 || @popular_routes['dom_int'].nil?
+      	@popular_routes['dom_int'] = @popular_routes['int_int'] 
+    	elsif @popular_routes['dom_int'].count > 0 
+      	@popular_routes['dom_int'] = @popular_routes['dom_int'] + @popular_routes['int_int']
     	end
-	  return popular_routes
+    	@popular_routes["more_routes"] = @popular_routes['dom_dom'] + @popular_routes['dom_int'] + @popular_routes['int_int']
+	  return @popular_routes
   end
  	def top_dom_int_airports
     airports = {"dom_airports" => [],
@@ -142,9 +144,9 @@ class FlightBookingService
   	return contents
   end
  	
- 	def airline_top_routes 
+	def more_routes_pagination
 
- 	end
+	end 
 
   def rhs_top_airlines
   	dom_airlines = AirlineBrand.where(country_code: @country_code).order(brand_routes_count:  :desc).limit(8).pluck(:carrier_code)

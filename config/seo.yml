@@ -308,3 +308,68 @@ to:
       title: "رحلات جوية إلى %{city_name}, حجز تذاكر الطيران الخاصة بك إلى %{city_name} & الحصول على ما يصل الى 70%% كاشباك على كليرتريب"
       description: "التخطيط للسفر إلى %{city_name}? فلتلقي نظرة على لوائح الرحلات وحجز السفر فقط على Cleartrip إلى %{city_name} من أي مكان على أساس جدول الرحلات الجوية، وتوقيت الرحلات الجوية. نحن نقدم أيضا استرداد النقود تصل إلى 70%% على تذاكر الطيران."
       keywords: ""
+booking-overview:
+  in:
+    en:
+      dom:
+        title: "%{carrier_name}, lowest fare on %{carrier_name} flight booking with Cleartrip"
+        description: "Find &amp; book your %{carrier_name} flight tickets at lowest air fares with Cleartrip. Plan your trip &amp; check availability for your selected time, date &amp; destination here"
+        keywords: ""
+      int:
+        title: "Book %{carrier_name} flight tickets &amp; get up to  ₹15,000 cashback - Cleartrip"
+        description: "%{carrier_name} offers amazing discounts on booking of flight tickets. Use coupon code: FLYINTL. Get information about %{carrier_name} flight schedule, airfares, PNR status, baggage allowance, web check-in on Cleartrip."
+        keywords: ""
+      amp_url: "https://www.cleartrip.com/flight-booking/amp/%{file_name}"
+    hi:
+      dom:
+        title: ""
+        description: ""
+        keywords: ""
+      int:
+        title: ""
+        description: ""
+        keywords: ""
+      amp_url: ""
+  ae:
+    en:
+      dom: 
+        title: "%{carrier_name} airlines, use Coupon code – TRAVELMORE on %{carrier_name} flight tickets – Cleartrip"
+        description: "Now get AED 1000 off on booking of %{carrier_name} flights. Check information about %{carrier_name} flight schedule, airfares, PNR status, baggage allowance, web check-in on Cleartrip"
+        keywords: ""
+      int:
+        title: "%{carrier_name} airlines, use Coupon code – FLIGHTS on %{carrier_name} flight tickets – Cleartrip"
+        description: "Now get AED 700 off on booking of %{carrier_name} flights. Check information about %{carrier_name} flight schedule, airfares, PNR status, baggage allowance, web check-in on Cleartrip."
+        keywords: ""
+      amp_url: "https://www.cleartrip.ae/flight-booking/amp/%{file_name}"
+    ar:
+      dom:
+        title: ""
+        description: ""
+        keywords: ""
+      int:
+        title: ""
+        description: ""
+        keywords: ""
+      amp_url: ""
+  sa:
+    en:
+      dom:
+        title: ""
+        description: ""
+        keywords: ""
+      int:
+        title: ""
+        description: ""
+        keywords: ""
+      amp_url: ""
+    ar:
+      dom:
+        title: ""
+        description: ""
+        keywords: ""
+      int:
+        title: ""
+        description: ""
+        keywords: ""
+      amp_url: ""
+ 

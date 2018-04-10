@@ -1,5 +1,5 @@
 class FlightSchedulesController < ApplicationController
-
+	include ApplicationHelper
 	def schedule_values
 		domain = request.domain
 		path = "#{request.fullpath}"
@@ -10,8 +10,8 @@ class FlightSchedulesController < ApplicationController
 		@country_name = @application_processor.host_country_code(domain)[1]
 		@language = params[:lang].nil? ? 'en' : params[:lang]
 		@page_type="flight-schedule"
-		check_domain = check_domain(@language,@country_code)
 		@host_name = @application_processor.host_name(@country_code)
+		check_domain = check_domain(@language,@country_code)
 		if check_domain
 			lang = @language == "en" ? "" : "#{@language}"
 			if @country_code == "IN"
@@ -197,21 +197,6 @@ class FlightSchedulesController < ApplicationController
 		@arr_city_name_formated = schedule_layout_values["arr_city_name_formated"]
 		partial = "schedules/routes/#{@language}/hops/flight_schedule_hop_#{@country_code.downcase}_#{@language.downcase}_#{@section[3..5]}"
 		render  partial,locals: {schedule_layout_values: schedule_layout_values,dep_city_name: @dep_city_name,arr_city_name: @arr_city_name,dep_city_name_ar: @dep_city_name_ar,arr_city_name_ar: @arr_city_name_ar,dep_city_code: @route.dep_city_code,arr_city_code: @route.arr_city_code,schedule_header: header_values,schedule_footer: schedule_footer }
-
-	end
-	def check_domain(language,country_code)
-		country_codes = ["AE","SA","BH","QA","KW","OM"]
-		if language=="ar" && country_code=="IN"
-			return true
-		elsif language=="hi" && country_codes.include?(country_code)
-			if country_code=="AE" || country_code=="SA"
-				return true
-			else
-				return true
-			end
-		else
-			return false
-		end
 	end
 end
 

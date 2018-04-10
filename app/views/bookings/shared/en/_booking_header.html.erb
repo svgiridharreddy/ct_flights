@@ -9,7 +9,7 @@
       <ul class="list-unstyled dropdown-menu"> 
         <% popular_routes["dom_dom"][0..10].each do |route|%>
         <li>
-          <% link = link_to( "#{route['dep_city_name']} to #{route['arr_city_name']} Flights", "/flight-booking/" + url_escape("#{carrier_name_en.downcase.gsub(" ","-")}-#{route['dep_city_name_en']}-#{route['arr_city_name_en']}-flights") + ".html",title: "#{route['dep_city_name_en']} to #{route['arr_city_name_en']} Flights") %>
+          <% link = link_to( "#{route['dep_city_name']} to #{route['arr_city_name']} Flights", "/flight-booking/" + url_escape("#{carrier_name_en.downcase.gsub(" ","-")}-#{route['dep_city_name']}-#{route['arr_city_name']}-flights") + ".html",title: "#{route['dep_city_name_en']} to #{route['arr_city_name_en']} Flights") %>
           <%= link %>
         </li>  
         <% end %>
