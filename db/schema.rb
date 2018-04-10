@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180409102751) do
+ActiveRecord::Schema.define(version: 20180410061925) do
 
   create_table "ae_airline_contents", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "carrier_code"
@@ -32,6 +32,30 @@ ActiveRecord::Schema.define(version: 20180409102751) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "ae_flight_hop_schedule_collectives", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string "carrier_code"
+    t.string "dep_time"
+    t.string "arr_time"
+    t.string "dep_city_code"
+    t.string "arr_city_code"
+    t.string "dep_country_code"
+    t.string "arr_country_code"
+    t.string "dep_airport_code"
+    t.string "arr_airport_code"
+    t.string "mid_city_code"
+    t.string "mid_airport_code"
+    t.string "duration"
+    t.integer "first_flight_no"
+    t.integer "second_flight_no"
+    t.string "first_carrier_code"
+    t.string "second_carrier_code"
+    t.string "days_of_operation"
+    t.bigint "unique_hop_route_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["unique_hop_route_id"], name: "index_ae_flight_hop_schedule_collectives_on_unique_hop_route_id"
+  end
+
   create_table "ae_flight_schedule_collectives", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "carrier_code"
     t.integer "flight_no"
@@ -49,18 +73,17 @@ ActiveRecord::Schema.define(version: 20180409102751) do
     t.index ["unique_route_id"], name: "index_ae_flight_schedule_collectives_on_unique_route_id"
   end
 
-  create_table "ae_footers", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+  create_table "ae_footers", id: :integer, default: nil, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "city_code"
     t.string "city_name"
-    t.string "city_name_ar"
     t.string "country_code"
     t.string "country_name"
     t.integer "total_routes_count"
-    t.integer "current_routes_count"
     t.text "routes_data"
+    t.integer "current_routes_count"
+    t.string "city_name_ar"
     t.text "routes_data_ar"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "updated_at"
   end
 
   create_table "ae_from_to_contents", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
@@ -90,6 +113,7 @@ ActiveRecord::Schema.define(version: 20180409102751) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["carrier_code", "carrier_name"], name: "indecies"
+    t.index ["carrier_code", "carrier_name"], name: "indicies"
     t.index ["unique_route_id"], name: "index_airline_brand_collectives_on_unique_route_id"
   end
 
@@ -106,29 +130,6 @@ ActiveRecord::Schema.define(version: 20180409102751) do
     t.string "publish_status"
     t.string "carrier_name_ar"
     t.string "carrier_name_hi"
-  end
-
-  create_table "airline_contents", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
-    t.string "carrier_code"
-    t.string "carrier_name"
-    t.string "country_code"
-    t.text "content_en_in"
-    t.text "content_en_ae"
-    t.text "content_en_sa"
-    t.text "content_en_bh"
-    t.text "content_en_kw"
-    t.text "content_en_qa"
-    t.text "content_en_om"
-    t.text "content_hi_in"
-    t.text "content_ar_ae"
-    t.text "content_ar_sa"
-    t.text "content_ar_bh"
-    t.text "content_ar_kw"
-    t.text "content_ar_qa"
-    t.text "content_ar_om"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.string "icoa_code"
   end
 
   create_table "airports", id: false, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
@@ -184,6 +185,30 @@ ActiveRecord::Schema.define(version: 20180409102751) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "bh_flight_hop_schedule_collectives", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string "carrier_code"
+    t.string "dep_time"
+    t.string "arr_time"
+    t.string "dep_city_code"
+    t.string "arr_city_code"
+    t.string "dep_country_code"
+    t.string "arr_country_code"
+    t.string "dep_airport_code"
+    t.string "arr_airport_code"
+    t.string "mid_city_code"
+    t.string "mid_airport_code"
+    t.string "duration"
+    t.integer "first_flight_no"
+    t.integer "second_flight_no"
+    t.string "first_carrier_code"
+    t.string "second_carrier_code"
+    t.string "days_of_operation"
+    t.bigint "unique_hop_route_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["unique_hop_route_id"], name: "index_bh_flight_hop_schedule_collectives_on_unique_hop_route_id"
+  end
+
   create_table "bh_flight_schedule_collectives", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "carrier_code"
     t.integer "flight_no"
@@ -201,18 +226,17 @@ ActiveRecord::Schema.define(version: 20180409102751) do
     t.index ["unique_route_id"], name: "index_bh_flight_schedule_collectives_on_unique_route_id"
   end
 
-  create_table "bh_footers", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+  create_table "bh_footers", id: :integer, default: nil, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "city_code"
     t.string "city_name"
-    t.string "city_name_ar"
     t.string "country_code"
     t.string "country_name"
     t.integer "total_routes_count"
-    t.integer "current_routes_count"
     t.text "routes_data"
+    t.integer "current_routes_count"
+    t.string "city_name_ar"
     t.text "routes_data_ar"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "updated_at"
   end
 
   create_table "bh_from_to_contents", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
@@ -276,31 +300,6 @@ ActiveRecord::Schema.define(version: 20180409102751) do
     t.datetime "updated_at"
   end
 
-  create_table "flight_schedules", id: false, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
-    t.integer "connection_id"
-    t.string "carrier_code"
-    t.string "flight_no"
-    t.string "dep_airport_code"
-    t.string "dep_city_code"
-    t.string "dep_country_code"
-    t.string "arr_airport_code"
-    t.string "arr_city_code"
-    t.string "arr_country_code"
-    t.string "dep_time"
-    t.string "arr_time"
-    t.integer "arrival_day_marker"
-    t.string "elapsed_journey_time"
-    t.integer "flight_count"
-    t.date "effective_from"
-    t.date "effective_to"
-    t.string "day_of_operation"
-    t.integer "stop"
-    t.string "intermediate_airports"
-    t.string "data_source"
-    t.integer "distance"
-    t.date "created_at"
-  end
-
   create_table "flights_headers", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "dep_city_code"
     t.string "arr_city_code"
@@ -328,6 +327,7 @@ ActiveRecord::Schema.define(version: 20180409102751) do
     t.integer "current_routes_count"
     t.string "city_name_ar"
     t.text "routes_data_ar"
+    t.datetime "updated_at"
   end
 
   create_table "headers", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
@@ -399,6 +399,7 @@ ActiveRecord::Schema.define(version: 20180409102751) do
     t.bigint "unique_hop_route_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["dep_city_code", "arr_city_code"], name: "indicies"
     t.index ["unique_hop_route_id"], name: "index_in_flight_hop_schedule_collectives_on_unique_hop_route_id"
   end
 
@@ -416,32 +417,32 @@ ActiveRecord::Schema.define(version: 20180409102751) do
     t.bigint "unique_route_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["dep_city_code", "arr_city_code"], name: "indicies"
     t.index ["unique_route_id"], name: "index_in_flight_schedule_collectives_on_unique_route_id"
   end
 
-  create_table "in_footers", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|
+  create_table "in_footers", id: :integer, default: nil, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "city_code"
     t.string "city_name"
-    t.string "city_name_ar"
     t.string "country_code"
     t.string "country_name"
     t.integer "total_routes_count"
     t.text "routes_data"
     t.integer "current_routes_count"
+    t.string "city_name_ar"
     t.text "routes_data_ar"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "updated_at"
   end
 
   create_table "in_from_to_contents", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
-    t.string "city_code", collation: "latin1_swedish_ci"
-    t.text "en_from_content", limit: 4294967295, collation: "latin1_swedish_ci"
-    t.text "en_to_content", limit: 4294967295, collation: "latin1_swedish_ci"
-    t.text "hi_from_content", limit: 4294967295, collation: "latin1_swedish_ci"
-    t.text "hi_to_content", limit: 4294967295, collation: "latin1_swedish_ci"
+    t.string "city_code"
+    t.text "en_from_content", limit: 4294967295
+    t.text "en_to_content", limit: 4294967295
+    t.text "hi_from_content", limit: 4294967295
+    t.text "hi_to_content", limit: 4294967295
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "city_name", collation: "latin1_swedish_ci"
+    t.string "city_name"
   end
 
   create_table "kw_airline_contents", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
@@ -469,6 +470,30 @@ ActiveRecord::Schema.define(version: 20180409102751) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "kw_flight_hop_schedule_collectives", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string "carrier_code"
+    t.string "dep_time"
+    t.string "arr_time"
+    t.string "dep_city_code"
+    t.string "arr_city_code"
+    t.string "dep_country_code"
+    t.string "arr_country_code"
+    t.string "dep_airport_code"
+    t.string "arr_airport_code"
+    t.string "mid_city_code"
+    t.string "mid_airport_code"
+    t.string "duration"
+    t.integer "first_flight_no"
+    t.integer "second_flight_no"
+    t.string "first_carrier_code"
+    t.string "second_carrier_code"
+    t.string "days_of_operation"
+    t.bigint "unique_hop_route_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["unique_hop_route_id"], name: "index_kw_flight_hop_schedule_collectives_on_unique_hop_route_id"
+  end
+
   create_table "kw_flight_schedule_collectives", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "carrier_code"
     t.integer "flight_no"
@@ -486,18 +511,17 @@ ActiveRecord::Schema.define(version: 20180409102751) do
     t.index ["unique_route_id"], name: "index_kw_flight_schedule_collectives_on_unique_route_id"
   end
 
-  create_table "kw_footers", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+  create_table "kw_footers", id: :integer, default: nil, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "city_code"
     t.string "city_name"
-    t.string "city_name_ar"
     t.string "country_code"
     t.string "country_name"
     t.integer "total_routes_count"
-    t.integer "current_routes_count"
     t.text "routes_data"
+    t.integer "current_routes_count"
+    t.string "city_name_ar"
     t.text "routes_data_ar"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "updated_at"
   end
 
   create_table "kw_from_to_contents", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
@@ -536,6 +560,30 @@ ActiveRecord::Schema.define(version: 20180409102751) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "om_flight_hop_schedule_collectives", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string "carrier_code"
+    t.string "dep_time"
+    t.string "arr_time"
+    t.string "dep_city_code"
+    t.string "arr_city_code"
+    t.string "dep_country_code"
+    t.string "arr_country_code"
+    t.string "dep_airport_code"
+    t.string "arr_airport_code"
+    t.string "mid_city_code"
+    t.string "mid_airport_code"
+    t.string "duration"
+    t.integer "first_flight_no"
+    t.integer "second_flight_no"
+    t.string "first_carrier_code"
+    t.string "second_carrier_code"
+    t.string "days_of_operation"
+    t.bigint "unique_hop_route_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["unique_hop_route_id"], name: "index_om_flight_hop_schedule_collectives_on_unique_hop_route_id"
+  end
+
   create_table "om_flight_schedule_collectives", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "carrier_code"
     t.integer "flight_no"
@@ -553,18 +601,17 @@ ActiveRecord::Schema.define(version: 20180409102751) do
     t.index ["unique_route_id"], name: "index_om_flight_schedule_collectives_on_unique_route_id"
   end
 
-  create_table "om_footers", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+  create_table "om_footers", id: :integer, default: nil, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "city_code"
     t.string "city_name"
-    t.string "city_name_ar"
     t.string "country_code"
     t.string "country_name"
     t.integer "total_routes_count"
-    t.integer "current_routes_count"
     t.text "routes_data"
+    t.integer "current_routes_count"
+    t.string "city_name_ar"
     t.text "routes_data_ar"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "updated_at"
   end
 
   create_table "om_from_to_contents", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
@@ -703,6 +750,30 @@ ActiveRecord::Schema.define(version: 20180409102751) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "qa_flight_hop_schedule_collectives", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string "carrier_code"
+    t.string "dep_time"
+    t.string "arr_time"
+    t.string "dep_city_code"
+    t.string "arr_city_code"
+    t.string "dep_country_code"
+    t.string "arr_country_code"
+    t.string "dep_airport_code"
+    t.string "arr_airport_code"
+    t.string "mid_city_code"
+    t.string "mid_airport_code"
+    t.string "duration"
+    t.integer "first_flight_no"
+    t.integer "second_flight_no"
+    t.string "first_carrier_code"
+    t.string "second_carrier_code"
+    t.string "days_of_operation"
+    t.bigint "unique_hop_route_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["unique_hop_route_id"], name: "index_qa_flight_hop_schedule_collectives_on_unique_hop_route_id"
+  end
+
   create_table "qa_flight_schedule_collectives", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "carrier_code"
     t.integer "flight_no"
@@ -720,18 +791,17 @@ ActiveRecord::Schema.define(version: 20180409102751) do
     t.index ["unique_route_id"], name: "index_qa_flight_schedule_collectives_on_unique_route_id"
   end
 
-  create_table "qa_footers", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+  create_table "qa_footers", id: :integer, default: nil, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "city_code"
     t.string "city_name"
-    t.string "city_name_ar"
     t.string "country_code"
     t.string "country_name"
     t.integer "total_routes_count"
-    t.integer "current_routes_count"
     t.text "routes_data"
+    t.integer "current_routes_count"
+    t.string "city_name_ar"
     t.text "routes_data_ar"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "updated_at"
   end
 
   create_table "qa_from_to_contents", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
@@ -770,6 +840,30 @@ ActiveRecord::Schema.define(version: 20180409102751) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "sa_flight_hop_schedule_collectives", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string "carrier_code"
+    t.string "dep_time"
+    t.string "arr_time"
+    t.string "dep_city_code"
+    t.string "arr_city_code"
+    t.string "dep_country_code"
+    t.string "arr_country_code"
+    t.string "dep_airport_code"
+    t.string "arr_airport_code"
+    t.string "mid_city_code"
+    t.string "mid_airport_code"
+    t.string "duration"
+    t.integer "first_flight_no"
+    t.integer "second_flight_no"
+    t.string "first_carrier_code"
+    t.string "second_carrier_code"
+    t.string "days_of_operation"
+    t.bigint "unique_hop_route_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["unique_hop_route_id"], name: "index_sa_flight_hop_schedule_collectives_on_unique_hop_route_id"
+  end
+
   create_table "sa_flight_schedule_collectives", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "carrier_code"
     t.integer "flight_no"
@@ -787,18 +881,17 @@ ActiveRecord::Schema.define(version: 20180409102751) do
     t.index ["unique_route_id"], name: "index_sa_flight_schedule_collectives_on_unique_route_id"
   end
 
-  create_table "sa_footers", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+  create_table "sa_footers", id: :integer, default: nil, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "city_code"
     t.string "city_name"
-    t.string "city_name_ar"
     t.string "country_code"
     t.string "country_name"
     t.integer "total_routes_count"
-    t.integer "current_routes_count"
     t.text "routes_data"
+    t.integer "current_routes_count"
+    t.string "city_name_ar"
     t.text "routes_data_ar"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "updated_at"
   end
 
   create_table "sa_from_to_contents", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
@@ -828,6 +921,7 @@ ActiveRecord::Schema.define(version: 20180409102751) do
     t.string "url"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["url", "dep_city_code", "arr_city_code"], name: "indicies"
   end
 
   create_table "unique_routes", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
@@ -849,14 +943,20 @@ ActiveRecord::Schema.define(version: 20180409102751) do
     t.index ["schedule_route_url", "ticket_route_url", "dep_city_code", "arr_city_code"], name: "indecies"
   end
 
+  add_foreign_key "ae_flight_hop_schedule_collectives", "unique_hop_routes"
   add_foreign_key "ae_flight_schedule_collectives", "unique_routes"
   add_foreign_key "airline_brand_collectives", "unique_routes"
+  add_foreign_key "bh_flight_hop_schedule_collectives", "unique_hop_routes"
   add_foreign_key "bh_flight_schedule_collectives", "unique_routes"
   add_foreign_key "collectives", "unique_routes"
   add_foreign_key "in_flight_hop_schedule_collectives", "unique_hop_routes"
   add_foreign_key "in_flight_schedule_collectives", "unique_routes"
+  add_foreign_key "kw_flight_hop_schedule_collectives", "unique_hop_routes"
   add_foreign_key "kw_flight_schedule_collectives", "unique_routes"
+  add_foreign_key "om_flight_hop_schedule_collectives", "unique_hop_routes"
   add_foreign_key "om_flight_schedule_collectives", "unique_routes"
+  add_foreign_key "qa_flight_hop_schedule_collectives", "unique_hop_routes"
   add_foreign_key "qa_flight_schedule_collectives", "unique_routes"
+  add_foreign_key "sa_flight_hop_schedule_collectives", "unique_hop_routes"
   add_foreign_key "sa_flight_schedule_collectives", "unique_routes"
 end

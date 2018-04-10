@@ -146,6 +146,9 @@
     <script type="text/javascript" src="https://d2w5af8s1781.cloudfront.net/waytogo-staging/javascripts/date_format.js"></script>
     <script type="text/javascript" src="https://d2w5af8s1781.cloudfront.net/waytogo-staging/javascripts/ct_custom.js"></script>
     <script type="text/javascript" src="https://d2w5af8s1781.cloudfront.net/waytogo-staging/javascripts/banner_tool_v1.js"></script>
+    <%= render "shared/sa/sa_gac"%>
+    <%= render "common/comscore" %>
+    <%= render "common/mobile_header_flexislider" %>
     <script>
       var country_code= "<%= @country_code.downcase %>";
       var section_type= "<%= @section.include?("dom") ? "domestic" : "international" %>";

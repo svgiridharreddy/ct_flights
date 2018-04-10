@@ -6,6 +6,7 @@
 			<div class="col-xs-3"><a href="">Dept & Arrival</a></div>
 			<div class="col-xs-1"><a href="">Duration</a></div>
 			<div class="col-xs-2"><a href="">Days of Operation</a></div>
+			<div class="col-xs-2"><a href="">Price</a></div>
 			<div class="col-xs-2"><a href="">&nbsp;</a></div>
 		</div>
 		<div class="clearfix"></div>
@@ -49,6 +50,16 @@
 		    <div class="col-xs-2 no-padding pad-10">
 	        	<span><%= route[:days_of_operation]%></span>
 	        </div>
+	        <div class="col-xs-2 no-padding pad-10">
+	        	<span>
+	        		<% if route[:cc_min_price].present? && route[:cc_min_price]!=0 && schedule_layout_values["country_code"]=='IN' %>
+	        		<i class='fa fa-inr'></i>
+	        		<% elsif route[:cc_min_price].present? && route[:cc_min_price]!=0 && schedule_layout_values["country_code"]=='AE' %>
+	        		AED 
+	        		<% end %>
+	        		<%= route[:cc_min_price].present? ? route[:cc_min_price].to_i : "--NA--"%>
+	        	</span>
+        	</div>
 		      <div class="col-xs-2 no-padding">
 		        <a data-route="<%= schedule_layout_values["dep_airport_code"]%>-<%= schedule_layout_values["arr_airport_code"]%>-<%= route[:carrier_code] %>" class="booking flight-schedule-booking" >Check Now</a>
 		      </div>

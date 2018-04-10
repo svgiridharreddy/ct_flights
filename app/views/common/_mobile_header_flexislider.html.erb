@@ -1,0 +1,34 @@
+<script>
+  $(document).ready(function(){
+    $('.Menuicon').click(function(){
+           // $('#Second-menu').css("right", "0");
+           $("#Second-menu").animate({right: '0'});
+         })
+
+    $('.close').click(function(){
+           // $('#slide-header').css("right", "-300px")
+           $("#Second-menu").animate({right: '-450px'});
+
+         })
+    $(".featured_local").flexslider({
+      animation: "slide",
+      animationLoop: false,
+      itemWidth: 205,
+      itemMargin: 10,
+      mousewheel: false,
+      rtl: true
+      // start:function(){
+      //     $('.featured_local ul.slides').show(200)
+      // }
+    });
+    clevertap.event.push("Air_SEO_Traffic",{
+      "Domain": 'Cleartrip.com',
+      "Marketing_Channel": 'SEO-Organic',
+      "Traffic_Source": 'Organic',
+      "SEO_Path": 'flight-schedule',
+      "Origin": 'BLR',
+      "Destination": 'MAA',
+      "URL": 'https://www.cleartrip.com/flight-schedule/bangalore-chennai-flights.html'
+    })
+  })
+</script>

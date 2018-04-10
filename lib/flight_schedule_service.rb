@@ -219,7 +219,7 @@ class FlightScheduleService
       weekly_flights_count = weekly_flights.count
       lang_city_name = "city_name_#{@language.downcase}"
       # airline_count_list = weekly_flights.map{}
-      more_routes = @language == "en" ? get_more_routes : get_more_arabic_routes
+      more_routes = @language == "ar" ? get_more_arabic_routes : get_more_routes  
       min_pr = min_price_new_changes(@dep_city_code,@arr_city_code)
       schedule_routes_with_price = []
       schedule_routes.each do |route|
@@ -241,7 +241,7 @@ class FlightScheduleService
       schedule_layout_hop_values["arr_city_name"] = @route.arr_city_name
       schedule_layout_hop_values["dep_city_name_#{@language.downcase}"] = CityName.find_by(city_code: @dep_city_code).send(lang_city_name)
       schedule_layout_hop_values["arr_city_name_#{@language.downcase}"] = CityName.find_by(city_code: @dep_city_code).send(lang_city_name)
-      schedule_layout_hop_values["dep_city_name_formated`"] = schedule_airline_values["dep_city_name_formated"]
+      schedule_layout_hop_values["dep_city_name_formated"] = schedule_airline_values["dep_city_name_formated"]
       schedule_layout_hop_values["arr_city_name_formated"] = schedule_airline_values["arr_city_name_formated"]
       schedule_layout_hop_values["arr_city_name"] = @route.arr_city_name
       schedule_layout_hop_values["dep_city_code"] = @route.dep_city_code

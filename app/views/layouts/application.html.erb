@@ -6,6 +6,7 @@
 
     <%= stylesheet_link_tag    'application', media: 'all' %>
     <%= javascript_include_tag 'application'%>
+    <%= render partial: "common/header_google_tag_manager" %>
     <% seo =  seo_header %>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
   	<title>  
@@ -26,8 +27,8 @@
     <%# end %>
     <%= render partial: "common/language_meta_tags",locals: {page_number: 1} %>
     <%=  render partial: "common/fb_tw_gplus",locals: {title: seo[:title],description: seo[:description]} %>
-    <%= render partial: "common/header_google_tag_manager" %>
-
+    
+    <%= render partial: "common/crazy_hot_jar_code" %>
     <link rel="stylesheet" href="https://s3-ap-southeast-1.amazonaws.com/waytogo-assets/waytogo-staging/stylesheets/application.css"/>
     <style>
       .list-inline>li {

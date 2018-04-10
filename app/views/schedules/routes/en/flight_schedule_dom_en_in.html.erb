@@ -149,7 +149,9 @@
         
       </div>
     </div>
-   
+    <%= render "shared/in/in_gac"%>
+    <%= render "common/comscore" %>
+    <%= render "common/mobile_header_flexislider" %>
     <script>
       var country_code= "<%= @country_code.downcase %>";
       var section_type= "<%= @section.include?("dom") ? "domestic" : "international" %>";

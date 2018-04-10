@@ -131,6 +131,13 @@ class FlightSchedulesController < ApplicationController
 	end
 
 	def get_hop_schedule_values
+		
+		dep_city = CityName.find_by(city_code: @route.dep_city_code)
+		arr_city = CityName.find_by(city_code: @route.arr_city_code)
+		@dep_city_name  = dep_city.city_name_en.titleize
+		@arr_city_name = arr_city.city_name_en.titleize
+		@dep_city_name_ar  = dep_city.city_name_ar rescue ""
+		@arr_city_name_ar = arr_city.city_name_ar rescue ""
 		@route_details = {  :dep_city_code => @route.dep_city_code,
 											  :arr_city_code => @route.arr_city_code,
 											  :dep_airport_code => @route.dep_airport_code,
@@ -145,12 +152,6 @@ class FlightSchedulesController < ApplicationController
 												:route => @route,
 												:route_type => @route_type,
 												:country_name => @country_name }
-		dep_city = CityName.find_by(city_code: @route.dep_city_code)
-		arr_city = CityName.find_by(city_code: @route.arr_city_code)
-		@dep_city_name  = dep_city.city_name_en.titleize
-		@arr_city_name = arr_city.city_name_en.titleize
-		@dep_city_name_ar  = dep_city.city_name_ar rescue ""
-		@arr_city_name_ar = arr_city.city_name_ar rescue ""
 		if @route.dep_country_code == @country_code &&  @route.arr_country_code == @country_code
 			@section = @country_code + "-dom"
 		else
@@ -166,24 +167,27 @@ class FlightSchedulesController < ApplicationController
     else
       inc_cc =  "carrier_code in ('#{@all_carrier_codes.join("\',\'")}')"
     end
-    case @country_code
-    when  "IN"
-    	@schedule_routes = @route.in_flight_hop_schedule_collectives.where("#{inc_cc}").order("dep_time asc").limit(10)
-    when  "AE"
-    	@schedule_routes = @route.ae_flight_schedule_collectives.where("#{inc_cc}").order("dep_time asc").limit(10)
-    when  "SA"
-    	@schedule_routes = @route.sa_flight_hop_schedule_collectives.where("#{inc_cc}").order("dep_time asc").limit(10)
-    when  "BH"
-    	@schedule_routes = @route.bh_flight_hop_schedule_collectives.where("#{inc_cc}").order("dep_time asc").limit(10)
-    when  "QA"
-    	@schedule_routes = @route.qa_flight_hop_schedule_collectives.where("#{inc_cc}").order("dep_time asc").limit(10)
-    when  "KW"
-    	@schedule_routes = @route.kw_flight_hop_schedule_collectives.where("#{inc_cc}").order("dep_time asc").limit(10)
-    when  "OM"
-    	@schedule_routes = @route.om_flight_hop_schedule_collectives.where("#{inc_cc}").order("dep_time asc").limit(10)
-    else
-    	@schedule_routes = @route.in_flight_hop_schedule_collectives.where("#{inc_cc}").order("dep_time asc").limit(10)
-    end
+    # comented because only in_flight_hop_schedule_collectives table has data
+    # uncomment after feeding data to respective tables
+    # case @country_code
+    # when  "IN"
+    # 	@schedule_routes = @route.in_flight_hop_schedule_collectives.where("#{inc_cc}").order("dep_time asc").limit(10)
+    # when  "AE"
+    # 	@schedule_routes = @route.ae_flight_schedule_collectives.where("#{inc_cc}").order("dep_time asc").limit(10)
+    # when  "SA"
+    # 	@schedule_routes = @route.sa_flight_hop_schedule_collectives.where("#{inc_cc}").order("dep_time asc").limit(10)
+    # when  "BH"
+    # 	@schedule_routes = @route.bh_flight_hop_schedule_collectives.where("#{inc_cc}").order("dep_time asc").limit(10)
+    # when  "QA"
+    # 	@schedule_routes = @route.qa_flight_hop_schedule_collectives.where("#{inc_cc}").order("dep_time asc").limit(10)
+    # when  "KW"
+    # 	@schedule_routes = @route.kw_flight_hop_schedule_collectives.where("#{inc_cc}").order("dep_time asc").limit(10)
+    # when  "OM"
+    # 	@schedule_routes = @route.om_flight_hop_schedule_collectives.where("#{inc_cc}").order("dep_time asc").limit(10)
+    # else
+    # 	@schedule_routes = @route.in_flight_hop_schedule_collectives.where("#{inc_cc}").order("dep_time asc").limit(10)
+    # end
+    @schedule_routes = @route.in_flight_hop_schedule_collectives.where("#{inc_cc}").order("dep_time asc").limit(10)
 		header_values = flight_schedule_service.schedule_header_details
 		schedule_layout_values = flight_schedule_service.schedule_hop_values(@schedule_routes)
 		@title_min_price = schedule_layout_values["route_min_price"]

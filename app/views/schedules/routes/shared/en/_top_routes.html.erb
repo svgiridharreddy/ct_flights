@@ -9,7 +9,7 @@
 		<% end %>
 	</ul>
 	<p class="more_link">
-	 	<a href="/flight-schedule/flights-from-<%=url_escape(dep_city_name)%>.html"><%= t('flights.more_flights_from')%> <%= dep_city_name%></a>
+	 	<a href="/flight-schedule/flights-from-<%=url_escape(dep_city_name)%>.html" title="More Flights From <%= dep_city_name%>"><%= t('flights.more_flights_from')%> <%= dep_city_name%></a>
 	</p>
 </div>
 <p class="bottom-br">&nbsp;</p>
@@ -23,7 +23,7 @@
 		<% end %>
 	</ul>
 	<p class="more_link">
-		 <a href="/flight-schedule/flights-to-<%=use_helper.url_escape(arr_city_name)%>.html"><%= t('flights.more_flights_to')%> <%= arr_city_name%></a>
-	</p>
+		 <a href="/flight-schedule/flights-to-<%=use_helper.url_escape(arr_city_name)%>.html" title="More Flights To <%= arr_city_name%>"><%= t('flights.more_flights_to')%> <%= arr_city_name%></a>
+	</p> 
 	<div class="clearfix"></div>
 </div>

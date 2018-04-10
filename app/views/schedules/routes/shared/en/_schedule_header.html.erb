@@ -2,7 +2,7 @@
   <section id="Second-menu">
     <div class="close visible-xs"><i class="fa fa-close"></i></div>
     <ul class="list-inline">
-      <% if country_code=="IN"%>
+      <% if country_code=="IN" && (dep_country_code=="IN" || arr_country_code=="IN") %>
         <li>
           <a class="dropdown-toggle" type="button" data-toggle="dropdown">About<span class="caret"></span></a>
           <ul class="list-unstyled dropdown-menu"> 
@@ -52,8 +52,8 @@
       <li>
         <a class="dropdown-toggle" type="button" data-toggle="dropdown">Flights <span class="caret"></span></a>
         <ul class="list-unstyled dropdown-menu">
-          <li><a href="#{@host_name}/flight-schedule/flights-from-<%= dep_city_name_formated%>.html" title="Flights from <%=dep_city_name.titleize %>" target="_blank">List of Flights from <%= dep_city_name.titleize%></a></li> 
-          <li><a href="#{@host_name}/flight-schedule/flights-to-<%= arr_city_name_formated %>.html" title="Flights to <%= arr_city_name.titleize %>" target="_blank">List of Flights to <%= arr_city_name.titleize%></a></li>  
+          <li><a href="<%= @host_name %>/flight-schedule/flights-from-<%= dep_city_name_formated%>.html" title="Flights from <%=dep_city_name.titleize %>" target="_blank">List of Flights from <%= dep_city_name.titleize%> </a></li> 
+          <li><a href="<%= @host_name %>/flight-schedule/flights-to-<%= arr_city_name_formated %>.html" title="Flights to <%= arr_city_name.titleize %>" target="_blank">List of Flights to <%= arr_city_name.titleize%></a></li>  
         </ul>
       </li>
       <% if route_dom_airlines.present? %>
@@ -85,8 +85,8 @@
       <li>
         <a class="dropdown-toggle" type="button" data-toggle="dropdown">Airport and hotels <span class="caret"></span></a>
         <ul class="list-unstyled dropdown-menu"> 
-          <li><a href="#{@host_name}/tourism/airports/<%= dep_city_name_formated%>-airport.html" title="<%= dep_city_name.titleize%> Airport" target="_blank"><%= dep_city_name.titleize%> Airport</a></li> 
-          <li><a href="#{@host_name}/tourism/airports/<%= arr_city_name_formated%>-airport.html"  title="<%= arr_city_name.titleize%> Airport" target="_blank"><%= arr_city_name.titleize%> Airport</a></li> 
+          <li><a href="<%= @host_name%>/tourism/airports/<%= dep_city_name_formated%>-airport.html" title="<%= dep_city_name.titleize%> Airport" target="_blank"><%= dep_city_name.titleize%> Airport</a></li> 
+          <li><a href="<%= @host_name%>/tourism/airports/<%= arr_city_name_formated %>-airport.html"  title="<%= arr_city_name.titleize%> Airport" target="_blank"><%= arr_city_name.titleize%> Airport</a></li> 
           <% unless near_by_airport_hotels.present? && near_by_airport_hotels!="" %>
             <% if hotels_header_list.present? && hotels_header_list!="" %>
               <li><span class="high-light-txt"><b>Hotels near <%= arr_city_name %> Aiport</b></span>
