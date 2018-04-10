@@ -26,7 +26,7 @@
 			<li class="<%= rc>10 ? "hide showMore" : "" %>">
 				<div class="airline">
 					<div class="col-xs-2 no-padding">
-						<a data-route="<%=route[:dep_airport_code]%>-<%= route[:arr_airport_code]%>-<%= route[:carrier_code] %>-<%= route_type %>"   data-languageType ="<%= I18n.locale.to_s%>" class="booking flight-schedule-booking" >
+						<a data-route="<%=route[:dep_airport_code]%>-<%= route[:arr_airport_code]%>-<%= route[:first_carrier_code] %>-<%= route_type %>"   data-languageType ="<%= I18n.locale.to_s%>" class="booking flight-schedule-booking" >
 							<% if route[:cc_min_price].present? && route[:cc_min_price]!=0 %>
 							<%= t('flight_schedule.book_now_text_btn') %>
 							<% else %>
@@ -41,20 +41,20 @@
 					<div class="col-xs-2 no-padding pad-10">
 						<span>
 							<% if route[:cc_min_price].present? && route[:cc_min_price]!=0 && country_code=='AE' %>
-							AED 
+								AED 
 							<% elsif route[:cc_min_price].present? && route[:cc_min_price]!=0 && country_code=='SA' %>
-							SAR
+								SAR
 							<% end %>
-							<%= route[:cc_min_price].present? ? route[:cc_min_price].to_i : "--NA--"%>
+							<%= route[:cc_min_price].present? ? route[:cc_min_price].to_i : "--NA--" %>
 						</span>
 					</div>
 					<div class="col-xs-1 no-padding pad-10">
-			      <% if route[:duration].include? (":")%>
-		            <span> <%= route[:duration].to_time.strftime("%Hh %Mm") %></span>
-		            <span class="type"><%= I18n.t("flight_schedule.non-stop")%></span>
+						<% if route[:duration].include? (":")%>
+	            <span> <%= route[:duration].to_time.strftime("%Hh %Mm") %></span>
+	            <span class="type"><%= I18n.t("flight_schedule.one-hop")%></span>
 	          <% else %>
-	            	<span> <%= Time.at(route[:duration].to_i*60).utc.strftime("%Hh %Mm") %></span>
-	            	<span class="type"><%= I18n.t("flight_schedule.non-stop")%></span>
+	            <span> <%= Time.at(route[:duration].to_i*60).utc.strftime("%Hh %Mm") %></span>
+	            <span class="type"><%= I18n.t("flight_schedule.non-stop")%></span>
 	          <% end %>  
 					</div>
 					<div class="col-xs-3 no-padding pad-10">
@@ -70,10 +70,10 @@
 					</div>
 					<div class="col-xs-2 no-padding">
 						<span class="name mt-15">
-							<%= route[:carrier_code] %><%= route[:flight_no] %>
+							<%= route[:first_carrier_code] %><%= route[:first_flight_no] %>/<%= route[:second_carrier_code] %><%= route[:second_flight_no] %>
 						</span>
 						<span class="name mt-5">
-							<% airline_name = link_to( t("airlines.#{route[:carrier_code]}"), "/#{I18n.locale.to_s}/flight-booking/" + format_airline_name(I18n.with_locale(:en) { t("airlines.#{route[:carrier_code]}") }).downcase.gsub(" ", "-").gsub("--","-") + ".html") %>
+							<% airline_name = link_to( t("airlines.#{route[:first_carrier_code]}"), "/#{I18n.locale.to_s}/flight-booking/" + format_airline_name(I18n.with_locale(:en) { t("airlines.#{route[:first_carrier_code]}") }).downcase.gsub(" ", "-").gsub("--","-") + ".html") %>
 							<%= airline_name %>
 						</span>
 					</div>					
@@ -107,8 +107,8 @@
 				rc+=1 %>
 				<li class="<%= rc>10 ? "hide showMore" : "" %>">
 					<div class="col-xs-3 no-padding ">
-						<a data-route="<%=route[:dep_airport_code]%>-<%= route[:arr_airport_code]%>-<%= route[:carrier_code] %>-<%= route_type %>"  data-languageType ="<%= I18n.locale.to_s%>" class="booking flight-schedule-booking">
-							<% if route[:price].present? && route[:price]!=0 %>
+						<a data-route="<%=route[:dep_airport_code]%>-<%= route[:arr_airport_code]%>-<%= route[:first_carrier_code] %>-<%= route_type %>"  data-languageType ="<%= I18n.locale.to_s%>" class="booking flight-schedule-booking">
+							<% if route[:cc_min_price].present? && route[:cc_min_price]!=0 %>
 							<%= t('flight_schedule.book_now_text_btn') %>
 							<% else %>
 							<%= t("airport.check_price") %>
@@ -117,15 +117,15 @@
 					</div>
 					<div class="airline">
 					<div class="col-xs-2 no-padding pad-10">
-							<span>
+						<span>
 							<% if route[:cc_min_price].present? && route[:cc_min_price]!=0 && country_code=='AE' %>
 								AED 
 							<% elsif route[:cc_min_price].present? && route[:cc_min_price]!=0 && country_code=='SA' %>
 								SAR
 							<% end %>
-							<%= route[:cc_min_price].present? ? route[:cc_min_price].to_i : "--NA--"%>
+							<%= route[:cc_min_price].present? ? route[:cc_min_price].to_i : "--NA--" %>
 						</span>
-						</div>
+					</div>
 
 						<div class="col-xs-4 no-padding pad-10">
 							<span><%= Time.strptime(route[:dep_time],"%H:%M").to_time.strftime("%l:%M %p") %> → <%= Time.strptime(route[:arr_time],"%H:%M").to_time.strftime("%l:%M %p") %></span>
@@ -134,10 +134,10 @@
 
 						<div class="col-xs-3 no-padding">
 							<span class="name mt-15">
-								<%= route[:carrier_code] %><%= route[:flight_no] %>
+								<%= route[:first_carrier_code] %><%= route[:first_flight_no] %>/<%= route[:second_carrier_code] %><%= route[:second_flight_no] %>
 							</span>
 							<span class="name mt-5">
-								<% airline_name = link_to( t("airlines.#{route[:carrier_code]}"), "/#{I18n.locale.to_s}/flight-booking/" + format_airline_name(I18n.with_locale(:en) { t("airlines.#{route[:carrier_code]}") }).downcase.gsub(" ", "-").gsub("--","-") + ".html") %>
+								<% airline_name = link_to( t("airlines.#{route[:first_carrier_code]}"), "/ar/flight-booking/" + format_airline_name(I18n.with_locale(:en) { t("airlines.#{route[:first_carrier_code]}") }).downcase.gsub(" ", "-").gsub("--","-") + ".html") %>
 								<%= airline_name %>
 							</span>
 						</div>

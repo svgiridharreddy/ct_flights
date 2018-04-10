@@ -516,6 +516,7 @@ ar:
     breadcrumb_second: "لوائح الرحلات الجوية الداخلية"
     breadcrumb_second_intl: "لوائح الرحلات الجوية الدولية"
     description_paragraph: "تبحث عن رحلات رخيصة من %{dep_city_name} إلى %{arr_city_name}؟ فلتلقي نظرة على لوائح الرحلات وحجز السفر فقط على %{host}. نقدم لك مجموعة واسعة من شركات الطيران المحلية مثل %{airline_routes_list} لتحجز رحلتك. هناك %{total_flights} رحلات أسبوعية من %{dep_city_name} إلى %{arr_city_name}. الرحلة الأولى من %{dep_city_name} إلى %{arr_city_name} هي في %{dep_first_time}، وهي شركة الطيران %{airline_name1} - %{flight_no1}. الرحلة الأخيرة من %{dep_city_name} إلى %{arr_city_name} هي في %{dep_last_time}، وهي شركة %{airline_name2} - %{flight_no2}. تأكد من أن تجد أفضل العروض والصفقات على الرحلات الجوية الرخيصة من %{dep_city_code} إلى %{arr_city_code}."
+    one-hop: "هوب واحد"
     header_1: "%{dep_city_name} %{arr_city_name} جدول الطيران"
     departure: "المغادرة"
     arrival: "وصول"
