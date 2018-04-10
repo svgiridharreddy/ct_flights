@@ -11,34 +11,40 @@
           meta_title = meta_info["#{@country_code.downcase}_#{@section[3..5]}"]["#{@language.downcase}"]["#{title}"] %{dep_city_name: @dep_city_name_ar,arr_city_name: @arr_city_name_ar,price: @title_min_price}
           meta_description = meta_info["#{@country_code.downcase}_#{@section[3..5]}"]["#{@language.downcase}"]["description"] %{dep_city_name: @dep_city_name_ar,arr_city_name: @arr_city_name_ar,host: host}
           meta_keywords = meta_info["#{@country_code.downcase}_#{@section[3..5]}"]["#{@language.downcase}"]["keywords"] %{dep_city_name: @dep_city_name_ar,arr_city_name: @arr_city_name_ar}
+          amp_url = meta_info["#{@country_code.downcase}_#{@section[3..5]}"]["#{@language.downcase}"]["amp_url"] %{dep_city_name_formated: @dep_city_name_formated,arr_city_name_formated: @arr_city_name_formated}
         else
           title = (@title_min_price.present? && @title_min_price!=0) ? "title_with_price" : "title_without_price"
           meta_title = meta_info["#{@country_code.downcase}_#{@section[3..5]}"]["#{@language.downcase}"]["#{title}"] %{dep_city_name: @dep_city_name,arr_city_name: @arr_city_name,price: @title_min_price}
           meta_description = meta_info["#{@country_code.downcase}_#{@section[3..5]}"]["#{@language.downcase}"]["description"] %{dep_city_name: @dep_city_name,arr_city_name: @arr_city_name}
           meta_keywords = meta_info["#{@country_code.downcase}_#{@section[3..5]}"]["#{@language.downcase}"]["keywords"] %{dep_city_name: @dep_city_name,arr_city_name: @arr_city_name}
+          amp_url = meta_info["#{@country_code.downcase}_#{@section[3..5]}"]["#{@language.downcase}"]["amp_url"] %{dep_city_name_formated: @dep_city_name_formated,arr_city_name_formated: @arr_city_name_formated}
         end
       when "from"
         if @language == "ar"
           meta_title = meta_info["#{@country_code.downcase}_from"]["#{@language.downcase}"]["title"] %{city_name: @city_name_ar}
           meta_description = meta_info["#{@country_code.downcase}_from"]["#{@language.downcase}"]["description"] %{city_name: @city_name_ar}
           meta_keywords = meta_info["#{@country_code.downcase}_from"]["#{@language.downcase}"]["keywords"] %{city_name: @city_name_ar} rescue ""
+          amp_url = ""
         else 
           meta_title = meta_info["#{@country_code.downcase}_from"]["#{@language.downcase}"]["title"] %{city_name: @city_name}
           meta_description = meta_info["#{@country_code.downcase}_from"]["#{@language.downcase}"]["description"] %{city_name: @city_name}
           meta_keywords = meta_info["#{@country_code.downcase}_from"]["#{@language.downcase}"]["keywords"] %{city_name: @city_name} rescue ""
+          amp_url = ""
         end
       when "to"
         if @language == "ar"
           meta_title = meta_info["#{@country_code.downcase}_to"]["#{@language.downcase}"]["title"] %{city_name: @city_name_ar}
           meta_description = meta_info["#{@country_code.downcase}_to"]["#{@language.downcase}"]["description"] %{city_name: @city_name_ar}
           meta_keywords = meta_info["#{@country_code.downcase}_to"]["#{@language.downcase}"]["keywords"] %{city_name: @city_name_ar} rescue ""
+          amp_url = ""
         else
           meta_title = meta_info["#{@country_code.downcase}_to"]["#{@language.downcase}"]["title"] %{city_name: @city_name}
           meta_description = meta_info["#{@country_code.downcase}_to"]["#{@language.downcase}"]["description"] %{city_name: @city_name}
           meta_keywords = meta_info["#{@country_code.downcase}_to"]["#{@language.downcase}"]["keywords"] %{city_name: @city_name} rescue ""
+          amp_url = ""
         end
       end
-      {:title =>meta_title,:keywords=>meta_keywords,:description=>meta_description}
+      {:title =>meta_title,:keywords=>meta_keywords,:description=>meta_description,amp_url: amp_url}
     end
 
   def og_tags

@@ -12,8 +12,15 @@
   	<title>  
       <%=  seo[:title] %>
     </title>
+    <% if @page_type=="flight-schedule" || @page_type== "flight-booking" %>
+      <link rel="amphtml" href="<%=  seo[:amp_url] %>">
+    <% end %>
     <meta name="description" content="<%= seo[:description] %>">
     <meta name="keywords" content="<%= seo[:keywords] %>">
+    <%= render partial: "common/language_meta_tags",locals: {page_number: 1} %>
+    <%=  render partial: "common/fb_tw_gplus",locals: {title: seo[:title],description: seo[:description]} %>
+    <%= render partial: "common/crazy_hot_jar_code" %>
+    <link rel="stylesheet" href="https://s3-ap-southeast-1.amazonaws.com/waytogo-assets/waytogo-staging/testing/application_test.css"/>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script src="https://d2w5af8s1781.cloudfront.net/waytogo-staging/javascripts/jquery-ui.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
@@ -21,80 +28,6 @@
     <script type="text/javascript" src="https://d2w5af8s1781.cloudfront.net/waytogo-staging/javascripts/date_format.js"></script>
     <script type="text/javascript" src="https://d2w5af8s1781.cloudfront.net/waytogo-staging/javascripts/ct_custom.js"></script>
     <script type="text/javascript" src="https://d2w5af8s1781.cloudfront.net/waytogo-staging/javascripts/banner_tool_v1.js"></script>
-    <%# if @page_type== "flight-schedule" && @country_code="IN" %>
-      <!-- <meta itemprop="name" content="<%@dep_city_name %> to <%= @arr_city_name %> Flights, Airfares @ ₹ <%= @title_min_price%> + 30% cashback - Cleartrip"> -->
-      <!-- <meta itemprop="description" content="Find the best deal for <%@dep_city_name %> to <%= @arr_city_name %> flights on Cleartrip. Use Coupon code - BESTBUY &amp; get amazing discounts on the flights from <%@dep_city_name %> to <%= @arr_city_name %>. Hurry Now!">  -->
-    <%# end %>
-    <%= render partial: "common/language_meta_tags",locals: {page_number: 1} %>
-    <%=  render partial: "common/fb_tw_gplus",locals: {title: seo[:title],description: seo[:description]} %>
-    
-    <%= render partial: "common/crazy_hot_jar_code" %>
-    <link rel="stylesheet" href="https://s3-ap-southeast-1.amazonaws.com/waytogo-assets/waytogo-staging/stylesheets/application.css"/>
-    <style>
-      .list-inline>li {
-        display: inline-block;
-        padding-right: 5px;
-        padding-left: 5px;
-        position: relative;
-      }
-      .airline-info h3{
-        font-size: 18px;
-      }
-      .airline-info{
-        padding: 0 0 20px;
-      }
-      .airline-info table.airline-info-table,.airline-info .fare-table,.other-info{
-        width: 100%;
-        font-size: 14px;
-        border: 1px solid #d9d9d9;
-        border-collapse: collapse;
-        
-      }
-      .airline-info table.airline-info-table td,.fare-table td,.other-info td{
-        padding: 10px;
-        border-bottom: 1px solid #d9d9d9;
-      }
-      .fare-table th,.other-info th{
-        padding: 10px;
-        background: #eeeeee54;
-        border-bottom: 1px solid #d9d9d9;
-        font-weight: 500;
-      }
-      .airline-info table.airline-info-table td:nth-child(odd){
-        background: #eeeeee54;
-        font-weight: 500;
-        border-right: 1px solid #d9d9d9;
-      }
-      .airline-info .booking {
-        padding: 4px 15px;
-      }
-      .normal-list .dep-time,.normal-list .arr-time{
-        width: 32%;
-        display: inline-block;
-        vertical-align: top;
-      }
-      .schedule-divide{
-        width: 30px;
-        display: inline-block;
-        font-size: 18px;
-        font-weight: 600;
-        position: relative;
-        top: 5px;
-      }
-      .normal-list .timing-duration{
-
-      }
-      @media Screen and (max-width: 468px){
-        .airline-info{
-          width: 100%;
-          overflow-x: auto;
-        }
-        .airline-info table{
-          width: 700px!important;
-        }
-      }
-    </style>
-    
   </head>
     <%= yield %>
 

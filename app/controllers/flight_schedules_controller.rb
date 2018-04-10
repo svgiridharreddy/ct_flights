@@ -89,10 +89,12 @@ class FlightSchedulesController < ApplicationController
     when  "OM"
     	@schedule_routes = @route.om_flight_schedule_collectives.where("#{inc_cc}").order("dep_time asc").limit(10)
     else
-    	@schedule_routes = @route.in_flight_schedule_collectives.where("#{inc_cc}").order("dep_time asc").limit(10)
+    	@schedule_routes = @route.in_flight_schedule_collectives.where("#{inc_cc}").order("dep_time asc").limit(10)	
     end
 		header_values = flight_schedule_service.schedule_header_details
 		schedule_layout_values = flight_schedule_service.schedule_values(@schedule_routes)
+		@dep_city_name_formated = schedule_layout_values["dep_city_name_formated"]
+		@arr_city_name_formated = schedule_layout_values["arr_city_name_formated"]
 		@title_min_price = schedule_layout_values["route_min_price"]
 		partial = "schedules/routes/#{@language}/flight_schedule_#{@section[3..5]}_#{@language.downcase}_#{@country_code.downcase}"
 		render  partial,locals: {schedule_layout_values: schedule_layout_values,dep_city_name: @dep_city_name,arr_city_name: @arr_city_name,dep_city_name_ar: @dep_city_name_ar,arr_city_name_ar: @arr_city_name_ar,dep_city_code: @route.dep_city_code,arr_city_code: @route.arr_city_code,schedule_header: header_values,schedule_footer: schedule_footer }
@@ -191,6 +193,8 @@ class FlightSchedulesController < ApplicationController
 		header_values = flight_schedule_service.schedule_header_details
 		schedule_layout_values = flight_schedule_service.schedule_hop_values(@schedule_routes)
 		@title_min_price = schedule_layout_values["route_min_price"]
+		@dep_city_name_formated = schedule_layout_values["dep_city_name_formated"]
+		@arr_city_name_formated = schedule_layout_values["arr_city_name_formated"]
 		partial = "schedules/routes/#{@language}/hops/flight_schedule_hop_#{@country_code.downcase}_#{@language.downcase}_#{@section[3..5]}"
 		render  partial,locals: {schedule_layout_values: schedule_layout_values,dep_city_name: @dep_city_name,arr_city_name: @arr_city_name,dep_city_name_ar: @dep_city_name_ar,arr_city_name_ar: @arr_city_name_ar,dep_city_code: @route.dep_city_code,arr_city_code: @route.arr_city_code,schedule_header: header_values,schedule_footer: schedule_footer }
 

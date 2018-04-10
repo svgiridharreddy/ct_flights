@@ -31,14 +31,13 @@ class FlightScheduleService
 			route_values["arr_city_name_formated"] = arr_city_name_formated rescue ""
 			route_values["top_dom_airlines"] = top_dom_cc
 			route_values["top_int_airlines"] = top_int_cc  
-			return route_values
+      return route_values
     end
 
     def fetch_route_content
     	content = {"unique_route_content" => "",
     				"dep_city_content" => "",
     				"arr_city_content" => ""}
-    	
     	if I18n.t("flight_schedule_content.#{@country_code.downcase}.#{@dep_city_name}-#{@arr_city_name}-Flights").index("translation missing").nil? 
     		unique_route_content = I18n.t("flight_schedule_content.#{@dep_city_name}-#{@arr_city_name}-Flights")
     		content["unique_route_content"] = unique_route_content 
@@ -165,7 +164,7 @@ class FlightScheduleService
       schedule_layout_values["dep_city_name_#{@language.downcase}"] = CityName.find_by(city_code: @dep_city_code).send(lang_city_name)
       schedule_layout_values["arr_city_name_#{@language.downcase}"] = CityName.find_by(city_code: @dep_city_code).send(lang_city_name)
 
-      schedule_layout_values["dep_city_name_formated`"] = schedule_airline_values["dep_city_name_formated"]
+      schedule_layout_values["dep_city_name_formated"] = schedule_airline_values["dep_city_name_formated"]
       schedule_layout_values["arr_city_name_formated"] = schedule_airline_values["arr_city_name_formated"]
       schedule_layout_values["arr_city_name"] = @route.arr_city_name
       schedule_layout_values["dep_city_code"] = @route.dep_city_code
