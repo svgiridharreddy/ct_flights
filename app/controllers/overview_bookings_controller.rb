@@ -16,7 +16,6 @@ class OverviewBookingsController < ApplicationController
 			redirect_to "#{@host_name}/flight-booking/domestic-airlines.html" and return
 		end
 		check_domain = check_domain(@language,@country_code)
-		binding.pry
 		if check_domain
 			lang = @language == "en" ? "" : "#{@language}"
 			if @country_code == "IN"
