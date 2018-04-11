@@ -71,7 +71,7 @@
           <% end %>
           <% if city_layout_values["to_more_routes"].present? %>
             <h2>Flights to <%= @city_name %> </h2>
-            <%= render :partial=>"schedule/from_to/en/shared/top_more_routes" locals: { top_routes: city_layout_values["to_more_routes"] } %>
+            <%= render :partial=>"schedule/from_to/en/shared/top_more_routes",locals: { top_routes: city_layout_values["to_more_routes"] } %>
             <div class="clearfix"></div>
         <% end %>
         </div>
