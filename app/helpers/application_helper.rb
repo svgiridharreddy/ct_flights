@@ -45,10 +45,10 @@
         end
       when "booking-overview"
         if @language == "ar"
-          meta_title = meta_info["#{@country_code.downcase}"]["#{@language.downcase}"]["#{@section[3..5]}"]["title"] %{carrier_name: @carrier_name}
-          meta_description = meta_info["#{@country_code.downcase}_to"]["#{@language.downcase}"]["description"] %{carrier_name: @carrier_name}
-          meta_keywords = meta_info["#{@country_code.downcase}_to"]["#{@language.downcase}"]["keywords"] %{carrier_name: @carrier_name} rescue ""
-          amp_url = meta_info["#{@country_code.downcase}_to"]["#{@language.downcase}"]["amp_url"] %{file_name: @file_name}
+          meta_title = meta_info["#{@country_code.downcase}"]["#{@language.downcase}"]["#{@section[3..5]}"]["title"] %{airline_name: @carrier_name_ar}
+          meta_description = meta_info["#{@country_code.downcase}"]["#{@language.downcase}"]["#{@section[3..5]}"]["description"] %{airline_name: @carrier_name_ar}
+          meta_keywords = meta_info["#{@country_code.downcase}"]["#{@language.downcase}"]["#{@section[3..5]}"]["keywords"] %{airline_name: @carrier_name_ar} rescue ""
+          amp_url = meta_info["#{@country_code.downcase}"]["#{@language.downcase}"]["amp_url"] %{file_name: @file_name}
         else
           meta_title = meta_info["#{@country_code.downcase}"]["#{@language.downcase}"]["#{@section[3..5]}"]["title"] %{carrier_name: @carrier_name}
           meta_description = meta_info["#{@country_code.downcase}"]["#{@language.downcase}"]["#{@section[3..5]}"]["description"] %{carrier_name: @carrier_name}
@@ -70,10 +70,34 @@
     end
       {main_content: main_content, alts: alts}
   end
-  def language_meta_tags
-    
+  
+  def custom_pagination(page_no,routes,file_name)
+      prev_no = next_no = 0
+      routes_count = routes.count 
+      pagination_routes_count = routes_count-45  
+      total_pages,remaing_routes_count = pagination_routes_count.divmod(45)
+      file_name = file_name.gsub(/\d/,'').gsub(".html",'')
+      if remaing_routes_count > 0 
+        total_pages += 1
+      end
+      if (page_no < total_pages) &&  page_no != 0
+        start_index = 46*page_no
+        end_index = start_index + 45
+        if page_no == 1
+          next_no = page_no + 1
+          prev_url = "#{file_name}.html"
+          next_url = "#{file_name}-#{next_no}.html"
+        else
+          prev_no = page_no - 1
+          next_no = page_no + 1
+          prev_url = "#{file_name}-#{prev_no}.html"
+          next_url  = "#{file_name}-#{next_no}.html"
+        end
+        binding.pry
+        return {routes: routes[start_index..end_index],current_page_no: page_no,prev_url: prev_url,next_url: next_url}
+      end
   end
-
+  
   def get_domain
     protocol = request.protocol
     unless protocol.include? "s"

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180410061925) do
+ActiveRecord::Schema.define(version: 20180411102815) do
 
   create_table "ae_airline_contents", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "carrier_code"
@@ -28,6 +28,16 @@ ActiveRecord::Schema.define(version: 20180410061925) do
     t.text "cancellation_content_en", limit: 4294967295
     t.text "cancellation_content_ar", limit: 4294967295
     t.text "customer_support_content_en", limit: 4294967295
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "ae_airline_footers", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.text "airline_footer_en", limit: 4294967295
+    t.text "airline_footer_ar", limit: 4294967295
+    t.text "airline_footer_en_dup", limit: 4294967295
+    t.text "airline_footer_ar_dup", limit: 4294967295
+    t.integer "current_count"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -130,6 +140,16 @@ ActiveRecord::Schema.define(version: 20180410061925) do
     t.string "publish_status"
     t.string "carrier_name_ar"
     t.string "carrier_name_hi"
+  end
+
+  create_table "airline_footers", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.text "airline_footer_en", limit: 4294967295
+    t.text "airline_footer_ar", limit: 4294967295
+    t.text "airline_footer_en_dup", limit: 4294967295
+    t.text "airline_footer_ar_dup", limit: 4294967295
+    t.integer "current_count"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "airports", id: false, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|

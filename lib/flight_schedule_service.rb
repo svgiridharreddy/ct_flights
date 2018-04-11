@@ -434,7 +434,9 @@ class FlightScheduleService
     return routes
   end
   def from_to_more_routes(url_section,city_section,other_section,city_code)
-    routes = UniqueRoute.where("#{city_section}_city_code='#{city_code}' and #{other_section}_city_code!='#{city_code}'").limit(45)
+    dir_routes = UniqueRoute.where("#{city_section}_city_code='#{city_code}' and #{other_section}_city_code!='#{city_code}'").limit(300)
+    hop_routes = UniqueHopRoute.where("#{city_section}_city_code='#{city_code}' and #{other_section}_city_code!='#{city_code}'").limit(300)
+    routes = (dir_routes + hop_routes).flatten.uniq
     if @language == "ar"
       more_routes = routes.pluck("#{other_section}_city_code").map{|cc| CityName.find_by(city_code:  cc)}
     else

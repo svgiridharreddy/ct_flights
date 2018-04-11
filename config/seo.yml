@@ -343,12 +343,12 @@ booking-overview:
       amp_url: "https://www.cleartrip.ae/flight-booking/amp/%{file_name}"
     ar:
       dom:
-        title: ""
-        description: ""
+        title: "حجوزات %{airline_name} | %{airline_name}  تذاكر وجداول الرحلات الجوية   %{airline_name}"
+        description: "حجوزات %{airline_name} وتذاكر %{airline_name} رخيصة الثمن على Cleartrip.com. احجز الآن! نقدم حجوزات طيران رخيصة الثمن %{airline_name}. تحقق من أحدث جدول للرحلات والمواعيد %{airline_name} قبل أن تحجز رحلة سفر. احصل على فكرة كافية عن أسعار رحلاتها الجوية الرخيصة المحلية وكذلك الرحلات الدولية."
         keywords: ""
       int:
-        title: ""
-        description: ""
+        title: "حجوزات %{airline_name} | %{airline_name}  تذاكر وجداول الرحلات الجوية   %{airline_name}"
+        description: "حجوزات %{airline_name} وتذاكر %{airline_name} رخيصة الثمن على Cleartrip.com. احجز الآن! نقدم حجوزات طيران رخيصة الثمن %{airline_name}. تحقق من أحدث جدول للرحلات والمواعيد %{airline_name} قبل أن تحجز رحلة سفر. احصل على فكرة كافية عن أسعار رحلاتها الجوية الرخيصة المحلية وكذلك الرحلات الدولية."
         keywords: ""
       amp_url: ""
   sa:
@@ -364,12 +364,12 @@ booking-overview:
       amp_url: ""
     ar:
       dom:
-        title: ""
-        description: ""
+        title: "حجوزات %{airline_name} | %{airline_name}  تذاكر وجداول الرحلات الجوية   %{airline_name}"
+        description: "حجوزات %{airline_name} وتذاكر %{airline_name} رخيصة الثمن على Cleartrip.com. احجز الآن! نقدم حجوزات طيران رخيصة الثمن %{airline_name}. تحقق من أحدث جدول للرحلات والمواعيد %{airline_name} قبل أن تحجز رحلة سفر. احصل على فكرة كافية عن أسعار رحلاتها الجوية الرخيصة المحلية وكذلك الرحلات الدولية."
         keywords: ""
       int:
-        title: ""
-        description: ""
+        title: "حجوزات %{airline_name} | %{airline_name}  تذاكر وجداول الرحلات الجوية   %{airline_name}"
+        description: "حجوزات %{airline_name} وتذاكر %{airline_name} رخيصة الثمن على Cleartrip.com. احجز الآن! نقدم حجوزات طيران رخيصة الثمن %{airline_name}. تحقق من أحدث جدول للرحلات والمواعيد %{airline_name} قبل أن تحجز رحلة سفر. احصل على فكرة كافية عن أسعار رحلاتها الجوية الرخيصة المحلية وكذلك الرحلات الدولية."
         keywords: ""
       amp_url: ""
  

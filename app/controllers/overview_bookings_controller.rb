@@ -24,9 +24,9 @@ class OverviewBookingsController < ApplicationController
 				redirect_to "#{@host_name}/#{lang}/flight-schedule/flight-schedules-domestic.html" and return
 			end
 		end
-
 		@carrier_name = airline.carrier_name
 		@carrier_code = airline.carrier_code
+		@carrier_name_ar = I18n.with_locale(:ar) {I18n.t("airlines.#{@carrier_code}")}
 		file_paths = YAML.load(File.read('config/application.yml'))[Rails.env]
 		@assets_path = file_paths["assets_path"]
 		@section = airline.country_code == @country_code ? "#{@country_code}-dom" : "#{@country_code}-int"
