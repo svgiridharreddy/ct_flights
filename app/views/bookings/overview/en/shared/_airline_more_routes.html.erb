@@ -9,7 +9,7 @@
       <li>
           <% link = "/flight-booking/#{url_escape("#{airline_name_translated.gsub(' ','-').downcase}-#{route["dep_city_name"].gsub(' ','-').downcase}-#{route["arr_city_name"].gsub(' ','-').downcase}-flights")}.html" %>
         
-        <%= t('brand_flights_routes_html', dep_city_name: route["dep_city_name"], airline_name: airline_name_translated,airline_name_translated:airline_name_translated,arr_city_name: route["arr_city_name"], link: link,title: "#{airline_name_translated} #{route["dep_city_name"]} #{route["arr_city_name"]} flights") %>
+        <%= I18n.t('brand_flights_routes_html', dep_city_name: route["dep_city_name"], airline_name: airline_name_translated,airline_name_translated:airline_name_translated,arr_city_name: route["arr_city_name"], link: link,title: "#{airline_name_translated} #{route["dep_city_name"]} #{route["arr_city_name"]} flights").html_safe %>
         <% end %>
       </li>
     <% end -%>

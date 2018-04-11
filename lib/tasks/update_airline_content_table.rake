@@ -12,7 +12,7 @@ namespace :airline_content_tables do
 			begin 
 				country_code = "AE".titleize
 				modle_name = "#{country_code}AirlineContent".constantize
-				I18n.locale = "ar"
+				I18n.locale = "sa"
 				brand = modle_name.find_or_create_by(carrier_code: airline.carrier_code,icoa_code: airline.icoa_code)
 				# carrier_name = 'Jet Airways'
 				carrier_name = airline.carrier_name
@@ -25,16 +25,16 @@ namespace :airline_content_tables do
 				else
 					key = "#{country_code.downcase}_#{carrier_code}_content"
 					if I18n.t("airline_brand_content.#{key}").index("translation missing").nil?
-						overview_content_ar = I18n.t("airline_brand_content.#{key}") rescue ""
+						overview_content_en = I18n.t("airline_brand_content.#{key}") rescue ""
 					else
-						overview_content_ar = ""
+						overview_content_en = ""
 					end
 				end
-				brand.overview_content_ar = overview_content_ar
+				brand.overview_content_en = overview_content_en
 				brand.country_code = airline.country_code
 				brand.carrier_name = airline.carrier_name
 				brand.save! 
-				if overview_content_ar.present? 
+				if overview_content_en.present? 
 					puts "#{count+=1} updated for airline-#{carrier_code}-#{carrier_name}"
 				end
 				# customer_support_content_en = File.read("#{Rails.root}/public/india/en/booking/customer_support/#{carrier_name.split(' ').join('-')}-#{carrier_code}.txt") rescue nil

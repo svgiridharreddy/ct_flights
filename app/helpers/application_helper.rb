@@ -93,7 +93,6 @@
           prev_url = "#{file_name}-#{prev_no}.html"
           next_url  = "#{file_name}-#{next_no}.html"
         end
-        binding.pry
         return {routes: routes[start_index..end_index],current_page_no: page_no,prev_url: prev_url,next_url: next_url}
       end
   end

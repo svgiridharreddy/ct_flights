@@ -30,7 +30,7 @@
                   </span>
                   <span class="name">
                     <%= route['carrier_code'] %><%= route['flight_no'] %> |
-                    <% airline_name = link_to( t("airlines.#{route['carrier_code']}"), "/flight-booking/" + format_airline_name(I18n.with_locale(:en) { t("airlines.#{route['carrier_code']}") }).downcase.gsub(" ", "-").gsub("--","-") + ".html") %>
+                    <% airline_name = link_to( t("airlines.#{route['carrier_code']}"), "/flight-booking/" + format_airline_name(I18n.t("airlines.#{route['carrier_code']}") ).downcase.gsub(" ", "-").gsub("--","-") + ".html") %>
                     <%= airline_name %>
                   </span>
                 <% else %>
@@ -38,7 +38,7 @@
                     <%= route['carrier_code'] %><%= route['flight_no'] %>
                   </span>
                   <span class="name mt-5">
-                    <% airline_name = link_to( t("airlines.#{route['carrier_code']}"), "/flight-booking/" + format_airline_name(I18n.with_locale(:en) { t("airlines.#{route['carrier_code']}") }).downcase.gsub(" ", "-").gsub("--","-") + ".html") %>
+                    <% airline_name = link_to( t("airlines.#{route['carrier_code']}"), "/flight-booking/" + format_airline_name(I18n.t("airlines.#{route['carrier_code']}") ).downcase.gsub(" ", "-").gsub("--","-") + ".html") %>
                     <%= airline_name %>
                   </span>
                 <% end %>

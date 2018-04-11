@@ -127,7 +127,7 @@ class FlightSchedulesController < ApplicationController
 		from_to_values = flight_schedule_service.from_to_values(@city_code,@city_section)
 		city_layout_values = flight_schedule_service.city_layout_values(@city_code, @city_section,@city_name)
 		schedule_footer = flight_schedule_service.schedule_footer
-		pagination = custom_pagination(page_no,city_layout_values["#{@city_section}_more_routes"],flight_flight_name)
+		# pagination = custom_pagination(page_no,city_layout_values["#{@city_section}_more_routes"],flight_flight_name)
 		if @city_section === "from"
 			partial = "schedules/from_to/#{@language}/from_city_#{@country_code.downcase}_#{@language.downcase}"
 		else
