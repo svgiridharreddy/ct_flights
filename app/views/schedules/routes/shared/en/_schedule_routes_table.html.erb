@@ -37,7 +37,7 @@
 		      </div> 
 	        <div class="col-xs-1 no-padding pad-10">
 	            <!-- <span> <%#= Time.at(route[:duration].to_i*60).utc.strftime("%Hh %Mm") %></span> -->
-	            <% if route[:duration].include? (":")%>
+	            <% if route[:duration].include? (":") %>
 	            	<span> <%= route[:duration].to_time.strftime("%Hh %Mm") %></span>
 	            	<span class="type">non-stop</span>
 	            <% else %>

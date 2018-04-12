@@ -106,7 +106,7 @@ class FlightSchedulesController < ApplicationController
 		@page_type = @city_section
 		lang= @language=="ar" ? "/ar" : ""
 		@city_name = path.gsub("#{lang}/flight-schedule/flights-#{@city_section}-",'').gsub(/\d/,'').gsub('.html','').gsub('-','').titleize
-		page_no = path.gsub("#{lang}/flight-schedule/flights-#{@city_section}-",'').gsub(/[^0-9]/,'').to_i || 1
+		page_no = path.gsub("#{lang}/flight-schedule/flights-#{@city_section}-",'').gsub(/[^0-9]/,'').to_i || 0
 		city = UniqueRoute.find_by(dep_city_name: @city_name)
 		if !city.present? || city.nil?
 			redirect_to "#{@host_name}/flight-schedule/flight-schedules-domestic.html" and return
@@ -127,13 +127,13 @@ class FlightSchedulesController < ApplicationController
 		from_to_values = flight_schedule_service.from_to_values(@city_code,@city_section)
 		city_layout_values = flight_schedule_service.city_layout_values(@city_code, @city_section,@city_name)
 		schedule_footer = flight_schedule_service.schedule_footer
-		# pagination = custom_pagination(page_no,city_layout_values["#{@city_section}_more_routes"],flight_flight_name)
+		pagination = custom_pagination(page_no,city_layout_values["#{@city_section}_more_routes"],flight_flight_name)
 		if @city_section === "from"
 			partial = "schedules/from_to/#{@language}/from_city_#{@country_code.downcase}_#{@language.downcase}"
 		else
 			partial = "schedules/from_to/#{@language}/to_city_#{@country_code.downcase}_#{@language.downcase}"
 		end
-		render partial, locals: {popular_routes: from_to_values,application_processor: @application_processor,page_type: "flight-schedule",first_file_name: flight_flight_name,city_layout_values: city_layout_values,host: host,schedule_footer: schedule_footer}
+		render partial, locals: {popular_routes: from_to_values,application_processor: @application_processor,page_type: "flight-schedule",first_file_name: flight_flight_name,city_layout_values: city_layout_values,host: host,schedule_footer: schedule_footer,pagination: pagination}
 	end
 
 	def get_hop_schedule_values
