@@ -90,7 +90,7 @@ class FlightBookingService
 			  	record = AirlineBrandCollective.find_by(carrier_code: @carrier_code,unique_route_id: route.id)
 			  	if record.present? && record !=nil
 				  	# min_price,max_price = flight_schedule_service.get_price(route.dep_city_code,route.arr_city_code,@carrier_code,@carrier_name)
-				  	@popular_routes["dom_int"] << {
+				  	@popular_routes["dom_dom"] << {
 			  			"carrier_code" => @carrier_code,
 			  			"carrier_name" => @carrier_name,
 			  			"dep_city_name" => route.dep_city_name,

@@ -83,7 +83,6 @@
             <%= render :partial=>"bookings/overview/en/brand_flight_schedule",:locals=>{:routes=>popular_routes['dom_dom'], :use_helper=>use_helper, :assets_path=>@assets_path, :country_code=> @country_code, :section=> 'dom',currency_code: currency_code(@country_code)} %>
             <p>&nbsp;</p>
             <% end %>
-            
             <% if popular_routes['dom_int'].present? && popular_routes['dom_int'].length>0  %>
             <h2><%= t('brand.popular_int_route_title', airline_name: @carrier_name) %></h2>
             <%= render :partial=>"bookings/overview/en/brand_flight_schedule",:locals=>{:routes=>popular_routes['dom_int'], :use_helper=>use_helper, :assets_path=>@assets_path, :country_code=> @country_code, :section=> 'int',currency_code: currency_code(@country_code)} %><!--mobile-view-->
