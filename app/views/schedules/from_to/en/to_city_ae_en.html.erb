@@ -48,6 +48,7 @@
     <%= render :partial=>"common/search_widget" %>
     <div class="col-lg-9 col-md-9 col-sm-12 mobile-view pad-lzero" id="flight-schedule">
       <div class="list-box">
+      <% %>
         <% if popular_routes["dom"].present? %>
           <h2><%=t('from_city.domestic_flights_from')%> <%= t('from_city.city_name', city_name: @city_name) %><span class="weak"> ( <%= t("from_city.flights_found", count: city_layout_values['dom_route_count']) %> )</span></h2>
            <%= render :partial=>"schedules/from_to/en/shared/from_to_city_table_en",:locals=>{:routes=> popular_routes["dom"], section: "dom", :country_code=> country_code, :use_helper=>use_helper, :assets_path=>assets_path} %><!--/normal-list-view-->
@@ -60,25 +61,25 @@
         <% end %>
        
          <div class="content-desc">
-          <h1><%= t('from_city.flight_from_city_name', city_name: @city_name) %></h1>
-          
-          <% if city_layout_values["city_from_content"].present? %>
-            <%= raw city_layout_values["city_from_content"] %>
-          <% else %>
-          <p>
-            <%= render partial: "schedules/from_to/en/contents/to/ae_en_to_city_templatized_content", locals: {city_name: @city_name, host: display_host(@country_code),city_layout_values: city_layout_values} %>
-          </p>
-          <% end %>
+            <h1><%= t('from_city.flight_from_city_name', city_name: @city_name) %></h1>
+            <% if city_layout_values["city_from_content"].present? %>
+              <%= raw city_layout_values["city_from_content"] %>
+            <% else %>
+              <p>
+                <%= render partial: "schedules/from_to/en/contents/to/ae_en_to_city_templatized_content", locals: {city_name: @city_name, host: display_host(@country_code),city_layout_values: city_layout_values} %>
+              </p>
+            <% end %>
+          </div>
           <% if city_layout_values["to_more_routes"].present? %>
-            <h2>Flights to <%= @city_name %> </h2>
-            <%= render :partial=>"schedules/from_to/en/shared/top_more_routes", locals: { top_routes: city_layout_values["to_more_routes"] } %>
-            <div class="clearfix"></div>
+            <div class="content-desc">
+              <h2>Flights to <%= @city_name %> </h2>
+              <%= render :partial=>"schedules/from_to/en/shared/top_more_routes", locals: { top_routes: city_layout_values["to_more_routes"] } %>
+              <div class="clearfix"></div>
+            </div>
           <% end %>
-        </div>
-      </div>
     </div>
-       <div id="Rside-bar">
-      <div class="col-lg-3 col-md-3 col-sm-12 pad-rzero side-bar">
+      <div id="Rside-bar">
+        <div class="col-lg-3 col-md-3 col-sm-12 pad-rzero side-bar">
         <div class="blocks banner-section">
           <div id="banner">
             <a target="_blank"><img></a>

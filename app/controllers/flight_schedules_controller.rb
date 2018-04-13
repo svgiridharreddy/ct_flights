@@ -124,8 +124,8 @@ class FlightSchedulesController < ApplicationController
 							}
 		host = @application_processor.host_name(@country_code)
 		flight_schedule_service = FlightScheduleService.new @values
-		from_to_values = flight_schedule_service.from_to_values(@city_code,@city_section)
-		city_layout_values = flight_schedule_service.city_layout_values(@city_code, @city_section,@city_name)
+		from_to_values = flight_schedule_service.from_to_values(@city_code,@city_section,page_no)
+		city_layout_values = flight_schedule_service.city_layout_values(@city_code, @city_section,@city_name,page_no)
 		schedule_footer = flight_schedule_service.schedule_footer
 		pagination = custom_pagination(page_no,city_layout_values["#{@city_section}_more_routes"],flight_flight_name)
 		if @city_section === "from"

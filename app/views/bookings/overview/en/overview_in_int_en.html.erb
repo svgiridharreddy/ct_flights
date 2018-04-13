@@ -49,7 +49,7 @@
   </section>
   <!--/Header Ends Here-->
   <!-- /Second Header starts here -->
-  <%= render partial: "bookings/shared/en/booking_header",locals: {popular_routes: popular_routes,airports: header_airports,carrier_name_en: @carrier_name,use_helper: use_helper, application_processor: application_processor,customer_support: customer_support,baggages: baggages,brand_type: "overview_page"} %>
+  <%= render partial: "bookings/shared/en/booking_header",locals: {popular_routes: header_routes,airports: header_airports,carrier_name_en: @carrier_name,use_helper: use_helper, application_processor: application_processor,customer_support: customer_support,baggages: baggages,brand_type: "overview_page"} %>
   <!-- /Second Header ends  here -->
   <div class="clearfix"></div>
   <!--/content Starts Here-->
@@ -76,27 +76,42 @@
       <%= render "common/search_widget" %>
       <div class="col-lg-9 col-md-9 col-sm-12 mobile-view pad-lzero" id="flight-schedule">
         <div class="list-box">
-          <div id="banner" class="lhs-banner"></div>
-          
-          <% if popular_routes['dom_dom'].present? &&  popular_routes['dom_dom'].length>0 %>
-          <h2><%= t('brand.popular_dom_route_title', airline_name: @carrier_name) %></h2>
-          <%= render :partial=>"bookings/overview/en/brand_flight_schedule",:locals=>{:routes=>popular_routes['dom_dom'], :use_helper=>use_helper, :assets_path=>@assets_path, :country_code=> @country_code, :section=> 'dom',currency_code: 'Rs.'} %>
-          <p>&nbsp;</p>
-          <% end %>
-          
-          <% if popular_routes['dom_int'].present? && popular_routes['dom_int'].length>0  %>
-          <h2><%= t('brand.popular_int_route_title', airline_name: @carrier_name) %></h2>
-          <%= render :partial=>"bookings/overview/en/brand_flight_schedule",:locals=>{:routes=>popular_routes['dom_int'], :use_helper=>use_helper, :assets_path=>@assets_path, :country_code=> @country_code, :section=> 'int',currency_code: 'Rs.'} %><!--mobile-view-->
+          <% if pagination[:current_page_no] == 0 %>
+            <div id="banner" class="lhs-banner"></div>
+            
+            <% if popular_routes['dom_dom'].present? &&  popular_routes['dom_dom'].length>0 %>
+            <h2><%= t('brand.popular_dom_route_title', airline_name: @carrier_name) %></h2>
+            <%= render :partial=>"bookings/overview/en/brand_flight_schedule",:locals=>{:routes=>popular_routes['dom_dom'], :use_helper=>use_helper, :assets_path=>@assets_path, :country_code=> @country_code, :section=> 'dom',currency_code: currency_code(@country_code)} %>
+            <p>&nbsp;</p>
+            <% end %>
+            
+            <% if popular_routes['dom_int'].present? && popular_routes['dom_int'].length>0  %>
+            <h2><%= t('brand.popular_int_route_title', airline_name: @carrier_name) %></h2>
+            <%= render :partial=>"bookings/overview/en/brand_flight_schedule",:locals=>{:routes=>popular_routes['dom_int'], :use_helper=>use_helper, :assets_path=>@assets_path, :country_code=> @country_code, :section=> 'int',currency_code: currency_code(@country_code)} %><!--mobile-view-->
+            <% end %>
+            <div class="content-desc">
+              <% if content["overview_content_en"].present? %>
+                <%= raw content["overview_content_en"] %>
+              <% end%>
+            </div>
+            <div class="clearfix"></div>
           <% end %>
           <div class="content-desc">
-            <% if content["overview_content_en"].present? %>
-              <%= raw content["overview_content_en"] %>
-            <% end%>
-          </div>
-          <div class="clearfix"></div>
-          <div class="top-routes">
-            <h2><%= t('brand.top_route' , airline_name: @carrier_name) %></h2>
-            <%= render :partial=>"bookings/overview/en/shared/airline_more_routes", locals: { top_routes: popular_routes["more_routes"] }  %>
+            <div class="top-routes">
+              <h2><%= t('brand.top_route' , airline_name: @carrier_name) %></h2>
+              <%= render :partial=>"bookings/overview/en/shared/airline_more_routes", locals: { top_routes: pagination[:routes] }  %>
+                <% if pagination[:total_pages]  > 1 %>
+                  <div class="text-center linklist-btn">
+                    <% if pagination[:current_page_no] == 0 %>
+                      <a class="no-link" ><%= t('prev') %></a> | <a rel="next" href='<%= "/flight-booking/#{pagination[:next_url]}" %>' ><%= t('next') %></a>
+                    <% elsif pagination[:current_page_no] >= pagination[:total_pages] %>
+                      <a rel="prev" href='<%= "/flight-booking/#{pagination[:prev_url]}" %>' ><%= t('prev') %></a> | <a class="no-link" ><%= t('next') %></a>
+                    <% else %>
+                      <a rel="prev" href='<%= "/flight-booking/#{pagination[:prev_url]}" %>' ><%= t('prev') %></a> | <a rel="next" href='<%= "/flight-booking/#{pagination[:next_url]}" %>' ><%= t('next') %></a>
+                    <% end%>
+                  </div>
+                <% end %>
+            </div>
           </div>
         </div><!--list-box-->
       </div>
@@ -128,7 +143,6 @@
   <%= render "shared/in/in_gac"%>
   <%= render "common/comscore" %>
   <%= render "common/mobile_header_flexislider" %> 
-  
   <script type="text/javascript">
   var country_code='<%= @country_code.downcase%>';
   var section_type='<%= @section.include?("dom") ? "domestic" : "international" %>';

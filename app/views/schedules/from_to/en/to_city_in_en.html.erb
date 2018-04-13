@@ -48,34 +48,49 @@
     <%= render :partial=>"common/search_widget" %>
     <div class="col-lg-9 col-md-9 col-sm-12 mobile-view pad-lzero" id="flight-schedule">
       <div class="list-box">
-        <% if popular_routes["dom"].present? %>
-          <h2><%=t('from_city.domestic_flights_from')%> <%= t('from_city.city_name', city_name: @city_name) %><span class="weak"> ( <%= t("from_city.flights_found", count: city_layout_values['dom_route_count']) %> )</span></h2>
-           <%= render :partial=>"schedules/from_to/en/shared/from_to_city_table_en",:locals=>{:routes=> popular_routes["dom"], section: "dom", :country_code=> country_code, :use_helper=>use_helper, :assets_path=>assets_path} %><!--/normal-list-view-->
-          <p>&nbsp;</p>
-        <% end %>
-        <% if popular_routes["int"].present? %>
-          <h2><%=t('from_city.international_flights_from')%> <%= t('from_city.city_name', city_name: @city_name) %><span class="weak"> ( <%= t("from_city.flights_found", count: city_layout_values['int_route_count']) %> )</span></h2>
-          
-           <%= render :partial=>"schedules/from_to/en/shared/from_to_city_table_en",:locals=>{:routes=> popular_routes["int"], section: "int", :country_code=> @country_code, :use_helper=>use_helper, :assets_path=>assets_path} %><!--/normal-list-view-->
-        <% end %>
-       
-         <div class="content-desc">
-          <h1><%= t('from_city.flight_from_city_name', city_name: @city_name) %></h1>
-          
-          <% if city_layout_values["city_from_content"].present? %>
-            <%= raw city_layout_values["city_from_content"] %>
-          <% else %>
-          <p>
-            <%= render partial: "schedules/from_to/en/in_en_to_city_templatized_content", locals: {city_name: @city_name, host: display_host(@country_code),city_layout_values: city_layout_values} %>
-          </p>
+        <% if pagination[:current_page_no] == 0 %>
+          <% if popular_routes["dom"].present? %>
+            <h2><%=t('from_city.domestic_flights_from')%> <%= t('from_city.city_name', city_name: @city_name) %><span class="weak"> ( <%= t("from_city.flights_found", count: city_layout_values['dom_route_count']) %> )</span></h2>
+             <%= render :partial=>"schedules/from_to/en/shared/from_to_city_table_en",:locals=>{:routes=> popular_routes["dom"], section: "dom", :country_code=> country_code, :use_helper=>use_helper, :assets_path=>assets_path} %><!--/normal-list-view-->
+            <p>&nbsp;</p>
           <% end %>
-          <% if city_layout_values["to_more_routes"].present? %>
-            <h2>Flights to <%= @city_name %> </h2>
-            <%= render :partial=>"schedules/from_to/en/shared/top_more_routes",locals: { top_routes: city_layout_values["to_more_routes"] } %>
-            <div class="clearfix"></div>
-        <% end %>
+          <% if popular_routes["int"].present? %>
+            <h2><%=t('from_city.international_flights_from')%> <%= t('from_city.city_name', city_name: @city_name) %><span class="weak"> ( <%= t("from_city.flights_found", count: city_layout_values['int_route_count']) %> )</span></h2>
+            
+             <%= render :partial=>"schedules/from_to/en/shared/from_to_city_table_en",:locals=>{:routes=> popular_routes["int"], section: "int", :country_code=> @country_code, :use_helper=>use_helper, :assets_path=>assets_path} %><!--/normal-list-view-->
+          <% end %>
+         
+           <div class="content-desc">
+              <h1><%= t('from_city.flight_from_city_name', city_name: @city_name) %></h1>
+              
+              <% if city_layout_values["city_from_content"].present? %>
+                <%= raw city_layout_values["city_from_content"] %>
+              <% else %>
+              <p>
+                <%= render partial: "schedules/from_to/en/contents/in_en_to_city_templatized_content", locals: {city_name: @city_name, host: display_host(@country_code),city_layout_values: top_routes: pagination[:routes]} %>
+              </p>
+              <% end %>
+            </div>
+          <% end %>
+          <% if pagination[:routes].present? %>
+            <div class="content-desc">
+              <h2>Flights to <%= @city_name %> </h2>
+              <%= render :partial=>"schedules/from_to/en/shared/top_more_routes",locals: { top_routes: city_layout_values["to_more_routes"] } %>
+              <% if pagination[:total_pages]  > 1 %>
+                <div class="text-center linklist-btn">
+                  <% if pagination[:current_page_no] == 0 %>
+                    <a class="no-link" ><%= t('prev') %></a> | <a rel="next" href='<%= "/flight-schedule/#{pagination[:next_url]}" %>' ><%= t('next') %></a>
+                  <% elsif pagination[:current_page_no] >= pagination[:total_pages] %>
+                    <a rel="prev" href='<%= "/flight-schedule/#{pagination[:prev_url]}" %>' ><%= t('prev') %></a> | <a class="no-link" ><%= t('next') %></a>
+                  <% else %>
+                    <a rel="prev" href='<%= "/flight-schedule/#{pagination[:prev_url]}" %>' ><%= t('prev') %></a> | <a rel="next" href='<%= "/flight-schedule/#{pagination[:next_url]}" %>' ><%= t('next') %></a>
+                  <% end%>
+                </div>
+                <% end %>
+                <div class="clearfix"></div>
+              </div>
+            <% end %>
         </div>
-      </div>
     </div>
        <div id="Rside-bar">
       <div class="col-lg-3 col-md-3 col-sm-12 pad-rzero side-bar">

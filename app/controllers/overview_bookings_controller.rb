@@ -9,8 +9,11 @@ class OverviewBookingsController < ApplicationController
 		@host_name = application_processor.host_name(@country_code)
 		@page_type = "booking-overview"
 		airline_name = params[:airline] 
-		carrier_name = params[:airline].gsub("-",' ').gsub("airlines",'').titleize.strip
+		carrier_name = params[:airline].gsub("-",' ').gsub(/\d/,'').gsub("airlines",'').titleize.strip
 		carrier_name_with_airline = carrier_name + " Airlines"			
+		page_no = airline_name.gsub(/[^0-9]/,'').to_i || 0
+		page_name = airline_name.gsub(/-\d/,'')
+		@file_name = airline_name+".html"
 		airline = AirlineBrand.find_by("carrier_name='#{carrier_name}' OR carrier_name ='#{carrier_name_with_airline}'")
 		if airline.nil? || !airline.present?
 			redirect_to "#{@host_name}/flight-booking/domestic-airlines.html" and return
@@ -24,6 +27,7 @@ class OverviewBookingsController < ApplicationController
 				redirect_to "#{@host_name}/#{lang}/flight-schedule/flight-schedules-domestic.html" and return
 			end
 		end
+
 		@carrier_name = airline.carrier_name
 		@carrier_code = airline.carrier_code
 		@carrier_name_ar = I18n.with_locale(:ar) {I18n.t("airlines.#{@carrier_code}")}
@@ -41,16 +45,20 @@ class OverviewBookingsController < ApplicationController
     customer_support = @country_code=='IN' ? customer_support_airlines.include?(@carrier_code) : false
     baggages = @country_code=='IN' ? baggages_airlines.include?(@carrier_code) : false
 		flight_booking_service = FlightBookingService.new @airline_details
-		popular_routes = flight_booking_service.airline_popular_routes
-		content = flight_booking_service.fetch_content
+		airline_more_routes = flight_booking_service.airline_more_routes
+		pagination = custom_pagination(page_no,airline_more_routes,page_name)
+		if page_no == 0
+			popular_routes = flight_booking_service.airline_popular_routes
+			content = flight_booking_service.fetch_content
+	  end
+	  header_routes = flight_booking_service.header_airline_routes
 		header_airports = flight_booking_service.top_dom_int_airports
 		rhs_airlines = flight_booking_service.rhs_top_airlines
 		rhs_schedule_routes = flight_booking_service.rhs_top_schedule_routes
 		booking_footer = flight_booking_service.booking_footer
 	  section =  @section.include?("dom") ? "dom" : "int"
-	  @file_name = airline_name+".html"
 		partial = "bookings/overview/#{@language}/overview_#{@country_code.downcase}_#{section}_#{@language.downcase}"
-		render partial,locals: {popular_routes: popular_routes,flight_file_name: @file_name,application_processor: application_processor,page_type: 'flight-booking',header_airports: header_airports,customer_support: customer_support,baggages: baggages,rhs_airlines: rhs_airlines,rhs_schedule_routes: rhs_schedule_routes,content: content,booking_footer: booking_footer}
+		render partial,locals: {popular_routes: popular_routes,header_routes: header_routes,flight_file_name: @file_name,application_processor: application_processor,page_type: 'flight-booking',header_airports: header_airports,customer_support: customer_support,baggages: baggages,rhs_airlines: rhs_airlines,rhs_schedule_routes: rhs_schedule_routes,content: content,booking_footer: booking_footer,pagination: pagination}
 	end
 
 	def url_escape(url_string)

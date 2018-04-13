@@ -72,36 +72,34 @@
   end
   
   def custom_pagination(page_no,routes,file_name)
-      prev_no = next_no = 0
-      routes_count = routes.count 
-      pagination_routes_count = routes_count-45  
-      total_pages,remaing_routes_count = pagination_routes_count.divmod(45)
-      file_name = file_name.gsub(/\d/,'').gsub(".html",'')
-      if remaing_routes_count > 0 
-        total_pages += 1
-      end
-      if (page_no < total_pages) 
-        start_index = 46*page_no
-        end_index = start_index + 45
-        if page_no == 0
-          next_no = page_no + 1
-          prev_url = "#{file_name}.html"
-          next_url = "#{file_name}-#{next_no}.html"
-          routes = routes[start_index..end_index]
-        elsif page_no == 1
-          next_no = page_no + 1
-          prev_url = "#{file_name}.html"
-          next_url = "#{file_name}-#{next_no}.html"
-          routes = routes[start_index..end_index]
-        else
-          prev_no = page_no - 1
-          next_no = page_no + 1
-          prev_url = "#{file_name}-#{prev_no}.html"
-          next_url  = "#{file_name}-#{next_no}.html"
-          routes = routes[start_index..end_index]
-        end
-        return {routes: routes,current_page_no: page_no,prev_url: prev_url,next_url: next_url,prev_no: prev_no,next_no: next_no,total_pages: total_pages}
-      end
+    prev_no = next_no = 0
+    routes_count = routes.count 
+    pagination_routes_count = routes_count-44
+    total_pages,remaing_routes_count = pagination_routes_count.divmod(45)
+    file_name = file_name.gsub(/\d/,'').gsub(".html",'')
+    if remaing_routes_count > 0   
+      total_pages += 1
+    end
+    start_index = 46*page_no
+    end_index = start_index + 44
+    if page_no == 0
+      next_no = page_no + 1
+      prev_url = "#{file_name}.html"
+      next_url = "#{file_name}-#{next_no}.html"
+      routes = routes[start_index..end_index]
+    elsif page_no == 1
+      next_no = page_no + 1
+      prev_url = "#{file_name}.html"
+      next_url = "#{file_name}-#{next_no}.html"
+      routes = routes[start_index..end_index]
+    else
+      prev_no = page_no - 1
+      next_no = page_no + 1
+      prev_url = "#{file_name}-#{prev_no}.html"
+      next_url  = "#{file_name}-#{next_no}.html"
+      routes = routes[start_index..end_index]
+    end
+    return {routes: routes,current_page_no: page_no,prev_url: prev_url,next_url: next_url,prev_no: prev_no,next_no: next_no,total_pages: total_pages}
   end
   
   def get_domain
