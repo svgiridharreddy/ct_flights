@@ -75,7 +75,7 @@
           <% if pagination[:routes].present? %>
             <div class="content-desc">
               <h2>Flights to <%= @city_name %> </h2>
-              <%= render :partial=>"schedules/from_to/en/shared/top_more_routes",locals: { top_routes: city_layout_values["to_more_routes"] } %>
+              <%= render :partial=>"schedules/from_to/en/shared/top_more_routes",locals: { top_routes: pagination[:routes] } %>
               <% if pagination[:total_pages]  > 1 %>
                 <div class="text-center linklist-btn">
                   <% if pagination[:current_page_no] == 0 %>

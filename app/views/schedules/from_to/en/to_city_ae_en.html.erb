@@ -70,10 +70,21 @@
               </p>
             <% end %>
           </div>
-          <% if city_layout_values["to_more_routes"].present? %>
+          <% if pagination[:routes].present? %>
             <div class="content-desc">
               <h2>Flights to <%= @city_name %> </h2>
-              <%= render :partial=>"schedules/from_to/en/shared/top_more_routes", locals: { top_routes: city_layout_values["to_more_routes"] } %>
+              <%= render :partial=>"schedules/from_to/en/shared/top_more_routes", locals: { top_routes: pagination[:routes] } %>
+              <% if pagination[:total_pages]  > 1 %>
+                <div class="text-center linklist-btn">
+                  <% if pagination[:current_page_no] == 0 %>
+                    <a class="no-link" ><%= t('prev') %></a> | <a rel="next" href='<%= "/flight-schedule/#{pagination[:next_url]}" %>' ><%= t('next') %></a>
+                  <% elsif pagination[:current_page_no] >= pagination[:total_pages] %>
+                    <a rel="prev" href='<%= "/flight-schedule/#{pagination[:prev_url]}" %>' ><%= t('prev') %></a> | <a class="no-link" ><%= t('next') %></a>
+                  <% else %>
+                    <a rel="prev" href='<%= "/flight-schedule/#{pagination[:prev_url]}" %>' ><%= t('prev') %></a> | <a rel="next" href='<%= "/flight-schedule/#{pagination[:next_url]}" %>' ><%= t('next') %></a>
+                  <% end%>
+                </div>
+                <% end %>
               <div class="clearfix"></div>
             </div>
           <% end %>
