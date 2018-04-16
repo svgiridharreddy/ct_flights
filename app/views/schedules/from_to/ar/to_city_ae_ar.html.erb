@@ -49,6 +49,7 @@
     <%= render :partial=>"common/search_widget_ar" %>
     <div class="col-lg-9 col-md-9 col-sm-12 mobile-view pad-lzero" id="flight-schedule">
       <div class="list-box">
+      <% if pagination[:current_page_no] == 0 %>
         <% if popular_routes["dom"].present? %>
           <h2><%=I18n.t('from_city.domestic_flights_from')%> <%= I18n.t('from_city.city_name', city_name: @city_name_ar) %><span class="weak"> ( <%= I18n.t("from_city.flights_found", count: city_layout_values['dom_route_count']) %> )</span></h2>
            <%= render :partial=>"schedules/from_to/ar/shared/from_to_city_table_ar",:locals=>{:routes=> popular_routes["dom"], section: "dom", :country_code=> country_code, :use_helper=>use_helper, :assets_path=>assets_path} %><!--/normal-list-view-->
@@ -70,10 +71,25 @@
             <%= render partial: "schedules/from_to/ar/contents/to/ae_ar_to_city_templatized_content", locals: {city_name: @city_name_ar, host: display_host(@country_code),city_layout_values: city_layout_values} %>
           </p>
           <% end %>
+          </div>
+        <% end %>
           <% if city_layout_values["to_more_routes"].present? %>
+            <div class="content-desc">
             <h2> <%= I18n.t("from_city.flights_to")%>  <%= @city_name_ar %></h2>
-            <%= render :partial=>"schedules/from_to/ar/shared/from_to_more_routes_ar", locals: { top_routes: city_layout_values["to_more_routes"],section: "to"} %>
+            <%= render :partial=>"schedules/from_to/ar/shared/from_to_more_routes_ar", locals: { top_routes: pagination[:routes],section: "to" } %>
+                <% if pagination[:total_pages]  > 1 %>
+                  <div class="text-center linklist-btn">
+                  <% if pagination[:current_page_no] == 0 %>
+                    <a class="no-link" ><%= t('prev') %></a> | <a rel="next" href='<%= "/ar/flight-schedule/#{pagination[:next_url]}" %>' ><%= t('next') %></a>
+                  <% elsif pagination[:current_page_no] >= pagination[:total_pages] %>
+                    <a rel="prev" href='<%= "/ar/flight-schedule/#{pagination[:prev_url]}" %>' ><%= t('prev') %></a> | <a class="no-link" ><%= t('next') %></a>
+                  <% else %>
+                    <a rel="prev" href='<%= "/ar/flight-schedule/#{pagination[:prev_url]}" %>' ><%= t('prev') %></a> | <a rel="next" href='<%= "/ar/flight-schedule/#{pagination[:next_url]}" %>' ><%= t('next') %></a>
+                  <% end%>
+                </div>
+                <% end %> %>
             <div class="clearfix"></div>
+            </div>
           <% end %>
         </div>
       </div>

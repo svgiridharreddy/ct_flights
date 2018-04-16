@@ -105,23 +105,27 @@ class FlightSchedulesController < ApplicationController
 		@city_section = path.include?("from") ? "from" : "to"
 		@page_type = @city_section
 		lang= @language=="ar" ? "/ar" : ""
-		@city_name = path.gsub("#{lang}/flight-schedule/flights-#{@city_section}-",'').gsub(/\d/,'').gsub('.html','').gsub('-','').titleize
-		page_no = path.gsub("#{lang}/flight-schedule/flights-#{@city_section}-",'').gsub(/[^0-9]/,'').to_i || 0
-		city = UniqueRoute.find_by(dep_city_name: @city_name)
+		url =  path.gsub("#{lang}/flight-schedule/",'').gsub(/-\d/,'').gsub('.html','')
+		if  @city_section == "from"
+			city = CityName.find_by(from_url: url)
+		else
+			city = CityName.find_by(to_url: url)
+		end
 		if !city.present? || city.nil?
 			redirect_to "#{@host_name}/flight-schedule/flight-schedules-domestic.html" and return
 		end
-		@city_code = city.dep_city_code
-		@city_name_ar = CityName.find_by(city_code: @city_code).city_name_ar
-		@city_country_code = city.dep_country_code
+		@city_name = city.city_name_en
+		@city_name_ar = city.city_name_ar
+		@city_code = city.city_code
+		@city_country_code = UniqueRoute.find_by(dep_city_code: @city_code).dep_country_code
 		@section = @city_country_code == @country_code ? "dom" : "int"
-		file_name = path.split("/")[2]
-		flight_flight_name = file_name.gsub(/-\d/,'')
+		flight_flight_name = url + ".html"
 		@values = { country_code: @country_code,
 							  country_name: @country_name,
 							  language: @language,
 							  city_code: @city_code
 							}
+		page_no = path.gsub("#{lang}/flight-schedule/flights-#{@city_section}-",'').gsub(/[^0-9]/,'').to_i || 0
 		host = @application_processor.host_name(@country_code)
 		flight_schedule_service = FlightScheduleService.new @values
 		from_to_values = flight_schedule_service.from_to_values(@city_code,@city_section,page_no)

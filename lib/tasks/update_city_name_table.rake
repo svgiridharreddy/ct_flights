@@ -90,4 +90,30 @@ namespace :city_name_table do
       end
     end
   end
+  desc "create csv for no name cities"
+  task :update_urls => :environment do 
+    def url_escape(url_string)
+      unless url_string.blank?
+        result = url_string.encode("UTF-8", :invalid => :replace, :undef => :replace).to_s
+        result = result.gsub(/[\/]/,'-')
+        result = result.gsub(/[^\x00-\x7F]+/, '') # Remove anything non-ASCII entirely (e.g. diacritics).
+        result = result.gsub(/[^\w_ \-]+/i,   '') # Remove unwanted chars.
+        result = result.gsub(/[ \-]+/i,      '-') # No more than one of the separator in a row.
+        result = result.gsub(/^\-|\-$/i,      '') # Remove leading/trailing separator.
+        result = result.downcase
+      end
+    end
+    cities = CityName.all
+    count = 0
+    cities.each do |city|
+      format_city_name = url_escape(city.city_name_en) rescue ""
+      from_url = "flights-from-" + format_city_name rescue ""
+      to_url = "flights-to-" + format_city_name rescue ""
+      city.from_url = from_url  rescue ""
+      city.to_url = to_url rescue ""
+      city.save!
+      puts "#{count+=1} updated for city-#{city.city_name_en}"
+    end
+  end
+
 end

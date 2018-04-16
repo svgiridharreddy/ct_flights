@@ -77,6 +77,7 @@
     pagination_routes_count = routes_count-44
     total_pages,remaing_routes_count = pagination_routes_count.divmod(45)
     file_name = file_name.gsub(/\d/,'').gsub(".html",'')
+
     if remaing_routes_count > 0   
       total_pages += 1
     end
@@ -142,7 +143,6 @@
       result = result.gsub(/[ \-]+/i,      '-') # No more than one of the separator in a row.
       result = result.gsub(/^\-|\-$/i,      '') # Remove leading/trailing separator.
       result = result.downcase
-
     end
   end
 

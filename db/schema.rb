@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180411102815) do
+ActiveRecord::Schema.define(version: 20180413135020) do
 
   create_table "ae_airline_contents", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "carrier_code"
@@ -142,14 +142,13 @@ ActiveRecord::Schema.define(version: 20180411102815) do
     t.string "carrier_name_hi"
   end
 
-  create_table "airline_footers", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+  create_table "airline_footers", id: false, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.integer "id", null: false
     t.text "airline_footer_en", limit: 4294967295
     t.text "airline_footer_ar", limit: 4294967295
     t.text "airline_footer_en_dup", limit: 4294967295
     t.text "airline_footer_ar_dup", limit: 4294967295
     t.integer "current_count"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
   end
 
   create_table "airports", id: false, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
@@ -300,6 +299,8 @@ ActiveRecord::Schema.define(version: 20180411102815) do
     t.string "city_name_hi"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "from_url"
+    t.string "to_url"
   end
 
   create_table "collectives", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
