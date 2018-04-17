@@ -12,16 +12,17 @@
   	<title>  
       <%=  seo[:title] %>
     </title>
-    <% if @page_type=="flight-schedule" || @page_type== "flight-booking" %>
-      <link rel="amphtml" href="<%=  seo[:amp_url] %>">
-    <% end %>
+   
     <meta name="description" content="<%= seo[:description] %>">
     <meta name="keywords" content="<%= seo[:keywords] %>">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <%=  render partial: "common/fb_tw_gplus",locals: {title: seo[:title],description: seo[:description]} %>
-    <%= render partial: "common/language_meta_tags",locals: {page_number: 1} %>
-    <meta name="robots" content="noodp,noydir"/>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="robots" content="noodp,noydir"/>
+    <% if @page_type=="flight-schedule" || @page_type== "flight-booking" %>
+      <link rel="amphtml" href="<%=  seo[:amp_url] %>">
+    <% end %>
+    <%= render partial: "common/language_meta_tags",locals: {page_number: 1} %>
     <%= render partial: "common/crazy_hot_jar_code" %>
     <link rel="stylesheet" href="https://s3-ap-southeast-1.amazonaws.com/waytogo-assets/waytogo-staging/testing/application_test.css"/>
     
