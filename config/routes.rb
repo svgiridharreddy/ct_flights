@@ -1,6 +1,7 @@
 class DynamicValue
 end
 Rails.application.routes.draw do
+	
 	root "flight_schedules#index"
 	resources :flights
 	scope 'flight-schedule' do 
