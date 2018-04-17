@@ -45,7 +45,7 @@ class OverviewBookingsController < ApplicationController
     customer_support = @country_code=='IN' ? customer_support_airlines.include?(@carrier_code) : false
     baggages = @country_code=='IN' ? baggages_airlines.include?(@carrier_code) : false
 		flight_booking_service = FlightBookingService.new @airline_details
-		airline_more_routes = flight_booking_service.airline_more_routes
+		airline_more_routes = @language =="ar" ? flight_booking_service.airline_more_routes_ar : flight_booking_service.airline_more_routes
 		pagination = custom_pagination(page_no,airline_more_routes,page_name)
 		if page_no == 0
 			popular_routes = flight_booking_service.airline_popular_routes

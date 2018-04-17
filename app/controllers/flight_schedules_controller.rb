@@ -1,5 +1,8 @@
 class FlightSchedulesController < ApplicationController
 	include ApplicationHelper
+	def index
+		redirect_to "https://www.cleartrip.com/flights" and return
+	end
 	def schedule_values
 		domain = request.domain
 		path = "#{request.fullpath}"

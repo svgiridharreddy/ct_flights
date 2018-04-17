@@ -57,6 +57,14 @@ en:
   brand_flights_routes_html: "<a href= %{link} title= '%{airline_name} %{dep_city_name} %{arr_city_name} flights'> %{airline_name} %{dep_city_name} %{arr_city_name} flights</a>"
 
   flight_schedule: 
+    daily: "Daily"
+    mo: "Mo"
+    tu: "Tu"
+    we: "We"
+    th: "Th"
+    fr: "Fr"
+    sa: "Sa"
+    su: "Su"
     more_flights_from: "More Flights From"
     more_flights_to: "More Flights To"
     top_dom_airlines_from: "Top Domestic Airlines From "

@@ -115,22 +115,21 @@ class FlightScheduleService
     return flights_header      
   end
 	def get_more_routes
-    hop = @route_type == "one-hop" ? 'Hop' : ''
-    model_name = "Unique#{hop}Route".constantize
+    model_name = "#{@country_code.titleize}VolumeRoute".constantize
     more_routes =  {}
-		more_routes["dep_more_routes"] = model_name.where(dep_city_code: @dep_city_code).where.not(arr_city_code: @arr_city_code).order("weekly_flights_count desc").pluck(:arr_city_name).uniq.take(30)
-		more_routes["arr_more_routes"] = model_name.where(arr_city_code: @arr_city_code).where.not(dep_city_code: @dep_city_code).order("weekly_flights_count desc").pluck(:dep_city_name).uniq.take(30)
-    return more_routes
+    more_routes["dep_more_routes"] = model_name.where(dep_city_code: @dep_city_code).where.not(arr_city_code: @arr_city_code).take(30)
+    more_routes["arr_more_routes"] = model_name.where(arr_city_code: @arr_city_code).where.not(dep_city_code: @dep_city_code).take(30)
+       return more_routes
 	end
 
-  def get_more_arabic_routes 
-    hop = @route_type == "one-hop" ? 'Hop' : ''
-    model_name = "Unique#{hop}Route".constantize
-    more_routes =  {}
-    more_routes["dep_more_routes"] = model_name.where(dep_city_code: @dep_city_code).where.not(arr_city_code: @arr_city_code).order("weekly_flights_count desc").pluck(:arr_city_code).uniq.take(30).map{|city_code| CityName.find_by(city_code: city_code) rescue "" }
-    more_routes["arr_more_routes"] = model_name.where(arr_city_code: @arr_city_code).where.not(dep_city_code: @dep_city_code).order("weekly_flights_count desc").pluck(:dep_city_code).uniq.take(30).map{|city_code| CityName.find_by(city_code: city_code) rescue "" }
-    return more_routes
-  end
+  # def get_more_arabic_routes 
+  #   hop = @route_type == "one-hop" ? 'Hop' : ''
+  #   model_name = "Unique#{hop}Route".constantize
+  #   more_routes =  {}
+  #   more_routes["dep_more_routes"] = model_name.where(dep_city_code: @dep_city_code).where.not(arr_city_code: @arr_city_code).order("weekly_flights_count desc").pluck(:arr_city_code).uniq.take(30).map{|city_code| CityName.find_by(city_code: city_code) rescue "" }
+  #   more_routes["arr_more_routes"] = model_name.where(arr_city_code: @arr_city_code).where.not(dep_city_code: @dep_city_code).order("weekly_flights_count desc").pluck(:dep_city_code).uniq.take(30).map{|city_code| CityName.find_by(city_code: city_code) rescue "" }
+  #   return more_routes
+  # end
 
   def schedule_values(schedule_routes)
     I18n.locale = @language.to_sym
@@ -140,7 +139,7 @@ class FlightScheduleService
     weekly_flights_count = weekly_flights.count
     lang_city_name = "city_name_#{@language.downcase}"
     # airline_count_list = weekly_flights.map{}
-    more_routes = @language == "en" ? get_more_routes : get_more_arabic_routes
+    more_routes = get_more_routes 
     min_pr = min_price_new_changes(@dep_city_code,@arr_city_code)
     schedule_routes_with_price = []
     schedule_routes.each do |route|
@@ -198,6 +197,8 @@ class FlightScheduleService
     schedule_layout_values["dep_city_content"] = content["dep_city_content"]
     schedule_layout_values["arr_city_content"] = content["arr_city_content"]
     schedule_layout_values["unique_route_content"] = content["unique_route_content"] %{airlines_list: schedule_layout_values["operational_airlines"],weekly_flights_count: schedule_layout_values["weekly_flights_count"],airline_count_list: schedule_layout_values["operational_airlines"],first_dep_airline_name: schedule_layout_values["first_dep_airline"],first_dep_time: schedule_layout_values["first_dep_time"],first_dep_flight_no: schedule_layout_values["first_dep_airline_no"],last_dep_flight_no: schedule_layout_values["last_dep_airline_no"],last_dep_airline_name: schedule_layout_values["last_dep_airline"],last_dep_time: schedule_layout_values["last_dep_time"]}
+    schedule_layout_values["things_to_do"] = schedule_things_to_do
+    schedule_layout_values["locality_hotels"] =  schedule_hotels_content
     schedule_layout_values['max_price'] = min_pr[:max]
     schedule_layout_values['route_min_price'] = min_pr[:min]
     schedule_layout_values["min30"] = main_min30
@@ -217,7 +218,7 @@ class FlightScheduleService
     weekly_flights_count = weekly_flights.count
     lang_city_name = "city_name_#{@language.downcase}"
     # airline_count_list = weekly_flights.map{}
-    more_routes = @language == "ar" ? get_more_arabic_routes : get_more_routes  
+    more_routes = get_more_routes  
     min_pr = min_price_new_changes(@dep_city_code,@arr_city_code)
     # schedule_routes_with_price = []
     # schedule_routes.each do |route|
@@ -301,20 +302,22 @@ class FlightScheduleService
       end
       if api_data["current_iteration_count"] <= total_local_cities
         if current_index == 0
-          local_data_offset = eval(api_data["local_cities_data"]).first(5)
+          local_data_offset = eval(api_data["local_cities_data"]).first(5) rescue []
         else
-          local_data_offset = eval(api_data["local_cities_data"]).drop(api_data["current_iteration_count"]-5).first(5)
+          local_data_offset = eval(api_data["local_cities_data"]).drop(api_data["current_iteration_count"]-5).first(5) rescue []
         end
       else
         api_data.update(current_iteration_count: 0)
-        local_data_offset = eval(api_data["local_cities_data"]).first(5)
+        local_data_offset = eval(api_data["local_cities_data"]).first(5) rescue []
       end
-      hotel_api_stars = eval(api_data["star_data"])
-      hotel_api_property_types = eval(api_data["properties"])
+      hotel_api_stars = eval(api_data["star_data"]) rescue []
+      hotel_api_property_types = eval(api_data["properties"]) rescue []
     end
+    return {local_data_offset: local_data_offset,hotel_api_stars: hotel_api_stars,hotel_api_property_types: hotel_api_property_types}
     #  ending of local cities randamization
   end
   def schedule_things_to_do
+    api_model_name = "#{@country_code.titleize}HotelApi".constantize
     local_activities_cities_list = ["Dubai","Agra", "Srinagar", "Goa", "Mysore", "Chandigarh", "Amritsar", "Dehradun", "Ahmedabad", "Kolkata", "Kochi","Cochin", "Jaipur", "Guwahati", "Shillong", "Jodhpur", "Trivandrum", "Vijayawada", "New Delhi", "Kullu", "Bangalore", "Mumbai", "Hyderabad", "Udaipur", "Chennai", "Pune"] 
     if local_activities_cities_list.include?(@arr_city_name.titleize)
       local_data = api_model_name.where(city_name: @arr_city_name.titleize).first
@@ -340,7 +343,7 @@ class FlightScheduleService
         end
       end
     end
-        #  end of local collections data with randamization 
+      return {activities_data: activities_data} #  end of local collections data with randamization 
   end
   def schedule_footer
       #Foooter links randamization code
