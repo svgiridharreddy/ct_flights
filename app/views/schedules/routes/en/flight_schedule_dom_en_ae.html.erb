@@ -1,5 +1,4 @@
 <% use_helper = self.extend ApplicationHelper %>
-<body>
     <%=  render partial: "common/google_tag_manager" %>
   	<section id="flights-nav">
   		<div class="container-fluid">
@@ -127,10 +126,41 @@
           </div>
       </div>
     </section>
+    <div style="display:none">
+      <div id="departure_city_code"><%= dep_city_code %></div>
+      <div id="arrival_city_code"><%= arr_city_code %></div>
+    </div>
+    <div id="footer_container">
+      <div id="footer">
+        <% country_code = schedule_layout_values["country_code"] %>
+        <%= render partial: "footers/#{country_code.downcase}/schedule/routes/en/en_schedule_footer", locals: {country_code: country_code,dep_city_name: dep_city_name,arr_city_name: arr_city_name,dep_city_name_formated: schedule_layout_values["dep_city_name_formated"],arr_city_name_formated: schedule_layout_values["arr_city_name_formated"],page_type: 'schedule-routes',footer_links_data: schedule_footer[:footer_links_data],top_airlines: schedule_footer[:int_airlines],flights_header: schedule_header,section: @section} %>
+      </div>
+    </div>
     <%= render "shared/in/in_gac"%>
     <%= render "common/comscore" %>
     <%= render "common/mobile_header_flexislider" %>
+    <% lang = {
+      "calender"=>{
+        "airfare"=>t('calender.airfare'),
+        "today"=>t('calender.today'),
+        "cheapest"=>t('calender.cheapest'),
+        "calendar_note"=>t('calender.calendar_note')
+        },
+        "flight_schedule"=>{
+          "mo"=>t('flight_schedule.mo'),
+          "tu"=>t('flight_schedule.tu'),
+          "we"=>t('flight_schedule.we'),
+          "th"=>t('flight_schedule.th'),
+          "fr"=>t('flight_schedule.fr'),
+          "sa"=>t('flight_schedule.sa'),
+          "su"=>t('flight_schedule.su')
+          },
+          "month": ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+          "currency"=>currency_name(@country_code)
+        } 
+     %>
     <script>
+      var lang = <%= lang.to_json.html_safe %>;
       var country_code= "<%= @country_code.downcase %>";
       var section_type= "<%= @section.include?("dom") ? "domestic" : "international" %>";
       var page_type="flight-schedule";
@@ -141,4 +171,3 @@
       var arr_city_name = "<%= arr_city_name %>";
       var page_sub_type = "routes";
     </script>
-  </body>

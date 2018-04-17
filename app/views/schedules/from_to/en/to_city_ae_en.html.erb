@@ -3,7 +3,6 @@
    assets_path = "https://d2w5af8s1781.cloudfront.net/waytogo-staging"
    page_number = 1
 %>
-<body>
   <%= render partial: "common/google_tag_manager" %>
   <%= render partial: "common/top_header", locals: { assets_path: assets_path, country_code: country_code, host: host, flight_file_name: @file_name, page_type: 'flight-schedule', application_processor: application_processor} %>
 
@@ -166,4 +165,3 @@
     var section_type='<%= country_code=="AE" ? "domestic" : "international" %>';
     var page_type="flight-schedule";
   </script>
-</body>

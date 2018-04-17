@@ -1,4 +1,4 @@
-sdefault: &default
+default: &default
   adapter: mysql2
   pool: 5
   timeout: 5000
@@ -19,6 +19,7 @@ development:
   password: ClearTripCalendar
   port: 3306
   encoding: utf8
+  collation: utf8_general_ci
   # socket: /var/run/mysqld/mysqld.sock
 
 db_editor_panel:

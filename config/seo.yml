@@ -41,7 +41,7 @@ flight-schedule:
     en:
       title_without_price: "%{dep_city_name}  to  %{arr_city_name}  Flights,books tickets at discounted rates on cleartrip."
       title_with_price: "%{dep_city_name} to %{arr_city_name} Flights, Airfares @ AED %{price} + AED 1000 off – Cleartrip"
-      description: ""
+      description: "Find the best deal for %{dep_city_name} to %{arr_city_name} flights on Cleartrip. Use Coupon code – FLIGHTS and get amazing discounts on the flights from %{dep_city_name} to %{arr_city_name}. Hurry Now!"
       keywords: "%{dep_city_name} %{arr_city_name} flights, cheap %{dep_city_name} %{arr_city_name} flight , flights from %{dep_city_name} to %{arr_city_name}, %{dep_city_name} %{arr_city_name} flights booking, schedule flights from %{dep_city_name} to %{arr_city_name} flights, %{dep_city_name} %{arr_city_name} flights schedule"
       amp_url: "https://www.cleartrip.ae/flight-schedule/amp/%{dep_city_name_formated}-%{arr_city_name_formated}-flights.html"
     ar: 

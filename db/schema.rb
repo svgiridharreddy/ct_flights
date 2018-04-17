@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180413135020) do
+ActiveRecord::Schema.define(version: 20180417064148) do
 
   create_table "ae_airline_contents", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "carrier_code"
@@ -107,6 +107,22 @@ ActiveRecord::Schema.define(version: 20180413135020) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "ae_hotel_apis", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string "city_name"
+    t.string "country_code"
+    t.string "country_name"
+    t.text "hotel_data", limit: 4294967295
+    t.text "properties", limit: 4294967295
+    t.text "star_data", limit: 4294967295
+    t.text "local_cities_data", limit: 4294967295
+    t.text "local_activities", limit: 4294967295
+    t.integer "current_iteration_count"
+    t.integer "total_iteration_count"
+    t.text "wayto_go", limit: 4294967295
+    t.integer "local_activities_total"
+    t.integer "local_activities_current"
+  end
+
   create_table "airline_brand_collectives", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "carrier_code"
     t.string "carrier_name"
@@ -154,7 +170,6 @@ ActiveRecord::Schema.define(version: 20180413135020) do
   create_table "airports", id: false, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer "id"
     t.timestamp "created_at", default: -> { "CURRENT_TIMESTAMP" }, null: false
-    t.timestamp "updated_at", null: false
     t.string "airport_code"
     t.string "airport_name"
     t.string "city_code"
@@ -177,6 +192,7 @@ ActiveRecord::Schema.define(version: 20180413135020) do
     t.boolean "is_index"
     t.float "arr_latitude", limit: 53
     t.float "arr_langitude", limit: 53
+    t.string "airport_name_ar"
   end
 
   create_table "bh_airline_contents", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
@@ -267,6 +283,22 @@ ActiveRecord::Schema.define(version: 20180413135020) do
     t.string "city_name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "bh_hotel_apis", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string "city_name"
+    t.string "country_code"
+    t.string "country_name"
+    t.text "hotel_data", limit: 4294967295
+    t.text "properties", limit: 4294967295
+    t.text "star_data", limit: 4294967295
+    t.text "local_cities_data", limit: 4294967295
+    t.text "local_activities", limit: 4294967295
+    t.integer "current_iteration_count"
+    t.integer "total_iteration_count"
+    t.text "wayto_go", limit: 4294967295
+    t.integer "local_activities_total"
+    t.integer "local_activities_current"
   end
 
   create_table "city_contents", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
@@ -424,7 +456,7 @@ ActiveRecord::Schema.define(version: 20180413135020) do
     t.index ["unique_hop_route_id"], name: "index_in_flight_hop_schedule_collectives_on_unique_hop_route_id"
   end
 
-  create_table "in_flight_schedule_collectives", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|
+  create_table "in_flight_schedule_collectives", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "carrier_code"
     t.integer "flight_no"
     t.string "dep_time"
@@ -438,7 +470,6 @@ ActiveRecord::Schema.define(version: 20180413135020) do
     t.bigint "unique_route_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["dep_city_code", "arr_city_code"], name: "indicies"
     t.index ["unique_route_id"], name: "index_in_flight_schedule_collectives_on_unique_route_id"
   end
 
@@ -464,6 +495,22 @@ ActiveRecord::Schema.define(version: 20180413135020) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "city_name"
+  end
+
+  create_table "in_hotel_apis", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string "city_name"
+    t.string "country_code"
+    t.string "country_name"
+    t.text "hotel_data", limit: 4294967295
+    t.text "properties", limit: 4294967295
+    t.text "star_data", limit: 4294967295
+    t.text "local_cities_data", limit: 4294967295
+    t.text "local_activities", limit: 4294967295
+    t.integer "current_iteration_count"
+    t.integer "total_iteration_count"
+    t.text "wayto_go", limit: 4294967295
+    t.integer "local_activities_total"
+    t.integer "local_activities_current"
   end
 
   create_table "kw_airline_contents", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
@@ -556,6 +603,22 @@ ActiveRecord::Schema.define(version: 20180413135020) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "kw_hotel_apis", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string "city_name"
+    t.string "country_code"
+    t.string "country_name"
+    t.text "hotel_data", limit: 4294967295
+    t.text "properties", limit: 4294967295
+    t.text "star_data", limit: 4294967295
+    t.text "local_cities_data", limit: 4294967295
+    t.text "local_activities", limit: 4294967295
+    t.integer "current_iteration_count"
+    t.integer "total_iteration_count"
+    t.text "wayto_go", limit: 4294967295
+    t.integer "local_activities_total"
+    t.integer "local_activities_current"
+  end
+
   create_table "om_airline_contents", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "carrier_code"
     t.string "carrier_name"
@@ -644,6 +707,22 @@ ActiveRecord::Schema.define(version: 20180413135020) do
     t.string "city_name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "om_hotel_apis", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string "city_name"
+    t.string "country_code"
+    t.string "country_name"
+    t.text "hotel_data", limit: 4294967295
+    t.text "properties", limit: 4294967295
+    t.text "star_data", limit: 4294967295
+    t.text "local_cities_data", limit: 4294967295
+    t.text "local_activities", limit: 4294967295
+    t.integer "current_iteration_count"
+    t.integer "total_iteration_count"
+    t.text "wayto_go", limit: 4294967295
+    t.integer "local_activities_total"
+    t.integer "local_activities_current"
   end
 
   create_table "package_flight_hop_schedules", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
@@ -836,6 +915,22 @@ ActiveRecord::Schema.define(version: 20180413135020) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "qa_hotel_apis", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string "city_name"
+    t.string "country_code"
+    t.string "country_name"
+    t.text "hotel_data", limit: 4294967295
+    t.text "properties", limit: 4294967295
+    t.text "star_data", limit: 4294967295
+    t.text "local_cities_data", limit: 4294967295
+    t.text "local_activities", limit: 4294967295
+    t.integer "current_iteration_count"
+    t.integer "total_iteration_count"
+    t.text "wayto_go", limit: 4294967295
+    t.integer "local_activities_total"
+    t.integer "local_activities_current"
+  end
+
   create_table "sa_airline_contents", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "carrier_code"
     t.string "carrier_name"
@@ -924,6 +1019,22 @@ ActiveRecord::Schema.define(version: 20180413135020) do
     t.string "city_name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "sa_hotel_apis", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string "city_name"
+    t.string "country_code"
+    t.string "country_name"
+    t.text "hotel_data", limit: 4294967295
+    t.text "properties", limit: 4294967295
+    t.text "star_data", limit: 4294967295
+    t.text "local_cities_data", limit: 4294967295
+    t.text "local_activities", limit: 4294967295
+    t.integer "current_iteration_count"
+    t.integer "total_iteration_count"
+    t.text "wayto_go", limit: 4294967295
+    t.integer "local_activities_total"
+    t.integer "local_activities_current"
   end
 
   create_table "unique_hop_routes", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|

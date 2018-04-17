@@ -3,11 +3,11 @@ require 'sidekiq_status'
 require "active_record/relation"
 
 class IdentifyFlightScheduleCollectiveWorker
-  include SidekiqStatus::Worker
-  sidekiq_options queue: "identify_flight_schedule_collective_worker", backtrace: true
+  # include SidekiqStatus::Worker
+  # sidekiq_options queue: "identify_flight_schedule_collective_worker", backtrace: true
 	def perform()
 	  # unique_routes = UniqueRoute.where(dep_city_code: 'DXB',arr_city_code: 'BLR')
-    unique_routes = UniqueRoute.where("(dep_country_code='IN' and arr_country_code!='IN') OR (dep_country_code!='IN' and arr_country_code='IN') OR (dep_country_code!='IN' and arr_country_code!='IN') ")
+    unique_routes = UniqueRoute.where("(dep_country_code='IN' and arr_country_code='IN') ")
     puts "Started inseting data for unique routes"
     unique_routes.find_each do |route|
 	  	dep_city_code = route.dep_city_code
@@ -40,7 +40,7 @@ class IdentifyFlightScheduleCollectiveWorker
   def create_schedule_collective(routes,dep_city_code,arr_city_code)
   	count = 0
     routes.each do |route|
-  		route_value = SaFlightScheduleCollective.find_or_create_by(dep_city_code:dep_city_code,arr_city_code: arr_city_code,flight_no: route[:flight_no])
+  		route_value = InFlightScheduleCollective.find_or_create_by(dep_city_code:dep_city_code,arr_city_code: arr_city_code,flight_no: route[:flight_no])
   		route_value.carrier_code = route[:carrier_code]
   		route_value.flight_no = route[:flight_no]
   		route_value.dep_time = route[:dep_time]

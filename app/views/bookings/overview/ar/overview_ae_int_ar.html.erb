@@ -1,6 +1,5 @@
 <% use_helper = self.extend ApplicationHelper %>
 <% I18n.locale = :ar %>
-<body id="arabic">
   <section id="flights-nav">
     <div class="container-fluid">
       <div class="ctCol ctProducts mview-header">
@@ -69,7 +68,7 @@
           </a>
         </li>
       </ul>
-      <h1 class="col-lg-6 no-padding"><%= format_airline_name(@carrier_name_ar,I18n.locale) %> </h1>
+      <h1 class="col-lg-6 pull-right"><%= format_airline_name(@carrier_name_ar,I18n.locale) %> </h1>
       
       <div class="clearfix"></div>
       <%= render "common/search_widget_ar" %>
@@ -137,4 +136,3 @@
     var page_sub_type= "Airline overview";
     var sub_section= 'overview';
   </script>
-</body>

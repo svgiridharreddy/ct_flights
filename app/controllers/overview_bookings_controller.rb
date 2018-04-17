@@ -54,7 +54,7 @@ class OverviewBookingsController < ApplicationController
 	  header_routes = flight_booking_service.header_airline_routes
 		header_airports = flight_booking_service.top_dom_int_airports
 		rhs_airlines = flight_booking_service.rhs_top_airlines
-		rhs_schedule_routes = flight_booking_service.rhs_top_schedule_routes
+		rhs_schedule_routes = @language=="ar" ? flight_booking_service.rhs_top_schedule_routes_ar : flight_booking_service.rhs_top_schedule_routes
 		booking_footer = flight_booking_service.booking_footer
 	  section =  @section.include?("dom") ? "dom" : "int"
 		partial = "bookings/overview/#{@language}/overview_#{@country_code.downcase}_#{section}_#{@language.downcase}"

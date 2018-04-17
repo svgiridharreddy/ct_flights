@@ -11,5 +11,4 @@
 // about supported directives.
 //
 //= require rails-ujs
-//= require ct_custom	
 //= require_tree .
