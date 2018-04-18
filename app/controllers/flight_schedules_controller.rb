@@ -95,6 +95,9 @@ class FlightSchedulesController < ApplicationController
     else
     	@schedule_routes = @route.in_flight_schedule_collectives.where("#{inc_cc}").order("dep_time asc").limit(10)	
     end
+    if @schedule_routes.empty?
+    	redirect_to "#{@host_name}/flight-schedule/flight-schedules-domestic.html" and return
+    end
 		header_values = flight_schedule_service.schedule_header_details
 		schedule_layout_values = flight_schedule_service.schedule_values(@schedule_routes)
 		@dep_city_name_formated = schedule_layout_values["dep_city_name_formated"]
@@ -170,6 +173,8 @@ class FlightSchedulesController < ApplicationController
 		else
 			@section = @country_code + "-int"
 		end
+		binding.pry
+
 		flight_schedule_service = FlightScheduleService.new @route_details	 
 		schedule_footer = flight_schedule_service.schedule_footer
 		@domestic_carrier_codes = AirlineBrand.where(country_code: @country_code).pluck("distinct(carrier_code)")

@@ -182,7 +182,7 @@ class FlightScheduleService
     schedule_layout_values["last_dep_airline"] = I18n.t("airlines.#{schedule_routes.last[:carrier_code]}") rescue ""
     schedule_layout_values["last_dep_time"]  = Time.strptime(schedule_routes.last[:dep_time],"%H:%M").to_time.strftime("%I:%M %p") rescue ""
     schedule_layout_values["last_dep_airline_no"] = schedule_routes.last[:flight_no] rescue ""
-    min_max_duration = schedule_routes.collect{|r| r[:duration]}.minmax
+    min_max_duration = schedule_routes.collect{|r| r[:duration]}.minmax rescue ["",""]
     schedule_layout_values["min_duration"] = if min_max_duration[0].include? (":") then min_max_duration[0].to_time.strftime("%Hh %Mm") else Time.at(min_max_duration[0].to_i*60).utc.strftime("%Hh %Mm") end
     schedule_layout_values["max_duration"] = if min_max_duration[1].include? (":") then min_max_duration[1].to_time.strftime("%Hh %Mm") else Time.at(min_max_duration[1].to_i*60).utc.strftime("%Hh %Mm") end
     schedule_layout_values["return_url"]  = schedule_airline_values["return_url"]
