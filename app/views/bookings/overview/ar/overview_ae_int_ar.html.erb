@@ -91,9 +91,20 @@
             <% end%> 
           </div>
           <div class="clearfix"></div>
-          <div class="top-routes">
+          <div class="content-desc top-routes">
             <h2><%= I18n.t('brand.top_route' , airline_name: @carrier_name_ar) %></h2>
-            <%= render :partial=>"bookings/overview/ar/shared/airline_more_routes", locals: { top_routes: popular_routes["more_routes"] }  %>
+            <%= render :partial=>"bookings/overview/ar/shared/airline_more_routes", locals: { top_routes: pagination[:routes] }  %>
+              <% if pagination[:total_pages]  > 1 %>
+                <div class="text-center linklist-btn">
+                  <% if pagination[:current_page_no] == 0 %>
+                    <a class="no-link" ><%= t('prev') %></a> | <a rel="next" href='<%= "/ar/flight-booking/#{pagination[:next_url]}" %>' ><%= t('next') %></a>
+                  <% elsif pagination[:current_page_no] >= pagination[:total_pages] %>
+                    <a rel="prev" href='<%= "/ar/flight-booking/#{pagination[:prev_url]}" %>' ><%= t('prev') %></a> | <a class="no-link" ><%= t('next') %></a>
+                  <% else %>
+                    <a rel="prev" href='<%= "/ar/flight-booking/#{pagination[:prev_url]}" %>' ><%= t('prev') %></a> | <a rel="next" href='<%= "/ar/flight-booking/#{pagination[:next_url]}" %>' ><%= t('next') %></a>
+                  <% end%>
+                </div>
+              <% end %>
           </div>
         </div><!--list-box-->
       </div>

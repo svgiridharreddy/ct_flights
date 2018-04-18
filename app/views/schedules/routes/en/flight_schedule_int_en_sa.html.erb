@@ -100,6 +100,10 @@
               <% end %>
 
               <%= render :partial =>  "schedules/routes/shared/en/route_information_sa_en",locals: {schedule_layout_values: schedule_layout_values,dep_city_name: dep_city_name,arr_city_name: arr_city_name} %>
+              <% if schedule_layout_values["things_to_do"].present? %>
+                <%= render partial:"schedules/routes/shared/en/things_to_do",locals:{arr_city_name: @arr_city_name,things_todo: schedule_layout_values["things_to_do"]} %>
+              <% end %>
+              <%= render partial:"schedules/routes/shared/en/hotels_and_locality",locals:{arr_city_name: @arr_city_name,hotel_api: schedule_layout_values["locality_hotels"]} %>
               <% if schedule_layout_values["dep_city_conent"].present? && schedule_layout_values["arr_city_content"].present? %>
                   <h3> About <%= dep_city_name %> (<%= dep_city_code %>) </h3>
                   <%= raw schedule_layout_values["dep_city_conent"]%>
@@ -140,7 +144,7 @@
     </div>
     <%= render "shared/in/in_gac"%>
     <%= render "common/comscore" %>
-    <%= render "common/mobile_header_flexislider" %>
+    
     <% lang = {
       "calender"=>{
         "airfare"=>t('calender.airfare'),

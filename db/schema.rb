@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180417101524) do
+ActiveRecord::Schema.define(version: 20180417132209) do
 
   create_table "ae_airline_contents", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "carrier_code"
@@ -131,8 +131,6 @@ ActiveRecord::Schema.define(version: 20180417101524) do
     t.string "dep_city_name_ar"
     t.string "arr_city_name_ar"
     t.string "url"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
   end
 
   create_table "airline_brand_collectives", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
@@ -321,8 +319,6 @@ ActiveRecord::Schema.define(version: 20180417101524) do
     t.string "dep_city_name_ar"
     t.string "arr_city_name_ar"
     t.string "url"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
   end
 
   create_table "city_contents", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
@@ -545,8 +541,6 @@ ActiveRecord::Schema.define(version: 20180417101524) do
     t.string "dep_city_name_hi"
     t.string "arr_city_name_hi"
     t.string "url"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
   end
 
   create_table "kw_airline_contents", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
@@ -663,8 +657,6 @@ ActiveRecord::Schema.define(version: 20180417101524) do
     t.string "dep_city_name_ar"
     t.string "arr_city_name_ar"
     t.string "url"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
   end
 
   create_table "om_airline_contents", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
@@ -781,8 +773,6 @@ ActiveRecord::Schema.define(version: 20180417101524) do
     t.string "dep_city_name_ar"
     t.string "arr_city_name_ar"
     t.string "url"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
   end
 
   create_table "package_flight_hop_schedules", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
@@ -1117,8 +1107,6 @@ ActiveRecord::Schema.define(version: 20180417101524) do
     t.string "dep_city_name_ar"
     t.string "arr_city_name_ar"
     t.string "url"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
   end
 
   create_table "unique_hop_routes", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
@@ -1156,6 +1144,10 @@ ActiveRecord::Schema.define(version: 20180417101524) do
     t.string "arr_city_name"
     t.string "schedule_route_url"
     t.string "ticket_route_url"
+    t.string "dep_city_name_ar"
+    t.string "arr_city_name_ar"
+    t.string "dep_city_name_hi"
+    t.string "arr_city_name_hi"
     t.index ["schedule_route_url", "ticket_route_url", "dep_city_code", "arr_city_code"], name: "indecies"
   end
 

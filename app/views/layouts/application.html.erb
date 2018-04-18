@@ -25,6 +25,7 @@
     <%= render partial: "common/language_meta_tags",locals: {page_number: 1} %>
     <%= render partial: "common/crazy_hot_jar_code" %>
     <link rel="stylesheet" href="https://s3-ap-southeast-1.amazonaws.com/waytogo-assets/waytogo-staging/testing/application_test.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flexslider/2.7.0/flexslider.min.css"/>
     
   </head>
     <% if @language=="ar" %>
@@ -41,5 +42,6 @@
       <script type="text/javascript" src="https://d2w5af8s1781.cloudfront.net/waytogo-staging/javascripts/date_format.js"></script>
       <script type="text/javascript" src="https://d2w5af8s1781.cloudfront.net/waytogo-staging/javascripts/ct_custom.js"></script>
       <script type="text/javascript" src="https://d2w5af8s1781.cloudfront.net/waytogo-staging/javascripts/banner_tool_v1.js"></script>
+      <%= render "common/mobile_header_flexislider" %>
     </body>
 </html>

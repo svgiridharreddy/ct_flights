@@ -6,6 +6,7 @@ class FlightBookingService
 		@carrier_name = args[:carrier_name]
 		@country_code = args[:country_code]
 		@section = args[:section]
+		@language = args[:language]
 	end
 	def airline_more_routes
   	collecitves = "#{@country_code.downcase}_flight_schedule_collectives"
@@ -32,9 +33,9 @@ class FlightBookingService
 		  			"carrier_code" => @carrier_code,
 		  			"carrier_name" => @carrier_name,
 		  			"dep_city_name" => route.dep_city_name,
-		  			"dep_city_name_ar" => CityName.find_by(city_code: route.dep_city_code).city_name_ar,
 		  			"arr_city_name" => route.arr_city_name,
-		  			"arr_city_name_ar" => CityName.find_by(city_code: route.arr_city_code).city_name_ar
+		  			"dep_city_name_ar" => route.dep_city_name_ar,
+		  			"arr_city_name_ar" => route.arr_city_name_ar,
 			  	}
 			  end
 			end
@@ -94,9 +95,9 @@ class FlightBookingService
 			  			"carrier_code" => @carrier_code,
 			  			"carrier_name" => @carrier_name,
 			  			"dep_city_name" => route.dep_city_name,
-			  			"dep_city_name_ar" => CityName.find_by(city_code: route.dep_city_code).city_name_ar,
+			  			"dep_city_name_ar" => route.dep_city_name_ar,
 			  			"arr_city_name" => route.arr_city_name,
-			  			"arr_city_name_ar" => CityName.find_by(city_code: route.arr_city_code).city_name_ar,
+			  			"arr_city_name_ar" => route.arr_city_name_ar,
 			  			"dep_city_code" => route.dep_city_code,
 			  			"arr_city_code" => route.arr_city_code,
 			  			"dep_airport_code" => route.dep_airport_code,
@@ -121,9 +122,9 @@ class FlightBookingService
 			  			"carrier_code" => @carrier_code,
 			  			"carrier_name" => @carrier_name,
 			  			"dep_city_name" => route.dep_city_name,
-			  			"dep_city_name_ar" => CityName.find_by(city_code: route.dep_city_code).city_name_ar,
+			  			"dep_city_name_ar" => route.dep_city_name_ar,
 			  			"arr_city_name" => route.arr_city_name,
-			  			"arr_city_name_ar" => CityName.find_by(city_code: route.arr_city_code).city_name_ar,
+			  			"arr_city_name_ar" => route.arr_city_name_ar,
 			  			"dep_city_code" => route.dep_city_code,
 			  			"arr_city_code" => route.arr_city_code,
 			  			"dep_airport_code" => route.dep_airport_code,
@@ -148,9 +149,9 @@ class FlightBookingService
 			  			"carrier_code" => @carrier_code,
 			  			"carrier_name" => @carrier_name,
 			  			"dep_city_name" => route.dep_city_name,
-			  			"dep_city_name_ar" => CityName.find_by(city_code: route.dep_city_code).city_name_ar,
+			  			"dep_city_name_ar" => route.dep_city_name_ar,
 			  			"arr_city_name" => route.arr_city_name,
-			  			"arr_city_name_ar" => CityName.find_by(city_code: route.arr_city_code).city_name_ar,
+			  			"arr_city_name_ar" => route.arr_city_name_ar,
 			  			"dep_city_code" => route.dep_city_code,
 			  			"arr_city_code" => route.arr_city_code,
 			  			"dep_airport_code" => route.dep_airport_code,

@@ -34,10 +34,11 @@ class OverviewBookingsController < ApplicationController
 		file_paths = YAML.load(File.read('config/application.yml'))[Rails.env]
 		@assets_path = file_paths["assets_path"]
 		@section = airline.country_code == @country_code ? "#{@country_code}-dom" : "#{@country_code}-int"
-		@airline_details = { carrier_code: @carrier_code,
-											  carrier_name: @carrier_name,
-											  section: @section,
-												country_code: @country_code
+		@airline_details = {  carrier_code: @carrier_code,
+							  					carrier_name: @carrier_name,
+							  					section: @section,
+							  					country_code: @country_code,
+							  					language: @language
 											  }
 
 		customer_support_airlines = ['AI','CX','TG','SQ','G8','AK','UK','SG','G9','9W','LH','EY','BA','6E','QR','EK']
@@ -45,7 +46,7 @@ class OverviewBookingsController < ApplicationController
     customer_support = @country_code=='IN' ? customer_support_airlines.include?(@carrier_code) : false
     baggages = @country_code=='IN' ? baggages_airlines.include?(@carrier_code) : false
 		flight_booking_service = FlightBookingService.new @airline_details
-		airline_more_routes = @language =="ar" ? flight_booking_service.airline_more_routes_ar : flight_booking_service.airline_more_routes
+		airline_more_routes =  flight_booking_service.airline_more_routes
 		pagination = custom_pagination(page_no,airline_more_routes,page_name)
 		if page_no == 0
 			popular_routes = flight_booking_service.airline_popular_routes
