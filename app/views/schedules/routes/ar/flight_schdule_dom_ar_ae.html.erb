@@ -92,7 +92,6 @@
   			  	</div>
             <div class="content-desc">
               <% if schedule_layout_values["unique_route_content"].present? %>
-                <% binding.pry %>
                 <%= raw schedule_layout_values["unique_route_content"] %>
               <% else %>
                 <%= render :partial => "schedules/routes/contents/ar/templatized_content_ae_ar",locals: {schedule_layout_values: schedule_layout_values,dep_city_name: dep_city_name_ar,arr_city_name: arr_city_name_ar} %>
