@@ -75,21 +75,23 @@
       <div class="col-lg-9 col-md-9 col-sm-12 mobile-view pad-lzero" id="flight-schedule">
         <div class="list-box">
           <div id="banner" class="lhs-banner"></div>
-          <% if popular_routes['dom_dom'].present? &&  popular_routes['dom_dom'].length>0 %>
-          <h2><%= t('brand.popular_dom_route_title', airline_name: @carrier_name_ar) %></h2>
-          <%= render :partial=>"bookings/overview/ar/brand_flight_schedule_ar",:locals=>{:routes=>popular_routes['dom_dom'], :use_helper=>use_helper, :assets_path=>@assets_path, :country_code=> @country_code, :section=> 'dom',currency_code: currency_code(@country_code)} %>
-          <p>&nbsp;</p>
+          <% if pagination[:current_page_no] == 0%>
+            <% if popular_routes['dom_dom'].present? &&  popular_routes['dom_dom'].length>0 %>
+            <h2><%= t('brand.popular_dom_route_title', airline_name: @carrier_name_ar) %></h2>
+            <%= render :partial=>"bookings/overview/ar/brand_flight_schedule_ar",:locals=>{:routes=>popular_routes['dom_dom'], :use_helper=>use_helper, :assets_path=>@assets_path, :country_code=> @country_code, :section=> 'dom',currency_code: currency_code(@country_code)} %>
+            <p>&nbsp;</p>
+            <% end %>
+            
+            <% if popular_routes['dom_int'].present? && popular_routes['dom_int'].length>0  %>
+            <h2><%= t('brand.popular_int_route_title', airline_name: @carrier_name_ar) %></h2>
+            <%= render :partial=>"bookings/overview/ar/brand_flight_schedule_ar",:locals=>{:routes=>popular_routes['dom_int'], :use_helper=>use_helper, :assets_path=>@assets_path, :country_code=> @country_code, :section=> 'int',currency_code: currency_code(@country_code)} %><!--mobile-view-->
+            <% end %>
+            <div class="content-desc">
+               <% if content["overview_content_ar"].present? %>
+                <%= raw content["overview_content_ar"] %>
+              <% end%> 
+            </div>
           <% end %>
-          
-          <% if popular_routes['dom_int'].present? && popular_routes['dom_int'].length>0  %>
-          <h2><%= t('brand.popular_int_route_title', airline_name: @carrier_name_ar) %></h2>
-          <%= render :partial=>"bookings/overview/ar/brand_flight_schedule_ar",:locals=>{:routes=>popular_routes['dom_int'], :use_helper=>use_helper, :assets_path=>@assets_path, :country_code=> @country_code, :section=> 'int',currency_code: currency_code(@country_code)} %><!--mobile-view-->
-          <% end %>
-          <div class="content-desc">
-             <% if content["overview_content_ar"].present? %>
-              <%= raw content["overview_content_ar"] %>
-            <% end%> 
-          </div>
           <div class="clearfix"></div>
           <div class="content-desc top-routes">
             <h2><%= I18n.t('brand.top_route' , airline_name: @carrier_name_ar) %></h2>
