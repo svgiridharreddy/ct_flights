@@ -7,6 +7,8 @@ class UniqueRoute < ApplicationRecord
 	has_many :om_flight_schedule_collectives
 	has_many :kw_flight_schedule_collectives
 	has_many :qa_flight_schedule_collectives
+	has_many :in_flight_ticket_collectives
+	has_many :ae_flight_ticket_collectives
 	has_many :airline_brand_collectives
 end
 

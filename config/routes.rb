@@ -16,6 +16,12 @@ Rails.application.routes.draw do
 	scope ':lang/flight-booking' do 
 		get '/:airline' => "overview_bookings#booking_values"
 	end
+	scope 'flight-tickets' do 
+		get '/:route' => "flight_tickets#ticket_values"
+	end
+	scope ':lang/flight-tickets' do 
+		get '/:route' => "flight_tickets#ticket_values"
+	end
 	get '*path' => redirect('/')
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end

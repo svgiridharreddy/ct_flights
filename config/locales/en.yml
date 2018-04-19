@@ -42,7 +42,7 @@ en:
     international_airport: "International Airports"
     domestic_airlines: "Domestic Airlines"
     domestic_air_tickets: "Domestic Cheap Air Tickets"
-    inter_air_tickets: "International Cheap Air Tickets"
+    intl_air_tickets: "International Cheap Air Tickets"
   airport:
     airport_details: "Airport Details"
     name: "Name"
@@ -172,6 +172,10 @@ en:
         New Delhi-Kolkata-Flights: <p>Synonymous with the famous Howrah Bridge, this Eastern Bengal port is a major tourist attraction. If you’re considering a trip to Kolkata, but are perplexed by the complicated booking procedure, fret not. Cleartrip has made booking easy and simple to ensure a truly smooth experience.</p><p>When you are flying from New Delhi to Kolkata, you may choose between %{airlines_list}.</p><p>There are %{weekly_flights_count} flights that fly from New Delhi to Kolkata every week. Of these flights, %{airline_count_list}.</p><p>%{first_dep_airline_name} %{first_dep_flight_no} is the first flight from New Delhi to Kolkata, and it departs at %{first_dep_time}. The last flight is %{last_dep_airline_name} %{last_dep_flight_no}, departing at %{last_dep_time}.</p><p>The average length of a non-stop flight on this route is 2 hours 15 minutes.</p><p>There is a negligible difference between the pricing of a round trip and one-way tickets. To avail of the best offers, book your tickets 45-60 days in advance.</p><p>At New Delhi, your flight will depart from <a href="https://www.cleartrip.com/tourism/airports/new-delhi-airport.html" target="_blank">Indira Gandhi International Airport</a> which has two passenger terminals. The IATA code of the airport is DEL, and it offers facilities like bus shuttle service between terminals, childcare centers, and baggage wrapping.</p><p>Your flight will land in Kolkata, at the <a href="https://www.cleartrip.com/tourism/airports/kolkata-airport.html" target="_blank">Netaji Subhash Chandra Bose International Airport.</a> Its IATA code is CCU. The airport offers facilities like childcare centers, passenger lounges, and prayer rooms.</p><p>Most people fly to Kolkata to explore it as a tourist and experience its rich culture. You may choose to savor the street food and local delicacies, or visit the heritage sites, museums, and art galleries. Either way, ensure that Eden Gardens, the Howrah Bridge, and Mother Teresa’s Home are all in your list. While on the streets, be on the lookout for graffiti, since it is a popular form of expression used widely in Kolkata.</p><p>Cleartrip not only makes booking tickets easy, but also helps you prepare for the entire journey. Download the Cleartrip app and book your tickets in 60 seconds. The Fare Calendar facility lets you compare prices and select the cheapest options. For a seamless experience, make Cleartrip your travel partner.</p>"
     ae:
     sa:
+  flight_ticket:
+    header_1: "%{dep_city_name} to %{arr_city_name} cheap air tickets"
+    cheap_air_tickets: "cheap air tickets"
+    breadcrumb_title: "%{dep_city_name} %{arr_city_name} Cheap Air Tickets"
   footer:
     country_text: "Countries"
     countries: "Countries"

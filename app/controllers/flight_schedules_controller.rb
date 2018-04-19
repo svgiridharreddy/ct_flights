@@ -173,18 +173,16 @@ class FlightSchedulesController < ApplicationController
 		else
 			@section = @country_code + "-int"
 		end
-		binding.pry
-
 		flight_schedule_service = FlightScheduleService.new @route_details	 
 		schedule_footer = flight_schedule_service.schedule_footer
 		@domestic_carrier_codes = AirlineBrand.where(country_code: @country_code).pluck("distinct(carrier_code)")
 		@all_carrier_codes = AirlineBrand.all.pluck(:carrier_code)
 
 		unless (@section.include? "int")
-      inc_cc = "carrier_code in ('#{@domestic_carrier_codes.join("\',\'")}')"
-    else
-      inc_cc =  "carrier_code in ('#{@all_carrier_codes.join("\',\'")}')"
-    end
+	      inc_cc = "carrier_code in ('#{@domestic_carrier_codes.join("\',\'")}')"
+	  else
+	      inc_cc =  "carrier_code in ('#{@all_carrier_codes.join("\',\'")}')"
+	  end
     # comented because only in_flight_hop_schedule_collectives table has data
     # uncomment after feeding data to respective tables
     # case @country_code

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180417132209) do
+ActiveRecord::Schema.define(version: 20180419110646) do
 
   create_table "ae_airline_contents", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "carrier_code"
@@ -81,6 +81,23 @@ ActiveRecord::Schema.define(version: 20180417132209) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["unique_route_id"], name: "index_ae_flight_schedule_collectives_on_unique_route_id"
+  end
+
+  create_table "ae_flight_ticket_collectives", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string "carrier_code"
+    t.integer "flight_no"
+    t.string "dep_time"
+    t.string "arr_time"
+    t.string "duration"
+    t.string "days_of_operation"
+    t.string "dep_city_code"
+    t.string "arr_city_code"
+    t.string "dep_country_code"
+    t.string "arr_country_code"
+    t.bigint "unique_route_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["unique_route_id"], name: "index_ae_flight_ticket_collectives_on_unique_route_id"
   end
 
   create_table "ae_footers", id: :integer, default: nil, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
@@ -269,6 +286,23 @@ ActiveRecord::Schema.define(version: 20180417132209) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["unique_route_id"], name: "index_bh_flight_schedule_collectives_on_unique_route_id"
+  end
+
+  create_table "bh_flight_ticket_collectives", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string "carrier_code"
+    t.integer "flight_no"
+    t.string "dep_time"
+    t.string "arr_time"
+    t.string "duration"
+    t.string "days_of_operation"
+    t.string "dep_city_code"
+    t.string "arr_city_code"
+    t.string "dep_country_code"
+    t.string "arr_country_code"
+    t.bigint "unique_route_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["unique_route_id"], name: "index_bh_flight_ticket_collectives_on_unique_route_id"
   end
 
   create_table "bh_footers", id: :integer, default: nil, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
@@ -493,6 +527,23 @@ ActiveRecord::Schema.define(version: 20180417132209) do
     t.index ["unique_route_id"], name: "index_in_flight_schedule_collectives_on_unique_route_id"
   end
 
+  create_table "in_flight_ticket_collectives", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string "carrier_code"
+    t.integer "flight_no"
+    t.string "dep_time"
+    t.string "arr_time"
+    t.string "duration"
+    t.string "days_of_operation"
+    t.string "dep_city_code"
+    t.string "arr_city_code"
+    t.string "dep_country_code"
+    t.string "arr_country_code"
+    t.bigint "unique_route_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["unique_route_id"], name: "index_in_flight_ticket_collectives_on_unique_route_id"
+  end
+
   create_table "in_footers", id: :integer, default: nil, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "city_code"
     t.string "city_name"
@@ -536,8 +587,8 @@ ActiveRecord::Schema.define(version: 20180417132209) do
   create_table "in_volume_routes", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "dep_city_code"
     t.string "arr_city_code"
-    t.string "dep_city_name_en"
-    t.string "arr_city_name_en"
+    t.string "dep_city_name", limit: 250
+    t.string "arr_city_name"
     t.string "dep_city_name_hi"
     t.string "arr_city_name_hi"
     t.string "url"
@@ -607,6 +658,23 @@ ActiveRecord::Schema.define(version: 20180417132209) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["unique_route_id"], name: "index_kw_flight_schedule_collectives_on_unique_route_id"
+  end
+
+  create_table "kw_flight_ticket_collectives", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string "carrier_code"
+    t.integer "flight_no"
+    t.string "dep_time"
+    t.string "arr_time"
+    t.string "duration"
+    t.string "days_of_operation"
+    t.string "dep_city_code"
+    t.string "arr_city_code"
+    t.string "dep_country_code"
+    t.string "arr_country_code"
+    t.bigint "unique_route_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["unique_route_id"], name: "index_kw_flight_ticket_collectives_on_unique_route_id"
   end
 
   create_table "kw_footers", id: :integer, default: nil, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
@@ -723,6 +791,23 @@ ActiveRecord::Schema.define(version: 20180417132209) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["unique_route_id"], name: "index_om_flight_schedule_collectives_on_unique_route_id"
+  end
+
+  create_table "om_flight_ticket_collectives", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string "carrier_code"
+    t.integer "flight_no"
+    t.string "dep_time"
+    t.string "arr_time"
+    t.string "duration"
+    t.string "days_of_operation"
+    t.string "dep_city_code"
+    t.string "arr_city_code"
+    t.string "dep_country_code"
+    t.string "arr_country_code"
+    t.bigint "unique_route_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["unique_route_id"], name: "index_om_flight_ticket_collectives_on_unique_route_id"
   end
 
   create_table "om_footers", id: :integer, default: nil, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
@@ -941,6 +1026,23 @@ ActiveRecord::Schema.define(version: 20180417132209) do
     t.index ["unique_route_id"], name: "index_qa_flight_schedule_collectives_on_unique_route_id"
   end
 
+  create_table "qa_flight_ticket_collectives", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string "carrier_code"
+    t.integer "flight_no"
+    t.string "dep_time"
+    t.string "arr_time"
+    t.string "duration"
+    t.string "days_of_operation"
+    t.string "dep_city_code"
+    t.string "arr_city_code"
+    t.string "dep_country_code"
+    t.string "arr_country_code"
+    t.bigint "unique_route_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["unique_route_id"], name: "index_qa_flight_ticket_collectives_on_unique_route_id"
+  end
+
   create_table "qa_footers", id: :integer, default: nil, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "city_code"
     t.string "city_name"
@@ -1153,18 +1255,24 @@ ActiveRecord::Schema.define(version: 20180417132209) do
 
   add_foreign_key "ae_flight_hop_schedule_collectives", "unique_hop_routes"
   add_foreign_key "ae_flight_schedule_collectives", "unique_routes"
+  add_foreign_key "ae_flight_ticket_collectives", "unique_routes"
   add_foreign_key "airline_brand_collectives", "unique_routes"
   add_foreign_key "bh_flight_hop_schedule_collectives", "unique_hop_routes"
   add_foreign_key "bh_flight_schedule_collectives", "unique_routes"
+  add_foreign_key "bh_flight_ticket_collectives", "unique_routes"
   add_foreign_key "collectives", "unique_routes"
   add_foreign_key "in_flight_hop_schedule_collectives", "unique_hop_routes"
   add_foreign_key "in_flight_schedule_collectives", "unique_routes"
+  add_foreign_key "in_flight_ticket_collectives", "unique_routes"
   add_foreign_key "kw_flight_hop_schedule_collectives", "unique_hop_routes"
   add_foreign_key "kw_flight_schedule_collectives", "unique_routes"
+  add_foreign_key "kw_flight_ticket_collectives", "unique_routes"
   add_foreign_key "om_flight_hop_schedule_collectives", "unique_hop_routes"
   add_foreign_key "om_flight_schedule_collectives", "unique_routes"
+  add_foreign_key "om_flight_ticket_collectives", "unique_routes"
   add_foreign_key "qa_flight_hop_schedule_collectives", "unique_hop_routes"
   add_foreign_key "qa_flight_schedule_collectives", "unique_routes"
+  add_foreign_key "qa_flight_ticket_collectives", "unique_routes"
   add_foreign_key "sa_flight_hop_schedule_collectives", "unique_hop_routes"
   add_foreign_key "sa_flight_schedule_collectives", "unique_routes"
 end

@@ -119,7 +119,7 @@ class FlightScheduleService
     more_routes =  {}
     more_routes["dep_more_routes"] = model_name.where(dep_city_code: @dep_city_code).where.not(arr_city_code: @arr_city_code).take(30)
     more_routes["arr_more_routes"] = model_name.where(arr_city_code: @arr_city_code).where.not(dep_city_code: @dep_city_code).take(30)
-       return more_routes
+    return more_routes
 	end
 
   # def get_more_arabic_routes 
@@ -197,8 +197,8 @@ class FlightScheduleService
     schedule_layout_values["dep_city_content"] = content["dep_city_content"]
     schedule_layout_values["arr_city_content"] = content["arr_city_content"]
     schedule_layout_values["unique_route_content"] = content["unique_route_content"] %{airlines_list: schedule_layout_values["operational_airlines"],weekly_flights_count: schedule_layout_values["weekly_flights_count"],airline_count_list: schedule_layout_values["operational_airlines"],first_dep_airline_name: schedule_layout_values["first_dep_airline"],first_dep_time: schedule_layout_values["first_dep_time"],first_dep_flight_no: schedule_layout_values["first_dep_airline_no"],last_dep_flight_no: schedule_layout_values["last_dep_airline_no"],last_dep_airline_name: schedule_layout_values["last_dep_airline"],last_dep_time: schedule_layout_values["last_dep_time"]}
-    schedule_layout_values["things_to_do"] = schedule_things_to_do
-    schedule_layout_values["locality_hotels"] =  schedule_hotels_content
+    schedule_layout_values["things_to_do"] = things_to_do
+    schedule_layout_values["locality_hotels"] = hotels_content
     schedule_layout_values['max_price'] = min_pr[:max]
     schedule_layout_values['route_min_price'] = min_pr[:min]
     schedule_layout_values["min30"] = main_min30
@@ -287,7 +287,7 @@ class FlightScheduleService
     return schedule_layout_hop_values
   end
 
-  def schedule_hotels_content
+  def hotels_content
     # to get hotel star data , local cities randamized  data and property data from table 
     api_model_name = "#{@country_code.titleize}HotelApi".constantize
     hotel_api_content = api_model_name.where(city_name: @arr_city_name.titleize)
@@ -316,7 +316,7 @@ class FlightScheduleService
     return {local_data_offset: local_data_offset,hotel_api_stars: hotel_api_stars,hotel_api_property_types: hotel_api_property_types}
     #  ending of local cities randamization
   end
-  def schedule_things_to_do
+  def things_to_do
     api_model_name = "#{@country_code.titleize}HotelApi".constantize
     local_activities_cities_list = ["Dubai","Agra", "Srinagar", "Goa", "Mysore", "Chandigarh", "Amritsar", "Dehradun", "Ahmedabad", "Kolkata", "Kochi","Cochin", "Jaipur", "Guwahati", "Shillong", "Jodhpur", "Trivandrum", "Vijayawada", "New Delhi", "Kullu", "Bangalore", "Mumbai", "Hyderabad", "Udaipur", "Chennai", "Pune"] 
     if local_activities_cities_list.include?(@arr_city_name.titleize)

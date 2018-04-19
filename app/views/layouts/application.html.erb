@@ -19,7 +19,7 @@
     <%=  render partial: "common/fb_tw_gplus",locals: {title: seo[:title],description: seo[:description]} %>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <meta name="robots" content="noodp,noydir"/>
-    <% if @page_type=="flight-schedule" || @page_type== "flight-booking" %>
+    <% if @page_type=="flight-schedule" || @page_type== "flight-booking" || @page_type="flight-ticets" %>
       <link rel="amphtml" href="<%=  seo[:amp_url] %>">
     <% end %>
     <%= render partial: "common/language_meta_tags",locals: {page_number: 1} %>

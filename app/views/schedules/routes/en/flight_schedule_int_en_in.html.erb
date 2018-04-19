@@ -110,7 +110,7 @@
                 <%= render :partial => "schedules/routes/contents/en/templatized_content_en_in",locals: {schedule_layout_values: schedule_layout_values,dep_city_name: dep_city_name,arr_city_name: arr_city_name} %>
               <% end %>
               <%= render :partial =>  "schedules/routes/shared/en/route_information_in_en",locals: {schedule_layout_values: schedule_layout_values,dep_city_name: dep_city_name,arr_city_name: arr_city_name} %>
-               <% if schedule_layout_values["things_to_do"].present? %>
+               <% if schedule_layout_values['things_to_do'][:activities_data].present? && !schedule_layout_values['things_to_do'][:activities_data].nil? %>
                   <%= render partial:"schedules/routes/shared/en/things_to_do",locals:{arr_city_name: @arr_city_name,things_todo: schedule_layout_values["things_to_do"]} %>
               <% end %>
               <%= render partial:"schedules/routes/shared/en/hotels_and_locality",locals:{arr_city_name: @arr_city_name,hotel_api: schedule_layout_values["locality_hotels"]} %>

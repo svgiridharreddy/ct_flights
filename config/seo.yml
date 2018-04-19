@@ -372,4 +372,37 @@ booking-overview:
         description: "حجوزات %{airline_name} وتذاكر %{airline_name} رخيصة الثمن على Cleartrip.com. احجز الآن! نقدم حجوزات طيران رخيصة الثمن %{airline_name}. تحقق من أحدث جدول للرحلات والمواعيد %{airline_name} قبل أن تحجز رحلة سفر. احصل على فكرة كافية عن أسعار رحلاتها الجوية الرخيصة المحلية وكذلك الرحلات الدولية."
         keywords: ""
       amp_url: ""
- 
+flight-tickets:
+  in:
+    en:
+      dom:
+        title: "%{dep_city_name}(%{dep_city_code}) to %{arr_city_name}(%{arr_city_code}) cheap air tickets, airfares start @ ₹ %{min_pirce} - Cleartrip"
+        description: "Book cheap air tickets from %{dep_city_name} to %{arr_city_name} on Cleartrip &amp; avail amazing discounts &amp; offers on %{dep_city_name} to %{arr_city_name} flights today."
+        keywords: "%{dep_city_name} %{arr_city_name} cheap air tickets,%{dep_city_name} %{arr_city_name} flight tickets, %{dep_city_name} %{arr_city_name} flights, %{dep_city_name} %{arr_city_name} air tickets"
+      int:
+        title: "%{dep_city_name}(%{dep_city_code}) to %{arr_city_name}(%{arr_city_code}) cheap air tickets, airfares start @ ₹ %{min_pirce} - Cleartrip"
+        description: "Book cheap air tickets from %{dep_city_name} to %{arr_city_name} on Cleartrip &amp; avail amazing discounts &amp; offers on %{dep_city_name} to %{arr_city_name} flights today."
+        keywords: "%{dep_city_name} %{arr_city_name} cheap air tickets,%{dep_city_name} %{arr_city_name} flight tickets, %{dep_city_name} %{arr_city_name} flights, %{dep_city_name} %{arr_city_name} air tickets"
+      amp_url: "https://www.cleartrip.com/flight-tickets/amp/%{file_name}"
+  ae:
+    en:
+      dom:
+        title: "%{dep_city_name}(%{dep_city_code}) to %{arr_city_name}(%{arr_city_code}) cheap air tickets, airfares start @ ₹ %{min_pirce} - Cleartrip"
+        description: "Book cheap air tickets from %{dep_city_name} to %{arr_city_name} on Cleartrip &amp; avail amazing discounts &amp; offers on %{dep_city_name} to %{arr_city_name} flights today."
+        keywords: "%{dep_city_name} %{arr_city_name} cheap air tickets,%{dep_city_name} %{arr_city_name} flight tickets, %{dep_city_name} %{arr_city_name} flights, %{dep_city_name} %{arr_city_name} air tickets"
+      int:
+        title: "%{dep_city_name}(%{dep_city_code}) to %{arr_city_name}(%{arr_city_code}) cheap air tickets, airfares start @ ₹ %{min_pirce} - Cleartrip"
+        description: "Book cheap air tickets from %{dep_city_name} to %{arr_city_name} on Cleartrip &amp; avail amazing discounts &amp; offers on %{dep_city_name} to %{arr_city_name} flights today."
+        keywords: "%{dep_city_name} %{arr_city_name} cheap air tickets,%{dep_city_name} %{arr_city_name} flight tickets, %{dep_city_name} %{arr_city_name} flights, %{dep_city_name} %{arr_city_name} air tickets"
+      amp_url: "https://www.cleartrip.com/flight-tickets/amp/%{file_name}"
+  sa:
+    en:
+      dom:
+        title: "%{dep_city_name}(%{dep_city_code}) to %{arr_city_name}(%{arr_city_code}) cheap air tickets, airfares start @ ₹ %{min_pirce} - Cleartrip"
+        description: "Book cheap air tickets from %{dep_city_name} to %{arr_city_name} on Cleartrip &amp; avail amazing discounts &amp; offers on %{dep_city_name} to %{arr_city_name} flights today."
+        keywords: "%{dep_city_name} %{arr_city_name} cheap air tickets,%{dep_city_name} %{arr_city_name} flight tickets, %{dep_city_name} %{arr_city_name} flights, %{dep_city_name} %{arr_city_name} air tickets"
+      int:
+        title: "%{dep_city_name}(%{dep_city_code}) to %{arr_city_name}(%{arr_city_code}) cheap air tickets, airfares start @ ₹ %{min_pirce} - Cleartrip"
+        description: "Book cheap air tickets from %{dep_city_name} to %{arr_city_name} on Cleartrip &amp; avail amazing discounts &amp; offers on %{dep_city_name} to %{arr_city_name} flights today."
+        keywords: "%{dep_city_name} %{arr_city_name} cheap air tickets,%{dep_city_name} %{arr_city_name} flight tickets, %{dep_city_name} %{arr_city_name} flights, %{dep_city_name} %{arr_city_name} air tickets"
+      amp_url: "https://www.cleartrip.com/flight-tickets/amp/%{file_name}"
