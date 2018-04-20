@@ -23,6 +23,12 @@ module CtFlights
     config.i18n.load_path += Dir[File.join("#{Rails.root.to_s}", 'config', 'locales', '**', '*.{rb,yml}')]
     config.i18n.default_locale = :en
     config.i18n.fallbacks = true
+    config.cache_store = :redis_store, {
+        host: 'localhost',
+        port: 6379,
+        namespace: "cache"
+        expires_in: 1.day
+    }
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.
   end
