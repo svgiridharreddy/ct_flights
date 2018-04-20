@@ -26,7 +26,7 @@ module CtFlights
     config.cache_store = :redis_store, {
         host: 'localhost',
         port: 6379,
-        namespace: "cache"
+        namespace: "cache",
         expires_in: 1.day
     }
     # Application configuration should go into files in config/initializers
