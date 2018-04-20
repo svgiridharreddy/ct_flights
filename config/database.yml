@@ -67,7 +67,7 @@ db_postgres:
 
 production:
   <<: *default
-  database: air_development_production
+  database: air_development_testing
   host: 54.169.165.81
   username: flights
   password: ClearTripCalendar  
