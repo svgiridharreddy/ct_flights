@@ -56,10 +56,11 @@
           amp_url = meta_info["#{@country_code.downcase}"]["#{@language.downcase}"]["amp_url"] %{file_name: @file_name}
         end
       when "flight-tickets"
+        title = (@title_min_price.present? && @title_min_price!=0) ? "title_with_price" : "title_without_price"
         if @language == "ar"
-          meta_title = meta_info["#{@country_code.downcase}"]["#{@language.downcase}"]["#{@section[3..5]}"]["title"] 
-          meta_description = meta_info["#{@country_code.downcase}"]["#{@language.downcase}"]["#{@section[3..5]}"]["description"] 
-          meta_keywords = meta_info["#{@country_code.downcase}"]["#{@language.downcase}"]["#{@section[3..5]}"]["keywords"]  
+          meta_title = meta_info["#{@country_code.downcase}"]["#{@language.downcase}"]["#{@section[3..5]}"]["title"] %{dep_city_name: @dep_city_name_ar,arr_city_name: @arr_city_name_ar,dep_city_code: @route.dep_city_code,arr_city_code: @route.arr_city_code}
+          meta_description = meta_info["#{@country_code.downcase}"]["#{@language.downcase}"]["#{@section[3..5]}"]["description"] %{dep_city_name: @dep_city_name,arr_city_name: @arr_city_name}
+          meta_keywords = meta_info["#{@country_code.downcase}"]["#{@language.downcase}"]["#{@section[3..5]}"]["keywords"]  %{dep_city_name: @dep_city_name,arr_city_name: @arr_city_name}
           amp_url = meta_info["#{@country_code.downcase}"]["#{@language.downcase}"]["amp_url"] %{file_name: @file_name}
         else
           meta_title = meta_info["#{@country_code.downcase}"]["#{@language.downcase}"]["#{@section[3..5]}"]["title"] %{dep_city_name: @dep_city_name,arr_city_name: @arr_city_name,dep_city_code: @route.dep_city_code,arr_city_code: @route.arr_city_code,min_pirce: @title_min_price}

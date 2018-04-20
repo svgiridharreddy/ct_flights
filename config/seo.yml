@@ -394,7 +394,17 @@ flight-tickets:
         title: "%{dep_city_name}(%{dep_city_code}) to %{arr_city_name}(%{arr_city_code}) cheap air tickets, airfares start @ ₹ %{min_pirce} - Cleartrip"
         description: "Book cheap air tickets from %{dep_city_name} to %{arr_city_name} on Cleartrip &amp; avail amazing discounts &amp; offers on %{dep_city_name} to %{arr_city_name} flights today."
         keywords: "%{dep_city_name} %{arr_city_name} cheap air tickets,%{dep_city_name} %{arr_city_name} flight tickets, %{dep_city_name} %{arr_city_name} flights, %{dep_city_name} %{arr_city_name} air tickets"
-      amp_url: "https://www.cleartrip.com/flight-tickets/amp/%{file_name}"
+      amp_url: "https://www.cleartrip.ae/flight-tickets/amp/%{file_name}"
+    ar:
+      dom:
+        title: "%{dep_city_name} إلى  %{arr_city_name} حجز تذاكر طيران رخيصة ، حجز تذاكر رخيصة على كليرتريب"
+        description: "تذاكر رحلات جوية رخيصة من %{dep_city_name} إلى %{arr_city_name}. إحجز من %{dep_city_name} إلى %{arr_city_name}  في كليرتريب. ابحث عن أسعار رحلات جوية رخيصة للسفر جواً. احصل على تذاكر رحلات داخلية ودولية بأسعار مخفَضة مع كليرتريب"
+        keywords: "تذاكر طيران رخيصة من %{dep_city_name} إلى %{arr_city_name}، تذاكر رحلات جوية من %{dep_city_name} إلى %{arr_city_name} ، ورحلات جوية من من %{dep_city_name} إلى %{arr_city_name}، تذاكر طيران من %{dep_city_name} إلى %{arr_city_name}"
+      int:
+        title: "%{dep_city_name} إلى  %{arr_city_name} حجز تذاكر طيران رخيصة ، حجز تذاكر رخيصة على كليرتريب"
+        description: "تذاكر رحلات جوية رخيصة من %{dep_city_name} إلى %{arr_city_name}. إحجز من %{dep_city_name} إلى %{arr_city_name}  في كليرتريب. ابحث عن أسعار رحلات جوية رخيصة للسفر جواً. احصل على تذاكر رحلات داخلية ودولية بأسعار مخفَضة مع كليرتريب"
+        keywords: "تذاكر طيران رخيصة من %{dep_city_name} إلى %{arr_city_name}، تذاكر رحلات جوية من %{dep_city_name} إلى %{arr_city_name} ، ورحلات جوية من من %{dep_city_name} إلى %{arr_city_name}، تذاكر طيران من %{dep_city_name} إلى %{arr_city_name}"
+      amp_url: "https://www.cleartrip.ae/ar/flight-tickets/amp/%{file_name}"
   sa:
     en:
       dom:
@@ -405,4 +415,14 @@ flight-tickets:
         title: "%{dep_city_name}(%{dep_city_code}) to %{arr_city_name}(%{arr_city_code}) cheap air tickets, airfares start @ ₹ %{min_pirce} - Cleartrip"
         description: "Book cheap air tickets from %{dep_city_name} to %{arr_city_name} on Cleartrip &amp; avail amazing discounts &amp; offers on %{dep_city_name} to %{arr_city_name} flights today."
         keywords: "%{dep_city_name} %{arr_city_name} cheap air tickets,%{dep_city_name} %{arr_city_name} flight tickets, %{dep_city_name} %{arr_city_name} flights, %{dep_city_name} %{arr_city_name} air tickets"
-      amp_url: "https://www.cleartrip.com/flight-tickets/amp/%{file_name}"
+      amp_url: "https://www.cleartrip.sa/flight-tickets/amp/%{file_name}"
+    ar:
+      dom:
+        title: "%{dep_city_name} إلى  %{arr_city_name} حجز تذاكر طيران رخيصة ، حجز تذاكر رخيصة على كليرتريب"
+        description: "تذاكر رحلات جوية رخيصة من %{dep_city_name} إلى %{arr_city_name}. إحجز من %{dep_city_name} إلى %{arr_city_name}  في كليرتريب. ابحث عن أسعار رحلات جوية رخيصة للسفر جواً. احصل على تذاكر رحلات داخلية ودولية بأسعار مخفَضة مع كليرتريب"
+        keywords: "تذاكر طيران رخيصة من %{dep_city_name} إلى %{arr_city_name}، تذاكر رحلات جوية من %{dep_city_name} إلى %{arr_city_name} ، ورحلات جوية من من %{dep_city_name} إلى %{arr_city_name}، تذاكر طيران من %{dep_city_name} إلى %{arr_city_name}"
+      int:
+        title: "%{dep_city_name} إلى  %{arr_city_name} حجز تذاكر طيران رخيصة ، حجز تذاكر رخيصة على كليرتريب"
+        description: "تذاكر رحلات جوية رخيصة من %{dep_city_name} إلى %{arr_city_name}. إحجز من %{dep_city_name} إلى %{arr_city_name}  في كليرتريب. ابحث عن أسعار رحلات جوية رخيصة للسفر جواً. احصل على تذاكر رحلات داخلية ودولية بأسعار مخفَضة مع كليرتريب"
+        keywords: "تذاكر طيران رخيصة من %{dep_city_name} إلى %{arr_city_name}، تذاكر رحلات جوية من %{dep_city_name} إلى %{arr_city_name} ، ورحلات جوية من من %{dep_city_name} إلى %{arr_city_name}، تذاكر طيران من %{dep_city_name} إلى %{arr_city_name}"
+      amp_url: "https://www.cleartrip.sa/ar/flight-tickets/amp/%{file_name}"

@@ -4,8 +4,7 @@
 	</h2>
 	<ul class="linklist list-inline">
 		<% flights_dep.each do |route|%>
-		
-		<li><a href="/flight-tickets/<%= route.url.gsub('-flights.html','')%>-cheap-airtickets.html" title="<%= route.dep_city_name %> <%= route.arr_city_name %> Flights"><%= dep_city_name %> <%= route.arr_city_name %> <%= t('flight_ticket.cheap_air_tickets')%></a></li>
+		<li><a href="/flight-tickets/<%= route.url.gsub('-flights.html','')%>-cheap-airtickets.html" title="<%= route.dep_city_name_en %> <%= route.arr_city_name_en %> Flights"><%= route.dep_city_name_en %> <%= route.arr_city_name_en %> <%= t('flight_ticket.cheap_air_tickets')%></a></li>
 		<% end %>
 	</ul>
 	<p class="more_link">
@@ -19,7 +18,7 @@
 	</h2>
 	<ul class="linklist list-inline">
 		<% flights_arr.each do |route|%>
-		<li><a href="/flight-tickets/<%= route.url.gsub('-flights.html','') %>-cheap-airtickets.html" title="<%= route.dep_city_name %> <%= route.arr_city_name %> Flights"><%= route.dep_city_name %> <%= route.arr_city_name %> <%= t('flight_ticket.cheap_air_tickets')%></a></li>
+		<li><a href="/flight-tickets/<%= route.url.gsub('-flights.html','') %>-cheap-airtickets.html" title="<%= route.dep_city_name_en %> <%= route.arr_city_name_en %> Flights"><%= route.dep_city_name_en %> <%= route.arr_city_name_en %><%= t('flight_ticket.cheap_air_tickets')%></a></li>
 		<% end %>
 	</ul>
 	<p class="more_link">

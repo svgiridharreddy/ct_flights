@@ -53,7 +53,7 @@ class IdentifyFlightScheduleCollectiveWorker
   		route_value.arr_country_code = route[:arr_country_code]
   		route_value.unique_route_id = route[:unique_route_id]
   	  route_value.save!
-      puts "#{count +=1} inserted #{route[:carrier_code]}-#{route[:flight_no]}"
+      puts "#{count +=1} inserted  #{route[:carrier_code]}-#{route[:flight_no]}"
   	end
   end
 end

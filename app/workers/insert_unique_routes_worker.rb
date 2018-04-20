@@ -10,9 +10,7 @@ class InsertUniqueRoutesWorker
   def perform()
     country_code = 'IN'
     all_routes = PackageFlightSchedule.where("arr_city_code!=dep_city_code and ((dep_country_code='IN' and arr_country_code='IN') or (((dep_country_code='IN' and arr_country_code!='IN')or (dep_country_code!='IN' and arr_country_code='IN'))or(dep_country_code!='IN' and arr_country_code!='IN'))) and (stop=0)").group(:dep_city_code,:arr_city_code,:dep_airport_code,:arr_airport_code,:dep_country_code,:arr_country_code).order("sum(flight_count) desc").pluck(:dep_city_code,:arr_city_code,:dep_airport_code,:arr_airport_code,:dep_country_code,:arr_country_code,"sum(flight_count) as total",:stop)
-    binding.pry
       # top_routes_international =  PackageFlightSchedule.where("arr_city_code != dep_city_code and ((dep_country_code = '#{country_code}') AND NOT (arr_country_code = '#{country_code}')) OR (NOT (dep_country_code = '#{country_code}') AND ((arr_country_code = '#{country_code}'))) or (dep_country_code != '#{country_code}' and arr_country_code != '#{country_code}') and stop=0").group(:dep_city_code, :arr_city_code, :dep_airport_code,:arr_airport_code, :dep_city_name, :arr_city_name, :dep_country_code, :arr_country_code).order("sum(flight_count) desc").pluck(:dep_city_code, :arr_city_code, :dep_airport_code,:arr_airport_code, :dep_city_name, :arr_city_name, :dep_country_code, :arr_country_code, "sum(flight_count) as total") 
-        binding.pry
       create_flight_routes(all_routes)
   end
 
@@ -28,10 +26,10 @@ class InsertUniqueRoutesWorker
                   arr_city_code:       schedule_route[1],
                   dep_airport_code:    schedule_route[2],
                   arr_airport_code:    schedule_route[3],
-                  dep_country_code:       schedule_route[4],
-                  arr_country_code:       schedule_route[5],
+                  dep_country_code:    schedule_route[4],
+                  arr_country_code:    schedule_route[5],
                   weekly_flights_count: schedule_route[6],
-                  hop:             schedule_route[7],
+                  hop:                 schedule_route[7],
                   distance:         distance 
                 )
                 puts "#{count += 1}-inserted for #{schedule_route[0]}-#{schedule_route[1]}"

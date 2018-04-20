@@ -29,7 +29,7 @@ class FlightSchedulesController < ApplicationController
 			return
 		end
 
-		@route = UniqueRoute.find_by(schedule_route_url: url)
+		@route = UniqueRoute.find_by(schedule_route_url: url) 
 		
 		if @route.nil? || !@route.present?
 			@route = UniqueHopRoute.find_by(url: url)

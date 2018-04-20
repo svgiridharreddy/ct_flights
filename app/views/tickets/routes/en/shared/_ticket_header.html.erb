@@ -36,15 +36,15 @@
           <a class="dropdown-toggle" type="button" data-toggle="dropdown">How To Reach <%= arr_city_name.titleize %> <span class="caret"></span></a>
           <ul class="list-unstyled dropdown-menu"> 
           <% if dep_country_code=="IN" && arr_country_code=="IN" %>
-            <li><a href="https://www.cleartrip.com/tourism/routes/dd/<%= dep_city_name_formated.downcase %>-to-<%= arr_city_name_formated.downcase %>-route.html" title="<%=dep_city_name.titleize%> To <%=arr_city_name.titleize%> Routes" target="_blank"><%= dep_city_name.titleize %> to <%= arr_city_name.titleize %> routes</a></li> 
-            <li><a href="https://www.cleartrip.com/tourism/train/routes/<%= dep_city_name_formated.downcase%>-to-<%=arr_city_name_formated.downcase%>-trains.html" title="<%=dep_city_name.titleize%> To <%= arr_city_name.titleize%> via Tains" target="_blank"><%= dep_city_name.titleize%> to <%= arr_city_name.titleize %> via Trains</a></li>
+            <li><a href="/tourism/routes/dd/<%= dep_city_name_formated.downcase %>-to-<%= arr_city_name_formated.downcase %>-route.html" title="<%=dep_city_name.titleize%> To <%=arr_city_name.titleize%> Routes" target="_blank"><%= dep_city_name.titleize %> to <%= arr_city_name.titleize %> routes</a></li> 
+            <li><a href="/tourism/train/routes/<%= dep_city_name_formated.downcase%>-to-<%=arr_city_name_formated.downcase%>-trains.html" title="<%=dep_city_name.titleize%> To <%= arr_city_name.titleize%> via Tains" target="_blank"><%= dep_city_name.titleize%> to <%= arr_city_name.titleize %> via Trains</a></li>
           <% elsif dep_country_code=="IN" && arr_country_code!="IN"%> 
-              <li><a href="https://www.cleartrip.com/tourism/routes/di/<%= dep_city_name_formated.downcase%>-to-<%= arr_city_name_formated.downcase%>-route.html" title="<%=dep_city_name.titleize%> To <%=arr_city_name.titleize%> Routes" target="_blank"><%=dep_city_name.titleize %> to <%= arr_city_name.titleize %> routes</a></li>
+              <li><a href="/tourism/routes/di/<%= dep_city_name_formated.downcase%>-to-<%= arr_city_name_formated.downcase%>-route.html" title="<%=dep_city_name.titleize%> To <%=arr_city_name.titleize%> Routes" target="_blank"><%=dep_city_name.titleize %> to <%= arr_city_name.titleize %> routes</a></li>
           <% elsif dep_country_code!="IN" && arr_country_code=="IN"%>
-              <li><a href="https://www.cleartrip.com/tourism/routes/id/<%= dep_city_name_formated.downcase%>-to-<%= arr_city_name_formated.downcase%>-route.html" title="<%=dep_city_name.titleize%> To <%=arr_city_name.titleize%> Routes" target="_blank"><%=dep_city_name.titleize %> to <%= arr_city_name.titleize %> routes</a></li>
+              <li><a href="/tourism/routes/id/<%= dep_city_name_formated.downcase%>-to-<%= arr_city_name_formated.downcase%>-route.html" title="<%=dep_city_name.titleize%> To <%=arr_city_name.titleize%> Routes" target="_blank"><%=dep_city_name.titleize %> to <%= arr_city_name.titleize %> routes</a></li>
            <% else %>
-              <li><a href="https://www.cleartrip.com/tourism/routes/ii/<%= dep_city_name_formated.downcase%>-to-<%= arr_city_name_formated.downcase%>-route.html" title="<%=dep_city_name.titleize%> To <%=arr_city_name.titleize%> Routes" target="_blank"><%=dep_city_name.titleize %> to <%= arr_city_name.titleize %> routes</a></li>
-            <!-- <li><a href="https://www.cleartrip.com/flight-schedule/flight-schedules-domestic.html" target="_blank"><%= dep_city_name.titleize%> to <%= arr_city_name.titleize %> via Flights</a></li>   -->
+              <li><a href="/tourism/routes/ii/<%= dep_city_name_formated.downcase%>-to-<%= arr_city_name_formated.downcase%>-route.html" title="<%=dep_city_name.titleize%> To <%=arr_city_name.titleize%> Routes" target="_blank"><%=dep_city_name.titleize %> to <%= arr_city_name.titleize %> routes</a></li>
+            <!-- <li><a href="/flight-schedule/flight-schedules-domestic.html" target="_blank"><%= dep_city_name.titleize%> to <%= arr_city_name.titleize %> via Flights</a></li>   -->
           <% end %>
           </ul>
         </li>
@@ -131,25 +131,25 @@
 
             <ul class="list-unstyled dropdown-menu">
                 <% if section=="IN-dom" %>
-                  <li><%= link_to("#{dep_city_name} to #{arr_city_name} Trains","https://www.cleartrip.com/tourism/train/routes/#{dep_city_name_formated}-to-#{arr_city_name_formated}-trains.html",title: "#{dep_city_name} to #{arr_city_name} Trains",target: "_blank")%></li>
+                  <li><%= link_to("#{dep_city_name} to #{arr_city_name} Trains","/tourism/train/routes/#{dep_city_name_formated}-to-#{arr_city_name_formated}-trains.html",title: "#{dep_city_name} to #{arr_city_name} Trains",target: "_blank")%></li>
                   <% if dep_country_code=="IN" && train_details["train_stations"]["dep_stations"].present? %> 
-                    <li><%= link_to("#{dep_city_name} railway station","https://www.cleartrip.com#{train_details["train_stations"]["dep_stations"].first[:link]}",title: "#{dep_city_name} railway station",target: "_blank")%></li>
+                    <li><%= link_to("#{dep_city_name} railway station","#{train_details["train_stations"]["dep_stations"].first[:link]}",title: "#{dep_city_name} railway station",target: "_blank")%></li>
                   <% end %>
                 <% end %>
                 <% if arr_country_code=="IN" && train_details["train_stations"]["arr_stations"].present? %>
-                  <li><%= link_to("#{arr_city_name} railway station","https://www.cleartrip.com#{train_details["train_stations"]["arr_stations"].first[:link]}",title: "#{arr_city_name} railway station",target: "_blank")%></li>
+                  <li><%= link_to("#{arr_city_name} railway station","#{train_details["train_stations"]["arr_stations"].first[:link]}",title: "#{arr_city_name} railway station",target: "_blank")%></li>
                 <% end %>
                 <% if train_details["origin_from"].present? && arr_country_code=="IN" %>
                   <li><span class="high-light-txt"><b>Trains originating from <%= arr_city_name.titleize%> </b> </span>
                     <% train_details["origin_from"].each do |train|%>
-                      <li><%= link_to("#{train["name"]}","https://www.cleartrip.com#{train["link"]}",title: "#{train["name"]}",target: "_blank")%></li>
+                      <li><%= link_to("#{train["name"]}","#{train["link"]}",title: "#{train["name"]}",target: "_blank")%></li>
                     <% end %>
                   </li>
                 <% end %>
                 <% if train_details["passing_from"].present? && arr_country_code=="IN" %>
                     <li><span class="high-light-txt"><b>Trains passing from <%= arr_city_name.titleize%> </b>></span>
                       <% train_details["passing_from"].each do |train|%>
-                        <li><%= link_to("#{train["name"]}","https://www.cleartrip.com#{train["link"]}",title: "#{train["name"]}",target: "_blank")%></li>
+                        <li><%= link_to("#{train["name"]}","#{train["link"]}",title: "#{train["name"]}",target: "_blank")%></li>
                       <% end %>
                     </li>
                 <% end %>
@@ -157,18 +157,20 @@
           </li>
         <% end %>
       <% end %>
-      <li>
-        <a class="dropdown-toggle" type="button" data-toggle="dropdown">Offers <span class="caret"></span></a>
-        <ul class="list-unstyled dropdown-menu"> 
-          <li><a href="https://www.cleartrip.com/offers/india/payless" target="_blank" title="Domestic flight offers">Domestic flight offers</a></li> 
-           <li><a href="https://www.cleartrip.com/offers/india/anywhere" target="_blank" title="International flight offers">International flight offers</a></li> 
-           <li><a href="https://www.cleartrip.com/offers/india/awesome-long-weekends-2017" title="Long weekend offers" target="_blank">Long weekend offers</a></li> 
-          <li><a href="https://www.cleartrip.com/offers/india/hdfc-weekends" title="HDFC weekend offers" target="_blank">HDFC weekend offers</a></li> 
-          <li><a href="https://www.cleartrip.com/offers/india/hsbc-offers" title="HSBC offers" target="_blank">HSBC offers</a></li> 
-          <li><a href="https://www.cleartrip.com/offers/india/yes-bank" target="_blank" title="Yes bank offers ">Yes bank offers </a></li> 
-          <li><a href="https://www.cleartrip.com/offers/india/axisbank" target="_blank" title="AXIS bank offers">AXIS bank offers</a></li> 
-          <li><a href="https://www.cleartrip.com/offers/india/amex-tuesday" title="American express offers" target="_blank">American express offers</a></li> 
-        </ul>
-      </li>
+      <% if country_code==="IN" %>
+        <li>
+          <a class="dropdown-toggle" type="button" data-toggle="dropdown">Offers <span class="caret"></span></a>
+          <ul class="list-unstyled dropdown-menu"> 
+            <li><a href="/offers/india/payless" target="_blank" title="Domestic flight offers">Domestic flight offers</a></li> 
+             <li><a href="/offers/india/anywhere" target="_blank" title="International flight offers">International flight offers</a></li> 
+             <li><a href="/offers/india/awesome-long-weekends-2017" title="Long weekend offers" target="_blank">Long weekend offers</a></li> 
+            <li><a href="/offers/india/hdfc-weekends" title="HDFC weekend offers" target="_blank">HDFC weekend offers</a></li> 
+            <li><a href="/offers/india/hsbc-offers" title="HSBC offers" target="_blank">HSBC offers</a></li> 
+            <li><a href="/offers/india/yes-bank" target="_blank" title="Yes bank offers ">Yes bank offers </a></li> 
+            <li><a href="/offers/india/axisbank" target="_blank" title="AXIS bank offers">AXIS bank offers</a></li> 
+            <li><a href="/offers/india/amex-tuesday" title="American express offers" target="_blank">American express offers</a></li> 
+          </ul>
+        </li>
+      <% end %>
     </ul>
   </section>

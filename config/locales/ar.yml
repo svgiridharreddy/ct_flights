@@ -75,7 +75,7 @@ ar:
     domestic_airlines: "الخطوط الجوية المحلية"
     domestic_air_tickets: "الداخلية تذاكر رخيصة الجوية"
     inter_air_tickets: "تذاكر طيران رخيصة الدولية"
-    international_air_tickets: "تذاكر الطيران الدولية"
+    intl_air_tickets: "تذاكر الطيران الدولية"
     domestic_air_tickets: "تذاكر الطيران المحلية"
     flights: "رحلات طيران"
     cheap_flights: "رحلات رخيصة"
@@ -237,6 +237,12 @@ ar:
     flights: "رحلات"
     more_flights_from: "المزيد من الرحلات الجوية من"
     more_flights_to: "المزيد من الرحلات الجوية"
+  flight_ticket:
+    header_1: "%{dep_city_name} إلى %{arr_city_name} تذاكر الطيران الرخيصة"
+    cheap_air_tickets: "تذاكر الطيران الرخيصة"
+    breadcrumb_title: "%{dep_city_name} %{arr_city_name} تذاكر الطيران الرخيصة"
+    description: "تذاكر رحلات جوية رخيصة من %{dep_city_name} إلى %{arr_city_name}. إحجز من %{dep_city_name} إلى %{arr_city_name}  في كليرتريب. ابحث عن أسعار رحلات جوية رخيصة للسفر جواً. احصل على تذاكر رحلات داخلية ودولية بأسعار مخفَضة مع كليرتريب"
+    cheap_airtickets: "تذاكر طيران رخيصة"
   flights_from:
     flight_from_city_name: " رحلات من %{city_name}"
     airline: "شركة طيران"

@@ -147,8 +147,8 @@ class FlightScheduleService
       route_json[:cc_min_price] = min_pr[:cc][route.carrier_code]
       schedule_routes_with_price << route_json 
     end
-    operational_airline_codes = schedule_routes.group_by{|al| al.carrier_code}.map{|k,v| [k,v.count]}.to_h
-    operational_airline_names = operational_airline_codes.map{|k,v| I18n.t("airlines.#{k}")}
+    operational_airline_codes = schedule_routes.group_by{|al| al.carrier_code}.map{|k,v| [k,v.count]}.to_h 
+    operational_airline_names = operational_airline_codes.map{|k,v| I18n.t("airlines.#{k}")} 
     airport_details = get_airport_deatils
     @calendar_dates = min_pr[:dt]
       @min30 = min_pr[:cc1]
@@ -631,7 +631,7 @@ class FlightScheduleService
     calendar_data_json = FareCalendar.where({source_city_code: dep_city_code, destination_city_code: arr_city_code, section: @country_code}).first
     if calendar_data_json.present? && calendar_data_json.calendar_json.present?
       calendar_data = JSON.parse(calendar_data_json.calendar_json)['calendar_json'].values.flatten
-      if carrier_code.present? 
+      if carrier_code.present?  
         cal_data =  calendar_data.group_by{|c| c["al"]}[carrier_code]
         day_least_rate = cal_data.min{|a,b| (a["pr"].to_f)<=>(b["pr"].to_f) } ||  {"pr"=>0} rescue ""
         day_max_rate = cal_data.max{|a,b| (a["pr"].to_f)<=>(b["pr"].to_f)} || {"pr"=>0} rescue ""

@@ -72,7 +72,7 @@ class FlightTicketService
 
 	def ticket_header_details 
     flights_header = {}  
-    hop  =  @route_type == "non-hop" ? '' : "Hop"
+    hop  =  @route_type == "non-stop" ? '' : "Hop"
     model_name = "PackageFlight#{hop}Schedule".constantize
     top_dom_cc = AirlineBrand.where(country_code: @country_code).order("brand_routes_count desc").limit(8).pluck(:carrier_code)
     route_dom_airlines = model_name.where(dep_city_code: @dep_city_code,arr_city_code: @arr_city_code,carrier_code: top_dom_cc).pluck(:carrier_code).uniq
@@ -185,7 +185,8 @@ class FlightTicketService
     I18n.locale = @language.to_sym
     weekly_flights = PackageFlightSchedule.where(dep_city_code: @route.dep_city_code,arr_city_code: @route.arr_city_code).pluck(:carrier_code)
     weekly_airlines_count = weekly_flights.each_with_object(Hash.new(0)) {|k,v| v[k]+= 1}
-    weekly_airlines_count = weekly_airlines_count.map{|k,v| I18n.t("airlines.#{k}") +" #{I18n.t('has')} #{v} "}.to_sentence
+    weekly_airlines_count = weekly_airlines_count.map{|k,v| I18n.t("airlines.#{k}") +" #{I18n.t('has')} #{v} "}
+    weekly_airlines_count = @language == "ar" ? weekly_airlines_count.to_sentence(last_word_connector: "و") : weekly_airlines_count.to_sentence
     weekly_flights_count = weekly_flights.count
     lang_city_name = "city_name_#{@language.downcase}"
     # airline_count_list = weekly_flights.map{}
@@ -241,9 +242,9 @@ class FlightTicketService
     ticket_layout_values["top_int_airlines"] = ticket_airline_values["top_int_airlines"]
     ticket_layout_values["distance"] = @route.distance 
     ticket_layout_values["weekly_flights_count"] = weekly_flights_count
-    ticket_layout_values["operational_airlines"] = operational_airline_names.to_sentence
+    ticket_layout_values["operational_airlines"] = @language=="ar" ? operational_airline_names.to_sentence(:last_word_connector=> "و") : operational_airline_names.to_sentence
     ticket_layout_values["operational_airlines_count"] =  operational_airline_names.count
-    ticket_layout_values['airline_count_list'] = weekly_airlines_count
+    ticket_layout_values['airline_count_list'] =  weekly_airlines_count 
     content = fetch_route_content
     ticket_layout_values["dep_city_content"] = content["dep_city_content"]
     ticket_layout_values["arr_city_content"] = content["arr_city_content"]

@@ -35,8 +35,6 @@ class FlightTicketsController < ApplicationController
 		@arr_city_name = arr_city.city_name_en.titleize
 		@dep_city_name_ar  = dep_city.city_name_ar rescue ""
 		@arr_city_name_ar = arr_city.city_name_ar rescue ""
-		# @route_type = @route.hop == 0 ? "non-stop" : "hop"
-		# binding.pry
 		@route_type = "non-stop"
 		if @route.dep_country_code == @country_code &&  @route.arr_country_code == @country_code
 			@section = @country_code + "-dom"
