@@ -18,7 +18,10 @@
   </div>
   <ul id="airline-lists" class="list-unstyled">
   
-    <% rc = 0 %>
+    <% rc = 0 
+    binding.pry
+    %>
+
    <% routes.each do |route| %>
     <% rc +=1 %>
       <li class="<%= rc>10 ? "hide showMore" : "" %>">
