@@ -39,10 +39,21 @@ namespace :deploy do
       # execute "sudo touch #{File.join(current_path,'tmp','restart.txt')}"
     end
   end
-  
+  desc 'precompile assets'
+  task :precompile do
+    on roles(:app), in: :sequence, wait: 5 do
+      with :environment=>:production do 
+        within release_path do
+          rake "assets:clean"
+          rake "assets:precompile NG_FORCE=true"
+          #rake "assets:copy"
+        end
+      end
+    end
+  end
   after :finishing, 'deploy:restart'
   after :finishing, 'deploy:cleanup'
-  
+  after :updated, 'deploy:precompile'  
 
   # after :bundle, 'deploy:after_bundle'
 end 
