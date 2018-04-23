@@ -14,7 +14,6 @@ namespace :airport_table do
 				airport.save!
 				puts "#{index+=1}  updated airport-#{airport_code}"
 			rescue StandardError => e 
-				binding.pry
 				e.message
 				e.backtrace
 			end

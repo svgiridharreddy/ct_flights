@@ -35,30 +35,32 @@ class FlightTicketService
     return route_values
   end
 
-  def fetch_route_content
-  	content = {"unique_route_content" => "",
-  				"dep_city_content" => "",
-  				"arr_city_content" => ""}
-  	if I18n.t("flight_schedule_content.#{@country_code.downcase}.#{@dep_city_name}-#{@arr_city_name}-Flights").index("translation missing").nil? 
-  		unique_route_content = I18n.t("flight_schedule_content.#{@dep_city_name}-#{@arr_city_name}-Flights")
-  		content["unique_route_content"] = unique_route_content 
-  	else
-  		dep_city = CityContent.find_by(city_code: @dep_city_code)
-  		arr_city = CityContent.find_by(city_code: @arr_city_code)
-  		country_code = @country_code.downcase
-  		language = @language.downcase
-  		country_lang = "content_"+"#{@country_code.downcase}_#{@language.downcase}"
-  		content["dep_city_content"]= dep_city.send(country_lang) rescue nil
-  		content["arr_city_content"] = arr_city.send(country_lang)	rescue nil
-  	end
-  	return content
-  end
+  # def fetch_route_content
+  # 	content = {"unique_route_content" => "",
+  # 				"dep_city_content" => "",
+  # 				"arr_city_content" => ""}
+  # 	if I18n.t("flight_schedule_content.#{@country_code.downcase}.#{@dep_city_name}-#{@arr_city_name}-Flights").index("translation missing").nil? 
+  # 		unique_route_content = I18n.t("flight_schedule_content.#{@dep_city_name}-#{@arr_city_name}-Flights")
+  # 		content["unique_route_content"] = unique_route_content 
+  # 	else
+  # 		dep_city = CityContent.find_by(city_code: @dep_city_code)
+  # 		arr_city = CityContent.find_by(city_code: @arr_city_code)
+  # 		country_code = @country_code.downcase
+  # 		language = @language.downcase
+  # 		country_lang = "content_"+"#{@country_code.downcase}_#{@language.downcase}"
+  # 		content["dep_city_content"]= dep_city.send(country_lang) rescue nil
+  # 		content["arr_city_content"] = arr_city.send(country_lang)	rescue nil
+  # 	end
+  # 	return content
+  # end
 
-  def get_airport_deatils
+  def get_airport_details
     airport_details = {}
   	@airports = Hash[Airport.where(:city_code=>[@dep_city_code,@arr_city_code]).map{|c| [c.city_code,c]}]
-    airport_details['dep_airport_name'] = @airport[@dep_city_code].airport_name rescue ""
+    airport_details['dep_airport_name'] = @airports[@dep_city_code].airport_name rescue ""
     airport_details['arr_airport_name'] = @airports[@arr_city_code].airport_name rescue ""
+    airport_details['dep_airport_name_ar'] = @airports[@dep_city_code].airport_name_ar rescue ""
+    airport_details['arr_airport_name_ar'] = @airports[@arr_city_code].airport_name_ar rescue ""
     airport_details['dep_airport_address'] = @airports[@dep_city_code].address rescue ""
     airport_details['arr_airport_address'] = @airports[@arr_city_code].address rescue ""
     airport_details['dep_airport_phone'] = @airports[@dep_city_code].phone rescue ""
@@ -202,7 +204,6 @@ class FlightTicketService
     operational_airline_codes = ticket_routes.group_by{|al| al.carrier_code}.map{|k,v| [k,v.count]}.to_h
     operational_individual_ailine_count = operational_airline_codes
     operational_airline_names = operational_airline_codes.map{|k,v| I18n.t("airlines.#{k}")}
-    airport_details = get_airport_deatils
     @calendar_dates = min_pr[:dt]
       @min30 = min_pr[:cc1]
       @min90 = min_pr[:cc2]
@@ -222,8 +223,12 @@ class FlightTicketService
     ticket_layout_values["dep_airport_code"] = @route.dep_airport_code
     ticket_layout_values["arr_airport_code"] = @route.arr_airport_code
     ticket_layout_values["section"] = @section
-    ticket_layout_values["dep_airport_name"] = Airport.find_by(airport_code: @route.dep_airport_code).airport_name
-    ticket_layout_values["arr_airport_name"] = Airport.find_by(airport_code: @route.arr_airport_code).airport_name
+    dep_airport = Airport.find_by(airport_code: @route.dep_airport_code)
+    arr_airport = Airport.find_by(airport_code: @route.arr_airport_code)
+    ticket_layout_values["dep_airport_name"] = dep_airport.airport_name
+    ticket_layout_values["arr_airport_name"] = arr_airport.airport_name
+    ticket_layout_values["dep_airport_name_ar"] = dep_airport.airport_name_ar
+    ticket_layout_values["arr_airport_name_ar"] = arr_airport.airport_name_ar
     ticket_layout_values["country_code"] = @country_code
     ticket_layout_values["country_name"] = @country_name
     ticket_layout_values["dep_country_code"] = @route.dep_country_code
@@ -245,10 +250,10 @@ class FlightTicketService
     ticket_layout_values["operational_airlines"] = @language=="ar" ? operational_airline_names.to_sentence(:last_word_connector=> "و") : operational_airline_names.to_sentence
     ticket_layout_values["operational_airlines_count"] =  operational_airline_names.count
     ticket_layout_values['airline_count_list'] =  weekly_airlines_count 
-    content = fetch_route_content
-    ticket_layout_values["dep_city_content"] = content["dep_city_content"]
-    ticket_layout_values["arr_city_content"] = content["arr_city_content"]
-    ticket_layout_values["unique_route_content"] = content["unique_route_content"] %{airlines_list: ticket_layout_values["operational_airlines"],weekly_flights_count: ticket_layout_values["weekly_flights_count"],airline_count_list: ticket_layout_values["operational_airlines"],first_dep_airline_name: ticket_layout_values["first_dep_airline"],first_dep_time: ticket_layout_values["first_dep_time"],first_dep_flight_no: ticket_layout_values["first_dep_airline_no"],last_dep_flight_no: ticket_layout_values["last_dep_airline_no"],last_dep_airline_name: ticket_layout_values["last_dep_airline"],last_dep_time: ticket_layout_values["last_dep_time"]}
+    # content = fetch_route_content
+    # ticket_layout_values["dep_city_content"] = content["dep_city_content"]
+    # ticket_layout_values["arr_city_content"] = content["arr_city_content"]
+    # ticket_layout_values["unique_route_content"] = content["unique_route_content"] %{airlines_list: ticket_layout_values["operational_airlines"],weekly_flights_count: ticket_layout_values["weekly_flights_count"],airline_count_list: ticket_layout_values["operational_airlines"],first_dep_airline_name: ticket_layout_values["first_dep_airline"],first_dep_time: ticket_layout_values["first_dep_time"],first_dep_flight_no: ticket_layout_values["first_dep_airline_no"],last_dep_flight_no: ticket_layout_values["last_dep_airline_no"],last_dep_airline_name: ticket_layout_values["last_dep_airline"],last_dep_time: ticket_layout_values["last_dep_time"]}
     ticket_layout_values['max_price'] = min_pr[:max]
     ticket_layout_values['route_min_price'] = min_pr[:min]
     ticket_layout_values["min30"] = main_min30
@@ -256,7 +261,7 @@ class FlightTicketService
     ticket_layout_values["flight_timings"] = @min90
     ticket_layout_values["more_flights_from_dep"] = more_routes["dep_more_routes"]
     ticket_layout_values["more_flights_to_arr"] = more_routes["arr_more_routes"]
-    ticket_layout_values["airport_details"] = get_airport_deatils
+    ticket_layout_values["airport_details"] = get_airport_details
     return ticket_layout_values
   end
 
@@ -272,7 +277,6 @@ class FlightTicketService
     min_pr = min_price_new_changes(@dep_city_code,@arr_city_code)
     operational_airline_codes = ticket_routes.group_by{|al| al.carrier_code}.map{|k,v| [k,v.count]}.to_h rescue ""
     operational_airline_names = operational_airline_codes.map{|k,v| I18n.t("airlines.#{k}")}  rescue ""
-    airport_details = get_airport_deatils
     ticket_layout_hop_values = {}
     ticket_layout_hop_values["ticket_routes"] = ticket_routes
     ticket_layout_hop_values["dep_city_name"] = @route.dep_city_name
@@ -287,8 +291,12 @@ class FlightTicketService
     ticket_layout_hop_values["dep_airport_code"] = @route.dep_airport_code
     ticket_layout_hop_values["arr_airport_code"] = @route.arr_airport_code
     ticket_layout_hop_values["section"] = @section
-    ticket_layout_hop_values["dep_airport_name"] = Airport.find_by(airport_code: @route.dep_airport_code).airport_name
-    ticket_layout_hop_values["arr_airport_name"] = Airport.find_by(airport_code: @route.arr_airport_code).airport_name
+     dep_airport = Airport.find_by(airport_code: @route.dep_airport_code)
+    arr_airport = Airport.find_by(airport_code: @route.arr_airport_code)
+    ticket_layout_hop_values["dep_airport_name"] = dep_airport.airport_name
+    ticket_layout_hop_values["arr_airport_name"] = arr_airport.airport_name
+    ticket_layout_hop_values["dep_airport_name_ar"] = dep_airport.airport_name_ar
+    ticket_layout_hop_values["arr_airport_name_ar"] = arr_airport.airport_name_ar
     ticket_layout_hop_values["country_code"] = @country_code
     ticket_layout_hop_values["country_name"] = @country_name
     ticket_layout_hop_values["dep_country_code"] = @route.dep_country_code
@@ -310,13 +318,13 @@ class FlightTicketService
     ticket_layout_hop_values["operational_airlines"] = operational_airline_names.to_sentence rescue []
     ticket_layout_hop_values["operational_airlines_count"] =  operational_airline_names.count rescue ""
     ticket_layout_hop_values['airline_count_list'] = weekly_airlines_count
-    content = fetch_route_content
-    ticket_layout_hop_values["dep_city_content"] = content["dep_city_content"]
-    ticket_layout_hop_values["arr_city_content"] = content["arr_city_content"]
-    ticket_layout_hop_values["unique_route_content"] = content["unique_route_content"] %{airlines_list: ticket_layout_hop_values["operational_airlines"],weekly_flights_count: ticket_layout_hop_values["weekly_flights_count"],airline_count_list: ticket_layout_hop_values["operational_airlines"],first_dep_airline_name: ticket_layout_hop_values["first_dep_airline"],first_dep_time: ticket_layout_hop_values["first_dep_time"],first_dep_flight_no: ticket_layout_hop_values["first_dep_airline_no"],last_dep_flight_no: ticket_layout_hop_values["last_dep_airline_no"],last_dep_airline_name: ticket_layout_hop_values["last_dep_airline"],last_dep_time: ticket_layout_hop_values["last_dep_time"]}
+    # content = fetch_route_content
+    # ticket_layout_hop_values["dep_city_content"] = content["dep_city_content"]
+    # ticket_layout_hop_values["arr_city_content"] = content["arr_city_content"]
+    # ticket_layout_hop_values["unique_route_content"] = content["unique_route_content"] %{airlines_list: ticket_layout_hop_values["operational_airlines"],weekly_flights_count: ticket_layout_hop_values["weekly_flights_count"],airline_count_list: ticket_layout_hop_values["operational_airlines"],first_dep_airline_name: ticket_layout_hop_values["first_dep_airline"],first_dep_time: ticket_layout_hop_values["first_dep_time"],first_dep_flight_no: ticket_layout_hop_values["first_dep_airline_no"],last_dep_flight_no: ticket_layout_hop_values["last_dep_airline_no"],last_dep_airline_name: ticket_layout_hop_values["last_dep_airline"],last_dep_time: ticket_layout_hop_values["last_dep_time"]}
     ticket_layout_hop_values["more_flights_from_dep"] = more_routes["dep_more_routes"]
     ticket_layout_hop_values["more_flights_to_arr"] = more_routes["arr_more_routes"]
-    ticket_layout_hop_values["airport_details"] = get_airport_deatils
+    ticket_layout_hop_values["airport_details"] = get_airport_details
     return ticket_layout_hop_values
   end
 

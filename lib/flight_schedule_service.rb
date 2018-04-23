@@ -640,7 +640,6 @@ class FlightScheduleService
         day_max_rate = calendar_data.max{|a,b| (a["pr"].to_f)<=>(b["pr"].to_f)} || {"pr"=>0}
       end
     end
-    binding.pry
     [day_least_rate["pr"].to_i,day_max_rate["pr"].to_i]
   end
 

@@ -176,6 +176,8 @@ en:
     header_1: "%{dep_city_name} to %{arr_city_name} cheap air tickets"
     cheap_air_tickets: "cheap air tickets"
     breadcrumb_title: "%{dep_city_name} %{arr_city_name} Cheap Air Tickets"
+    intl_air_tickets: "International Cheap Air Tickets"
+    dom_air_tickets: "Domestic Cheap Air Tickets"
   footer:
     country_text: "Countries"
     countries: "Countries"

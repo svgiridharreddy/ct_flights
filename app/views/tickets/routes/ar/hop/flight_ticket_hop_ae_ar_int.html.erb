@@ -24,11 +24,11 @@
   			<div class="ctCol">
   				<ul class="list-inline language">
   					<li class="en first active">
-  						<a href="<%= use_helper.host_name(ticket_layout_values["country_code"])%>/ar/flight-schedule/<%= ticket_layout_values["dep_city_name_formated"]%>-<%= ticket_layout_values["arr_city_name_formated"] %>-flights.html" lang="ar">عربى</a>
+  						<a href="<%= use_helper.host_name(ticket_layout_values["country_code"])%>/ar/flight-schedule/<%= ticket_layout_values["dep_city_name_formated"]%>-<%= ticket_layout_values["arr_city_name_formated"] %>-cheap-airtickets.html" lang="ar">عربى</a>
   					</li>
   					<li>|</li>
   					<li>
-  						<a href="<%= use_helper.host_name(ticket_layout_values["country_code"])%>/flight-schedule/<%= ticket_layout_values["dep_city_name_formated"]%>-<%= ticket_layout_values["arr_city_name_formated"]%>-flights.html" lang="en">English</a>
+  						<a href="<%= use_helper.host_name(ticket_layout_values["country_code"])%>/flight-schedule/<%= ticket_layout_values["dep_city_name_formated"]%>-<%= ticket_layout_values["arr_city_name_formated"]%>-cheap-airtickets.html" lang="en">English</a>
   					</li>
   				</ul>
   			</div>
@@ -36,7 +36,7 @@
   		<div class="clearfix"></div>
   	</section>
     <!--======Second Header Starts Here==========-->
-      <%= render :partial => "schedules/routes/shared/ar/schedule_header_ar",locals: { dep_city_name: dep_city_name,arr_city_name: arr_city_name,dep_city_name_ar: dep_city_name_ar,arr_city_name_ar: arr_city_name_ar,route_dom_airlines: schedule_header["dom_airlines"],route_int_airlines: schedule_header["int_airlines"],dep_city_name_formated: ticket_layout_values["dep_city_name_formated"],arr_city_name_formated: ticket_layout_values["arr_city_name_formated"],use_helper: use_helper,section: ticket_layout_values["section"],country_code: ticket_layout_values["country_code"]} %> 
+      <%= render :partial => "tickets/routes/ar/shared/ticket_header_ar",locals: { dep_city_name: dep_city_name,arr_city_name: arr_city_name,dep_city_name_ar: dep_city_name_ar,arr_city_name_ar: arr_city_name_ar,route_dom_airlines: ticket_header["dom_airlines"],route_int_airlines: ticket_header["int_airlines"],dep_city_name_formated: ticket_layout_values["dep_city_name_formated"],arr_city_name_formated: ticket_layout_values["arr_city_name_formated"],use_helper: use_helper,section: ticket_layout_values["section"],country_code: ticket_layout_values["country_code"]} %> 
     <!--======Second Header Ends Here==========-->
   	<section id="content">
       <div class="container-fluid">
@@ -48,18 +48,18 @@
           </li>
 
           <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
-            <a  itemprop="item"  href="<%= use_helper.host_name(ticket_layout_values["country_code"])%>/flight-schedule/flight-schedules-international.html" title="<%= t('flight_schedule.breadcrumb_flight_title') %>" itemprop="url">
+            <a  itemprop="item"  href="<%= use_helper.host_name(ticket_layout_values["country_code"])%>/flight-tickets/cheap-flight-air-tickets-international.html" title="<%= t('breadcrumb.intl_air_tickets') %>" itemprop="url">
               <span itemprop="name">
-                <%= t('flight_schedule.breadcrumb_second_intl') %></span>
+                <%= t('breadcrumb.intl_air_tickets') %></span>
               </a>
               <meta itemprop="position" content="2" />
           </li>
           <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
-            <span itemprop="name" class="first"><%= t('flight_schedule.breadcrumb_title', dep_city_name: dep_city_name_ar, arr_city_name: arr_city_name_ar,:arr_city_code=>arr_city_code,:dep_city_code=>dep_city_code,:arr_city_code=>arr_city_code) %></span>
+            <span itemprop="name" class="first"><%= t('flight_ticket.breadcrumb_title', dep_city_name: dep_city_name_ar, arr_city_name: arr_city_name_ar,:arr_city_code=>arr_city_code,:dep_city_code=>dep_city_code,:arr_city_code=>arr_city_code) %></span>
             <meta itemprop="position" content="3" />
           </li>
         </ol>
-        <h1><%= t('flight_schedule.header_1', dep_city_name: dep_city_name_ar, arr_city_name: arr_city_name_ar,:arr_city_code=>ticket_layout_values["arr_city_code"],:dep_city_code=>ticket_layout_values["dep_city_code"]) %></h1>
+        <h1><%= t('flight_ticket.header_1', dep_city_name: dep_city_name_ar, arr_city_name: arr_city_name_ar,:arr_city_code=>ticket_layout_values["arr_city_code"],:dep_city_code=>ticket_layout_values["dep_city_code"]) %></h1>
   			<%= render :partial=>"common/search_widget_ar" %>
   			<div class="col-lg-9 col-md-9 col-sm-12 mobile-view pad-lzero" id="flight-schedule">
   	  		<div class="list-box">
@@ -86,29 +86,16 @@
   								</div>
                 </div>
               </div><!--/calendar-new-->  
-  	  			<%= render :partial=> "schedules/routes/shared/ar/schedule_routes_table_ar",locals: {ticket_layout_values: ticket_layout_values,dep_city_name: dep_city_name_ar,arr_city_name: arr_city_name_ar,country_code: @country_code}%>
+  	  			<%= render :partial=> "tickets/routes/ar/shared/hop_ticket_routes_table_ar",locals: {ticket_layout_values: ticket_layout_values,dep_city_name: dep_city_name_ar,arr_city_name: arr_city_name_ar,country_code: @country_code}%>
   					<div class="return_link">
-  			      <%=t("flight_schedule.return")%> <a href="/flight-schedule/<%= ticket_layout_values["return_url"] %>"> <%= arr_city_name_ar %> <%= dep_city_name_ar %></a> <%= I18n.t("flights.flights")%>.
+  			      <%=t("flight_schedule.return")%> <a href="/flight-schedule/<%= ticket_layout_values["return_url"].gsub('-flights.html','') %>-cheap-airtickets"> <%= arr_city_name_ar %> <%= dep_city_name_ar %></a> <%= I18n.t("flights.flights")%>.
   			  	</div>
             <div class="content-desc">
-              <% if ticket_layout_values["unique_route_content"].present? %>
-                <%= raw ticket_layout_values["unique_route_content"] %>
-              <% else %>
-                <%= render :partial => "schedules/routes/contents/ar/templatized_content_ae_ar",locals: {ticket_layout_values: ticket_layout_values,dep_city_name: dep_city_name_ar,arr_city_name: arr_city_name_ar} %>
-              <% end %>
-
-              <%= render :partial =>  "schedules/routes/shared/ar/route_information_ae_ar",locals: {ticket_layout_values: ticket_layout_values,dep_city_name: dep_city_name_ar,arr_city_name: arr_city_name_ar} %>
-              <% if ticket_layout_values["dep_city_conent"].present? && ticket_layout_values["arr_city_content"].present? %>
-                  <h3> <%= I18n.t('flight_schedule.about')%> <%= dep_city_name_ar %> (<%= dep_city_code_ar %>) </h3>
-                  <%= raw ticket_layout_values["dep_city_conent"]%>
-                  <div class="clearfix"></div>
-                  <h3> <%= I18n.t('flight_schedule.about')%> <%= arr_city_name_ar %> (<%= arr_city_code %>) </h3>
-                  <%= raw ticket_layout_values["arr_city_conent"]%>
-              <% end %>
-              <%= render partial: "schedules/routes/shared/ar/schedule_faq_ar", locals: { arr_city_name: arr_city_name_ar, dep_city_name: dep_city_name_ar, ticket_layout_values: ticket_layout_values, use_helper: use_helper } %>
+                <%= render :partial => "tickets/routes/ar/contents/ae_ar_templatized_content_direct",locals: {ticket_layout_values: ticket_layout_values,dep_city_name: dep_city_name_ar,arr_city_name: arr_city_name_ar} %>  
+              <%= render partial: "tickets/routes/ar/shared/ticket_faq_ar", locals: { arr_city_name: arr_city_name_ar, dep_city_name: dep_city_name_ar, ticket_layout_values: ticket_layout_values, use_helper: use_helper } %>
               <%= render :partial => "tickets/routes/ar/shared/airport_details_ar",locals: {airport_details: ticket_layout_values["airport_details"],dep_city_name: dep_city_name_ar,arr_city_name: arr_city_name_ar} %>
               
-              <%= render :partial=>"schedules/routes/shared/ar/top_routes_ar",locals: {flights_dep: ticket_layout_values['more_flights_from_dep'],flights_arr: ticket_layout_values['more_flights_to_arr'],arr_city_name_ar: arr_city_name_ar,dep_city_name_en: dep_city_name,arr_city_name_en: arr_city_name, dep_city_name_ar: dep_city_name_ar,use_helper: use_helper,} %>
+              <%= render :partial=>"tickets/routes/ar/shared/more_top_routes_ar",locals: {flights_dep: ticket_layout_values['more_flights_from_dep'],flights_arr: ticket_layout_values['more_flights_to_arr'],arr_city_name_ar: arr_city_name_ar,dep_city_name_en: dep_city_name,arr_city_name_en: arr_city_name, dep_city_name_ar: dep_city_name_ar,use_helper: use_helper} %>
             </div>
           </div>
       	</div>
@@ -119,10 +106,10 @@
                 <a target="_blank"><img></a>
               </div>
             </div>
-            <%= render partial: "schedules/routes/shared/ar/top_airlines_from_ar",locals: {ticket_layout_values: ticket_layout_values,top_airlines: ticket_layout_values["top_int_airlines"],dep_city_name: dep_city_name_ar,use_helper: use_helper,arr_city_name: arr_city_name_ar} %>
-          </div>
-          <div class="blocks banner-section">
-            <%= render :partial=>"common/banner",:locals=>{arr_city_name: arr_city_name, dep_city_name: dep_city_name,:country_code=>@country_code, use_helper: use_helper} %>
+            <%= render partial: "tickets/routes/ar/shared/top_airlines_from_ar",locals: {ticket_layout_values: ticket_layout_values,top_airlines: ticket_layout_values["top_int_airlines"],dep_city_name: dep_city_name_ar,use_helper: use_helper,arr_city_name: arr_city_name_ar} %>
+            <div class="blocks banner-section">
+              <%= render :partial=>"common/banner",:locals=>{arr_city_name: arr_city_name, dep_city_name: dep_city_name,:country_code=>@country_code, use_helper: use_helper} %>
+            </div>
           </div>
         </div>
       </div>
@@ -134,16 +121,9 @@
     <div id="footer_container">
       <div id="footer">
         <% country_code = ticket_layout_values["country_code"] %>
-        <%= render partial: "footers/#{country_code.downcase}/schedule/routes/ar/ae_ar_int_footer", locals: {country_code: country_code,dep_city_name: dep_city_name_ar,arr_city_name: arr_city_name_ar,dep_city_name_formated: ticket_layout_values["dep_city_name_formated"],arr_city_name_formated: ticket_layout_values["arr_city_name_formated"],page_type: 'schedule-routes',footer_links_data_arabic: schedule_footer[:footer_links_data_arabic],top_airlines: schedule_footer[:int_airlines],section: @section}%>
+        <%= render partial: "footers/#{country_code.downcase}/ticket/ae_ar_ticket_footer", locals: {country_code: country_code,dep_city_name: dep_city_name_ar,arr_city_name: arr_city_name_ar,dep_city_name_formated: ticket_layout_values["dep_city_name_formated"],arr_city_name_formated: ticket_layout_values["arr_city_name_formated"],page_type: 'ticket-routes',footer_links_data_arabic: ticket_footer[:footer_links_data_arabic],top_airlines: ticket_footer[:int_airlines],section: @section}%>
       </div>
     </div>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-    <script src="https://d2w5af8s1781.cloudfront.net/waytogo-staging/javascripts/jquery-ui.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bxslider/4.2.5/jquery.bxslider.min.js"></script>
-    <script type="text/javascript" src="https://d2w5af8s1781.cloudfront.net/waytogo-staging/javascripts/date_format.js"></script>
-    <script type="text/javascript" src="https://d2w5af8s1781.cloudfront.net/waytogo-staging/javascripts/ct_custom.js"></script>
-    <script type="text/javascript" src="https://d2w5af8s1781.cloudfront.net/waytogo-staging/javascripts/banner_tool_v1.js"></script>
     <%= render "shared/ae/ae_gac"%>
     <%= render "common/comscore" %>
     <% lang = {
