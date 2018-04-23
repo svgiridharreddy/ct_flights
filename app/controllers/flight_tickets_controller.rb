@@ -121,7 +121,6 @@ class FlightTicketsController < ApplicationController
 			@section = @country_code + "-int"
 		end
 		flight_ticket_service = FlightTicketService.new @route_details	 
-		schedule_footer = flight_ticket_service.schedule_footer
 		@domestic_carrier_codes = AirlineBrand.where(country_code: @country_code).pluck("distinct(carrier_code)")
 		@all_carrier_codes = AirlineBrand.all.pluck(:carrier_code)
 
@@ -150,13 +149,18 @@ class FlightTicketsController < ApplicationController
     # else
     # 	@schedule_routes = @route.in_flight_hop_schedule_collectives.where("#{inc_cc}").order("dep_time asc").limit(10)
     # end
-    @ticket_routes = @route.in_flight_hop_schedule_collectives.where("#{inc_cc}").order("dep_time asc").limit(10)
-		header_values = flight_ticket_service.schedule_header_details
-		ticket_layout_values = flight_ticket_service.ticket_hop_values(@schedule_routes)
-		@title_min_price = 0 #schedule_layout_values["route_min_price"]
+    @ticket_routes = @route.ae_flight_hop_ticket_collectives.where("#{inc_cc}").order("dep_time asc").limit(10)
+    if @ticket_routes.empty?
+    	redirect_to "#{@host_name}/flight-schedule/flight-schedules-domestic.html" and return
+    end
+    header_values = flight_ticket_service.ticket_header_details
+		ticket_layout_values = flight_ticket_service.ticket_hop_values(@ticket_routes)
+		@title_min_price = ticket_layout_values["route_min_price"]
+		ticket_footer = flight_ticket_service.ticket_footer
 		@dep_city_name_formated = ticket_layout_values["dep_city_name_formated"]
 		@arr_city_name_formated = ticket_layout_values["arr_city_name_formated"]
-		partial = "tickets/routes/#{@language}/hops/flight_ticket_hop_#{@country_code.downcase}_#{@language.downcase}_#{@section[3..5]}"
-		render  partial,locals: {schedule_layout_values: schedule_layout_values,dep_city_name: @dep_city_name,arr_city_name: @arr_city_name,dep_city_name_ar: @dep_city_name_ar,arr_city_name_ar: @arr_city_name_ar,dep_city_code: @route.dep_city_code,arr_city_code: @route.arr_city_code,schedule_header: header_values,schedule_footer: schedule_footer }
+		partial = "tickets/routes/#{@language}/hop/flight_ticket_hop_#{@country_code.downcase}_#{@language.downcase}_#{@section[3..5]}"
+		render  partial,locals: {ticket_layout_values: ticket_layout_values,dep_city_name: @dep_city_name,arr_city_name: @arr_city_name,dep_city_name_ar: @dep_city_name_ar,arr_city_name_ar: @arr_city_name_ar,dep_city_code: @route.dep_city_code,arr_city_code: @route.arr_city_code,ticket_header: header_values,ticket_footer: ticket_footer }
+		
 	end
 end

@@ -121,6 +121,9 @@
             </div>
             <%= render partial: "schedules/routes/shared/ar/top_airlines_from_ar",locals: {ticket_layout_values: ticket_layout_values,top_airlines: ticket_layout_values["top_int_airlines"],dep_city_name: dep_city_name_ar,use_helper: use_helper,arr_city_name: arr_city_name_ar} %>
           </div>
+          <div class="blocks banner-section">
+            <%= render :partial=>"common/banner",:locals=>{arr_city_name: arr_city_name, dep_city_name: dep_city_name,:country_code=>@country_code, use_helper: use_helper} %>
+          </div>
         </div>
       </div>
     </section>
