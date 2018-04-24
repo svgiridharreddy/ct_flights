@@ -249,14 +249,16 @@ class FlightBookingService
   
 	def booking_footer
 		dom_airlines = AirlineBrand.where(country_code: @country_code).order("brand_routes_count desc").limit(8).pluck(:carrier_code).uniq
-  	int_airlines = AirlineBrand.where.not(country_code: @country_code).order("brand_routes_count desc").limit(8).pluck(:carrier_code).uniq
+  		int_airlines = AirlineBrand.where.not(country_code: @country_code).order("brand_routes_count desc").limit(8).pluck(:carrier_code).uniq
 	 	# @footer_data = AirlineFooter.first
    #      total_footer_count = eval(@footer_data.airline_footer_en).count
+   #      binding.pry
    #      if @footer_data.current_count == 0 
    #        @footer_data_limit_10 = eval(@footer_data.airline_footer_en).first(10)
    #        @footer_data.update(current_count: @footer_data.current_count+10)
    #      elsif @footer_data.current_count < total_footer_count 
    #        @footer_data_limit_10 = eval(@footer_data.airline_footer_en).drop(@footer_data.current_count).first(10)
+   #        binding.pry
    #        @footer_data.update(current_count: @footer_data.current_count+10)
    #      else
    #        @footer_data.update(current_count: 0)
@@ -267,7 +269,7 @@ class FlightBookingService
    #      end
    #      @footer_data_limit_10 = @footer_data_limit_10.map{|a|  [url_escape(format_overview_link(a[:carrier_name_en]))+".html", a[:carrier_code]] if a[:carrier_code].present? && a[:carrier_name_en].present?}
    #      footer_airline_data = @footer_data_limit_10.present?  ? @footer_data_limit_10 : []
-	 	return {dom_airlines: dom_airlines,int_airlines: int_airlines}
+	 	return {dom_airlines: dom_airlines,int_airlines: int_airlines }
  	end
 
 end

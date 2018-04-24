@@ -137,7 +137,7 @@
   <div id="footer_container">
     <div id="footer">
       <% country_code = @country_code %>
-      <%= render partial: "footers/#{country_code.downcase}/booking/dom_footer", locals: {country_code: country_code,top_airlines: booking_footer[:int_airlines],section: @section}%>
+      <%= render partial: "footers/#{country_code.downcase}/booking/ae_int_footer_en", locals: {country_code: country_code,footer_airline_data: booking_footer[:footer_airline_data],top_airlines: booking_footer[:int_airlines],section: @section}%>
     </div>
   </div>
   <%= render "shared/ae/ae_gac"%>
