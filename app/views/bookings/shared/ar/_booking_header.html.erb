@@ -64,8 +64,8 @@
         <ul class="list-unstyled dropdown-menu"> 
           <% airports["dom_airports"].each do |airport|%>
           <li>
-            <%  airport_name = link_to( airport['airport_name'], "#{@host_name}/tourism/airports/ar/"+ "#{url_escape(airport['city_name'])+'-airport.html'.gsub('%2F','/')}", title: airport['airport_name']) %>
-            <%=  airport_name %>
+            <%  airport_name = link_to( airport['airport_name_ar'], "#{@host_name}/tourism/airports/ar/"+ "#{url_escape(airport['city_name'])+'-airport.html'.gsub('%2F','/')}", title: airport['airport_name_ar']) %>
+            <%=  airport['airport_name_ar'] %>
           </li> 
           <% end %> 
         </ul>
@@ -78,8 +78,8 @@
         <ul class="list-unstyled dropdown-menu"> 
           <%  airports["int_airports"].each do |airport| %>
           <li>
-            <%  airport_name = link_to( airport['airport_name'], "#{@host_name}tourism/airports/ar/"+ "#{url_escape(airport['city_name'])+'-airport.html'.gsub('%2F','/')}",title: airport['airport_name'])  %>
-            <%=  airport_name %>
+            <%  airport_name = link_to( airport['airport_name_ar'], "#{@host_name}tourism/airports/ar/"+ "#{url_escape(airport['city_name'])+'-airport.html'.gsub('%2F','/')}",title: airport['airport_name_ar'])  %>
+            <%=  airport['airport_name_ar'] %>
           </li>  
           <% end %>
         </ul>

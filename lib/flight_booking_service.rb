@@ -181,10 +181,12 @@ class FlightBookingService
               }
     dom_airport_records = Airport.where("country_code='#{@country_code}' and  airport_routes_count is not NULL").order('airport_routes_count desc').limit(5)
     int_airport_records = Airport.where("country_code!='#{@country_code}' and airport_routes_count is not NULL").order('airport_routes_count desc').limit(5)
+    binding.pry
     dom_airport_records.each do |airport|
       airports["dom_airports"] << {
         "airport_name" => airport.airport_name,
         "airport_code" => airport.airport_code,
+        "airport_name_ar" => airport.airport_name_ar,
         "city_name" => airport.city_name,
         "city_code" => airport.city_code
       }
@@ -192,6 +194,7 @@ class FlightBookingService
     int_airport_records.each do |airport|
       airports["int_airports"] << {
         "airport_name" => airport.airport_name,
+        "airport_name_ar" => airport.airport_name_ar,
         "airport_code" => airport.airport_code,
         "city_name" => airport.city_name,
         "city_code" => airport.city_code

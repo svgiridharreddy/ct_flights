@@ -350,18 +350,18 @@ booking-overview:
         title: "حجوزات %{airline_name} | %{airline_name}  تذاكر وجداول الرحلات الجوية   %{airline_name}"
         description: "حجوزات %{airline_name} وتذاكر %{airline_name} رخيصة الثمن على Cleartrip.ae .     احجز الآن! نقدم حجوزات طيران رخيصة الثمن %{airline_name}. تحقق من أحدث جدول للرحلات والمواعيد %{airline_name} قبل أن تحجز رحلة سفر. احصل على فكرة كافية عن أسعار رحلاتها الجوية الرخيصة المحلية وكذلك الرحلات الدولية."
         keywords: ""
-      amp_url: ""
+      amp_url: "https://www.cleartrip.ae/ar/flight-booking/amp/%{file_name}"
   sa:
     en:
-      dom:
-        title: ""
-        description: ""
+      dom: 
+        title: "%{carrier_name} airlines, use Coupon code – TRAVELMORE on %{carrier_name} flight tickets – Cleartrip"
+        description: "Now get SAR 1000 off on booking of %{carrier_name} flights. Check information about %{carrier_name} flight schedule, airfares, PNR status, baggage allowance, web check-in on Cleartrip"
         keywords: ""
       int:
-        title: ""
-        description: ""
+        title: "%{carrier_name} airlines, use Coupon code – FLIGHTS on %{carrier_name} flight tickets – Cleartrip"
+        description: "Now get SAR 700 off on booking of %{carrier_name} flights. Check information about %{carrier_name} flight schedule, airfares, PNR status, baggage allowance, web check-in on Cleartrip."
         keywords: ""
-      amp_url: ""
+      amp_url: "https://www.cleartrip.sa/flight-booking/amp/%{file_name}"
     ar:
       dom:
         title: "حجوزات %{airline_name} | %{airline_name}  تذاكر وجداول الرحلات الجوية   %{airline_name}"
@@ -371,7 +371,7 @@ booking-overview:
         title: "حجوزات %{airline_name} | %{airline_name}  تذاكر وجداول الرحلات الجوية   %{airline_name}"
         description: "حجوزات %{airline_name} وتذاكر %{airline_name} رخيصة الثمن على Cleartrip.sa. احجز الآن! نقدم حجوزات طيران رخيصة الثمن %{airline_name}. تحقق من أحدث جدول للرحلات والمواعيد %{airline_name} قبل أن تحجز رحلة سفر. احصل على فكرة كافية عن أسعار رحلاتها الجوية الرخيصة المحلية وكذلك الرحلات الدولية."
         keywords: ""
-      amp_url: ""
+      amp_url: "https://www.cleartrip.sa/ar/flight-booking/amp/%{file_name}"
 flight-tickets:
   in:
     en:

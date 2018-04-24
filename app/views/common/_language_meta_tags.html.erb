@@ -1,5 +1,5 @@
 
-<link rel="canonical" href="<%= get_domain + request.path %>">
+<link rel="canonical" href="<%= @host_name + request.path %>">
 <%if page_number == 1 %>
 	<%  COUNTRY_LIST.uniq.each do |country_code| %>
 	<link rel="alternate" hreflang="<%= "en-#{country_code.downcase}"%>" href="<%= "#{host_name(country_code)}/#{@page_type}/#{@file_name}"%>">
