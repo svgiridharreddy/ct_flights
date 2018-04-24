@@ -59,7 +59,7 @@ flight-schedule:
       amp_url: "https://www.cleartrip.sa/flight-schedule/amp/%{dep_city_name_formated}-%{arr_city_name_formated}-flights.html"
     ar: 
       title_without_price: "%{dep_city_name} إلى %{arr_city_name} رحلات، حجز التذاكر بأسعار مخفضة على Cleartrip"
-      title_with_price: "%{dep_city_name} إلى %{arr_city_name} رحلات, اسعار الرحلات الجوية @ AED %{price} + AED 1000 استرداد النقود – Cleartrip"
+      title_with_price: "%{dep_city_name} إلى %{arr_city_name} رحلات, اسعار الرحلات الجوية @ SAR %{price} + SAR 1000 استرداد النقود – Cleartrip"
       description: "رحلات %{dep_city_name} إلى %{arr_city_name} رخيصة - يقدم %{host} أفضل العروض على %{dep_city_name} إلى %{arr_city_name} حجز الرحلة. تفقد لائحة رحلة%{dep_city_name} إلى %{arr_city_name} هنا وأحجز الآن. سهلة، سريعة وموثوق بها"
       keywords: "الرحلات الجوية من %{dep_city_name} إلى  %{arr_city_name}، رحلة رخيصة من%{dep_city_name}  إلى %{arr_city_name} ، والرحلات الجوية من %{dep_city_name} إلى %{arr_city_name}، وحجز الرحلات الجوية من %{dep_city_name} إلى %{arr_city_name}، الرحلات الجوية من %{dep_city_name} إلى %{arr_city_name}، مواعيد الرحلات الجوية من %{dep_city_name} إلى %{arr_city_name}، الرحلات الجوية من %{dep_city_name} إلى %{arr_city_name}، حجز الرحلات الجوية من %{dep_city_name} إلى %{arr_city_name}، مواعيد الرحلات الجوية من %{dep_city_name} إلى %{arr_city_name}"
   sa_int:  
@@ -344,11 +344,11 @@ booking-overview:
     ar:
       dom:
         title: "حجوزات %{airline_name} | %{airline_name}  تذاكر وجداول الرحلات الجوية   %{airline_name}"
-        description: "حجوزات %{airline_name} وتذاكر %{airline_name} رخيصة الثمن على Cleartrip.com. احجز الآن! نقدم حجوزات طيران رخيصة الثمن %{airline_name}. تحقق من أحدث جدول للرحلات والمواعيد %{airline_name} قبل أن تحجز رحلة سفر. احصل على فكرة كافية عن أسعار رحلاتها الجوية الرخيصة المحلية وكذلك الرحلات الدولية."
-        keywords: ""
+        description: "حجوزات %{airline_name} وتذاكر %{airline_name} رخيصة الثمن على Cleartrip.ae .  احجز الآن! نقدم حجوزات طيران رخيصة الثمن %{airline_name}. تحقق من أحدث جدول للرحلات والمواعيد %{airline_name} قبل أن تحجز رحلة سفر. احصل على فكرة كافية عن أسعار رحلاتها الجوية الرخيصة المحلية وكذلك الرحلات الدولية."
+        keywords: "" 
       int:
         title: "حجوزات %{airline_name} | %{airline_name}  تذاكر وجداول الرحلات الجوية   %{airline_name}"
-        description: "حجوزات %{airline_name} وتذاكر %{airline_name} رخيصة الثمن على Cleartrip.com. احجز الآن! نقدم حجوزات طيران رخيصة الثمن %{airline_name}. تحقق من أحدث جدول للرحلات والمواعيد %{airline_name} قبل أن تحجز رحلة سفر. احصل على فكرة كافية عن أسعار رحلاتها الجوية الرخيصة المحلية وكذلك الرحلات الدولية."
+        description: "حجوزات %{airline_name} وتذاكر %{airline_name} رخيصة الثمن على Cleartrip.ae .     احجز الآن! نقدم حجوزات طيران رخيصة الثمن %{airline_name}. تحقق من أحدث جدول للرحلات والمواعيد %{airline_name} قبل أن تحجز رحلة سفر. احصل على فكرة كافية عن أسعار رحلاتها الجوية الرخيصة المحلية وكذلك الرحلات الدولية."
         keywords: ""
       amp_url: ""
   sa:
@@ -365,11 +365,11 @@ booking-overview:
     ar:
       dom:
         title: "حجوزات %{airline_name} | %{airline_name}  تذاكر وجداول الرحلات الجوية   %{airline_name}"
-        description: "حجوزات %{airline_name} وتذاكر %{airline_name} رخيصة الثمن على Cleartrip.com. احجز الآن! نقدم حجوزات طيران رخيصة الثمن %{airline_name}. تحقق من أحدث جدول للرحلات والمواعيد %{airline_name} قبل أن تحجز رحلة سفر. احصل على فكرة كافية عن أسعار رحلاتها الجوية الرخيصة المحلية وكذلك الرحلات الدولية."
+        description: "حجوزات %{airline_name} وتذاكر %{airline_name} رخيصة الثمن على Cleartrip.sa. احجز الآن! نقدم حجوزات طيران رخيصة الثمن %{airline_name}. تحقق من أحدث جدول للرحلات والمواعيد %{airline_name} قبل أن تحجز رحلة سفر. احصل على فكرة كافية عن أسعار رحلاتها الجوية الرخيصة المحلية وكذلك الرحلات الدولية."
         keywords: ""
       int:
         title: "حجوزات %{airline_name} | %{airline_name}  تذاكر وجداول الرحلات الجوية   %{airline_name}"
-        description: "حجوزات %{airline_name} وتذاكر %{airline_name} رخيصة الثمن على Cleartrip.com. احجز الآن! نقدم حجوزات طيران رخيصة الثمن %{airline_name}. تحقق من أحدث جدول للرحلات والمواعيد %{airline_name} قبل أن تحجز رحلة سفر. احصل على فكرة كافية عن أسعار رحلاتها الجوية الرخيصة المحلية وكذلك الرحلات الدولية."
+        description: "حجوزات %{airline_name} وتذاكر %{airline_name} رخيصة الثمن على Cleartrip.sa. احجز الآن! نقدم حجوزات طيران رخيصة الثمن %{airline_name}. تحقق من أحدث جدول للرحلات والمواعيد %{airline_name} قبل أن تحجز رحلة سفر. احصل على فكرة كافية عن أسعار رحلاتها الجوية الرخيصة المحلية وكذلك الرحلات الدولية."
         keywords: ""
       amp_url: ""
 flight-tickets:
@@ -387,11 +387,11 @@ flight-tickets:
   ae:
     en:
       dom:
-        title: "%{dep_city_name}(%{dep_city_code}) to %{arr_city_name}(%{arr_city_code}) cheap air tickets, airfares start @ ₹ %{min_pirce} - Cleartrip"
+        title: "%{dep_city_name}(%{dep_city_code}) to %{arr_city_name}(%{arr_city_code}) cheap air tickets, airfares start @ AED %{min_pirce} - Cleartrip"
         description: "Book cheap air tickets from %{dep_city_name} to %{arr_city_name} on Cleartrip &amp; avail amazing discounts &amp; offers on %{dep_city_name} to %{arr_city_name} flights today."
         keywords: "%{dep_city_name} %{arr_city_name} cheap air tickets,%{dep_city_name} %{arr_city_name} flight tickets, %{dep_city_name} %{arr_city_name} flights, %{dep_city_name} %{arr_city_name} air tickets"
       int:
-        title: "%{dep_city_name}(%{dep_city_code}) to %{arr_city_name}(%{arr_city_code}) cheap air tickets, airfares start @ ₹ %{min_pirce} - Cleartrip"
+        title: "%{dep_city_name}(%{dep_city_code}) to %{arr_city_name}(%{arr_city_code}) cheap air tickets, airfares start @ AED %{min_pirce} - Cleartrip"
         description: "Book cheap air tickets from %{dep_city_name} to %{arr_city_name} on Cleartrip &amp; avail amazing discounts &amp; offers on %{dep_city_name} to %{arr_city_name} flights today."
         keywords: "%{dep_city_name} %{arr_city_name} cheap air tickets,%{dep_city_name} %{arr_city_name} flight tickets, %{dep_city_name} %{arr_city_name} flights, %{dep_city_name} %{arr_city_name} air tickets"
       amp_url: "https://www.cleartrip.ae/flight-tickets/amp/%{file_name}"

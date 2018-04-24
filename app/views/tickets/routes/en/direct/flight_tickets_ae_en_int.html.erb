@@ -97,12 +97,10 @@
               </div>
           
             <div class="content-desc">
-             
               <%= render :partial => "tickets/routes/en/contents/ae_en_templatized_content_direct",locals: {ticket_layout_values: ticket_layout_values,dep_city_name: dep_city_name,arr_city_name: arr_city_name} %>
               <%= render partial: "tickets/routes/en/shared/tickets_faq_en", locals: { arr_city_name: arr_city_name, dep_city_name: dep_city_name, ticket_layout_values: ticket_layout_values, use_helper: use_helper } %>
               <%= render :partial => "tickets/routes/en/shared/airport_details",locals: {airport_details: ticket_layout_values["airport_details"],dep_city_name: dep_city_name,arr_city_name: arr_city_name} %>
               <%= render :partial=>"tickets/routes/en/shared/more_top_routes",locals: {flights_dep: ticket_layout_values['more_flights_from_dep'],flights_arr: ticket_layout_values['more_flights_to_arr'],arr_city_name: arr_city_name,dep_city_name_en:dep_city_name,arr_city_name_en: arr_city_name, dep_city_name: dep_city_name,use_helper: use_helper} %>
-              
             </div>
           </div>
         </div>

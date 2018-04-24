@@ -65,9 +65,7 @@
               <% if city_layout_values["city_from_content"].present? %>
                 <%= raw city_layout_values["city_from_content"] %>
               <% else %>
-              <p>
-                <%= render partial: "schedules/from_to/en/contents/in_en_to_city_templatized_content", locals: {city_name: @city_name, host: display_host(@country_code),city_layout_values: top_routes: pagination[:routes]} %>
-              </p>
+                <%= render partial: "schedules/from_to/en/contents/to/in_en_to_city_templatized_content", locals: {city_name: @city_name, host: display_host(@country_code),city_layout_values: city_layout_values,top_routes: pagination[:routes]} %>
               <% end %>
             </div>
           <% end %>
@@ -177,4 +175,9 @@
     var country_code='<%= country_code.downcase%>';
     var section_type='<%= country_code=="IN" ? "domestic" : "international" %>';
     var page_type="flight-schedule";
+    var city_code = "<%= @city_code %>";
+    var city_name = "<%= @city_name %>";
+    var language_type = "<%= @language %>";
+    var page_sub_type = 'routes';
+    var main_page_type = "<= @city_section %>";
   </script>

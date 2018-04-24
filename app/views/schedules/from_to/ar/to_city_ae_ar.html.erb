@@ -172,7 +172,12 @@
       %>
   <script type="text/javascript">
     var lang = <%= lang.to_json.html_safe %>;
-    var country_code='<%= country_code.downcase%>';
-    var section_type='<%= country_code=="IN" ? "domestic" : "international" %>';
-    var page_type="flight-schedule";
+    var country_code= '<%= country_code.downcase%>';
+    var section_type= '<%= country_code=="IN" ? "domestic" : "international" %>';
+    var page_type= "flight-schedule";
+    var city_code = "<%= @city_code %>";
+    var city_name = "<%= @city_name %>";
+    var language_type = "<%= @language %>";
+    var page_sub_type = 'routes';
+    var main_page_type = "<= @city_section %>";
   </script>
