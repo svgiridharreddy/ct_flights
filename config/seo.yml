@@ -408,11 +408,11 @@ flight-tickets:
   sa:
     en:
       dom:
-        title: "%{dep_city_name}(%{dep_city_code}) to %{arr_city_name}(%{arr_city_code}) cheap air tickets, airfares start @ ₹ %{min_pirce} - Cleartrip"
+        title: "%{dep_city_name}(%{dep_city_code}) to %{arr_city_name}(%{arr_city_code}) cheap air tickets, airfares start @ SAR %{min_pirce} - Cleartrip"
         description: "Book cheap air tickets from %{dep_city_name} to %{arr_city_name} on Cleartrip &amp; avail amazing discounts &amp; offers on %{dep_city_name} to %{arr_city_name} flights today."
         keywords: "%{dep_city_name} %{arr_city_name} cheap air tickets,%{dep_city_name} %{arr_city_name} flight tickets, %{dep_city_name} %{arr_city_name} flights, %{dep_city_name} %{arr_city_name} air tickets"
       int:
-        title: "%{dep_city_name}(%{dep_city_code}) to %{arr_city_name}(%{arr_city_code}) cheap air tickets, airfares start @ ₹ %{min_pirce} - Cleartrip"
+        title: "%{dep_city_name}(%{dep_city_code}) to %{arr_city_name}(%{arr_city_code}) cheap air tickets, airfares start @ SAR %{min_pirce} - Cleartrip"
         description: "Book cheap air tickets from %{dep_city_name} to %{arr_city_name} on Cleartrip &amp; avail amazing discounts &amp; offers on %{dep_city_name} to %{arr_city_name} flights today."
         keywords: "%{dep_city_name} %{arr_city_name} cheap air tickets,%{dep_city_name} %{arr_city_name} flight tickets, %{dep_city_name} %{arr_city_name} flights, %{dep_city_name} %{arr_city_name} air tickets"
       amp_url: "https://www.cleartrip.sa/flight-tickets/amp/%{file_name}"
