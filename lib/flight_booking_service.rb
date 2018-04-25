@@ -181,7 +181,6 @@ class FlightBookingService
               }
     dom_airport_records = Airport.where("country_code='#{@country_code}' and  airport_routes_count is not NULL").order('airport_routes_count desc').limit(5)
     int_airport_records = Airport.where("country_code!='#{@country_code}' and airport_routes_count is not NULL").order('airport_routes_count desc').limit(5)
-    binding.pry
     dom_airport_records.each do |airport|
       airports["dom_airports"] << {
         "airport_name" => airport.airport_name,
@@ -255,7 +254,8 @@ class FlightBookingService
   		int_airlines = AirlineBrand.where.not(country_code: @country_code).order("brand_routes_count desc").limit(8).pluck(:carrier_code).uniq
 	 	# @footer_data = AirlineFooter.first
    #      total_footer_count = eval(@footer_data.airline_footer_en).count
-   #      binding.pry
+   #      
+
    #      if @footer_data.current_count == 0 
    #        @footer_data_limit_10 = eval(@footer_data.airline_footer_en).first(10)
    #        @footer_data.update(current_count: @footer_data.current_count+10)
