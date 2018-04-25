@@ -112,7 +112,7 @@
         <%#= render :partial=>"airline_brands/top_routes",:locals=>{:routes=> dom_top_routes.uniq, page_type: 'flight-booking',:assets_path=>assets_path, application_processor: application_processor, section: "dom"  } %>
         <div class="clearfix"></div>
         <%# end %>
-        <% if city_layout_values['airport_address'].present? && city_layout_values['airport_name'].present? %>
+        <% if city_layout_values['airport_address'].present? && city_layout_values['airport_name_ar'].present? %>
           <%= render :partial=>"schedules/from_to/ar/shared/from_to_airport_ar",:locals=>{:airport=>city_layout_values } %>
         <% end %>
         <div class="blocks banner-section">

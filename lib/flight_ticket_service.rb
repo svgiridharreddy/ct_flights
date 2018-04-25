@@ -176,7 +176,8 @@ class FlightTicketService
       # footer random airlines 
       dom_airlines = AirlineBrand.where(country_code: @country_code).order("brand_routes_count desc").limit(8).pluck(:carrier_code).uniq
       # int_airlines = AirlineBrand.where.not(country_code: @country_code).order("brand_routes_count desc").limit(8).pluck(:carrier_code).uniq
-      @footer_data = AeAirlineFooter.first
+      footer_model_name = "#{@country_code.titleize}AirlineFooter".constantize
+      @footer_data = footer_model_name.first
       total_footer_count =   eval(@footer_data.airline_footer_en).count
       if @footer_data.current_count == 0 
         @footer_data_limit_10 =  eval(@footer_data.airline_footer_en).first(10)
@@ -459,4 +460,18 @@ class FlightTicketService
 			result = result.downcase
 		end
 	end
+  def format_overview_link(carrier_name)
+    unless carrier_name.blank?
+      if(carrier_name.downcase.include?('airlines') || carrier_name.downcase.include?('airline')|| carrier_name.downcase.include?('air lines'))
+        result = carrier_name.downcase
+        result = result.gsub("airlines","")
+        result = result.gsub("airline","")
+        result = result.gsub("air lines","")
+        result = result.strip.downcase.gsub(" ", "-")
+        result = result+"-airlines"
+      else
+        result = carrier_name.downcase.gsub(" ","-")+ "-airlines"
+      end
+    end
+  end
 end

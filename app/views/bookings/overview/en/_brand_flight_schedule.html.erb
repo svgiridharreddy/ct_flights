@@ -152,7 +152,7 @@
           </div>
           <% else %>
            <div class="col-xs-4 no-padding pad-10">
-              <span><%= route['dep_time'] %> - <%= route['arr_time']%></span>
+              <span><%= Time.strptime(route['dep_time'],"%H:%M").to_time.strftime("%I:%M %p") %> - <%= Time.strptime(route['arr_time'],"%H:%M").to_time.strftime("%I:%M %p")%></span>
             </div>
           <% end %>
           <% if route['min_price'].present? && route['min_price'] != 0 %>

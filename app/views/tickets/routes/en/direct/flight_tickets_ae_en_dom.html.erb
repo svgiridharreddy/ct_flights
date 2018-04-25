@@ -128,8 +128,7 @@
     <div id="footer_container">
       <div id="footer">
         <% country_code = ticket_layout_values["country_code"] %>
-        <%= render partial: "footers/#{country_code.downcase}/ticket/ae_en_ticket_footer", locals: {country_code: country_code,dep_city_name: dep_city_name,arr_city_name: arr_city_name,dep_city_name_formated: ticket_layout_values["dep_city_name_formated"],arr_city_name_formated: ticket_layout_values["arr_city_name_formated"],page_type: 'ticket-routes',footer_links_data: ticket_footer[:footer_links_data],top_airlines: ticket_footer[:dom_airlines],flights_header: ticket_header,section: @section}%>
-        
+        <%= render partial: "footers/#{country_code.downcase}/ticket/ae_en_dom_ticket_footer", locals: {country_code: country_code,dep_city_name: dep_city_name,arr_city_name: arr_city_name,dep_city_name_formated: ticket_layout_values["dep_city_name_formated"],arr_city_name_formated: ticket_layout_values["arr_city_name_formated"],page_type: 'ticket-routes',footer_links_data: ticket_footer[:footer_links_data],top_airlines: ticket_footer[:dom_airlines],flights_header: ticket_header,section: @section}%>
       </div>
     </div>
     <%= render "shared/ae/ae_gac"%>

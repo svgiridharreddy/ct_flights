@@ -135,7 +135,7 @@
     <div id="footer_container">
       <div id="footer">
         <% country_code = schedule_layout_values["country_code"] %>
-        <%= render partial: "footers/#{country_code.downcase}/schedule/routes/ar/ae_ar_int_footer", locals: {country_code: country_code,dep_city_name: dep_city_name_ar,arr_city_name: arr_city_name_ar,dep_city_name_formated: schedule_layout_values["dep_city_name_formated"],arr_city_name_formated: schedule_layout_values["arr_city_name_formated"],page_type: 'schedule-routes',footer_links_data_arabic: schedule_footer[:footer_links_data_arabic],top_airlines: schedule_footer[:int_airlines],section: @section}%>
+        <%= render partial: "footers/#{country_code.downcase}/schedule/routes/ar/ae_ar_int_footer", locals: {country_code: country_code,dep_city_name: dep_city_name_ar,arr_city_name: arr_city_name_ar,dep_city_name_formated: schedule_layout_values["dep_city_name_formated"],arr_city_name_formated: schedule_layout_values["arr_city_name_formated"],page_type: 'schedule-routes',footer_links_data_arabic: schedule_footer[:footer_links_data_arabic],top_airlines: schedule_footer[:int_airlines],section: @section,footer_airline_data: schedule_footer[:footer_airline_data]}%>
       </div>
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>

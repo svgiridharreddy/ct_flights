@@ -228,7 +228,7 @@ class FlightBookingService
 
   def rhs_top_airlines
   	dom_airlines = AirlineBrand.where(country_code: @country_code).order(brand_routes_count:  :desc).limit(8).pluck(:carrier_code)
-  	int_airlines = AirlineBrand.where.not(country_code: @country_code).order(brand_routes_count:  :desc).limit(8).pluck(:carrier_code)
+  	int_airlines = INTERNATIONAL_AIRLINES[@country_code].take(8)
   	return {dom_airlines: dom_airlines,int_airlines: int_airlines}
   end
 

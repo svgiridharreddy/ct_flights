@@ -1,5 +1,5 @@
 <p>التخطيط هو الجوهر عند السفر لأجل العمل أو الترفيه. رسم خطة رحلتك مقدماً عند السفر من <%= city_name %> يضمن لك تجربة سفر سلسة لذلك اكتشف كل ما تحتاجه حول حجز رحلتك من <% city_name %> .</p>
- <p>تغادر الرحلات من <%= city_layout_values["airport_name"] %> ورمز الاتحاد الدولي للنقل الجوي للمطار هو <%= city_layout_values["airport_code"] %>.</p>
+ <p>تغادر الرحلات من <%= city_layout_values["airport_name_ar"] %> ورمز الاتحاد الدولي للنقل الجوي للمطار هو <%= city_layout_values["airport_code"] %>.</p>
  <% if city_layout_values["dom_route_count"].present? && city_layout_values["dom_route_count"]!=0 %>
 <p>تصل نسبة رحلات الطيران من  <%= city_layout_values["airport_name"] %> إلى  <%= city_layout_values["dom_route_count"] %> من المدن المحلية في البلاد. حوالي  <%= city_layout_values["dom_airlines_count"] %> شركات الطيران المحلية تغادر من <% city_name %>. وتشمل شركات الطيران الرئيسية <%= city_layout_values["city_dom_airlines"]%>. <%= city_layout_values["dom_first_airline"] %> هي أول رحلة، تغادر في <%= city_layout_values["dom_first_dep_time"] %> و <%= city_layout_values["dom_last_airline"] %> هي آخر رحلة، تغادر في <%= city_layout_values["dom_last_dep_time"] %>.</p>
 <% end %>

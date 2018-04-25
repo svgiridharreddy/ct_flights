@@ -8,7 +8,7 @@
 	<ul class="list-unstyled top-airlines">
 		<% routes[0..5].each do |route| %>
 		<li>
-			<% link = link_to( "#{route['dep_city_name']} #{I18n.t('brand.to')} #{route['arr_city_name']} #{t('brand_flight.flights')}", "/ar/flight-schedule/" + "#{route['schedule_route_url']}" + "-flights.html") %>
+			<% link = link_to( "#{route['dep_city_name_ar']} #{I18n.t('brand.to')} #{route['arr_city_name_ar']} #{t('brand_flight.flights')}", "/ar/flight-schedule/" + "#{route['schedule_route_url']}" + "-flights.html") %>
 			<%= link %>
 			<div class="clearfix"></div>
 		</li>

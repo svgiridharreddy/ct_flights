@@ -66,7 +66,7 @@ class FlightScheduleService
   def get_airport_details
     airport_details = {}
   	@airports = Hash[Airport.where(:city_code=>[@dep_city_code,@arr_city_code]).map{|c| [c.city_code,c]}]
-    airport_details['dep_airport_name'] = @airport[@dep_city_code].airport_name rescue ""
+    airport_details['dep_airport_name'] = @airports[@dep_city_code].airport_name rescue ""
     airport_details['arr_airport_name'] = @airports[@arr_city_code].airport_name rescue ""
     airport_details['dep_airport_address'] = @airports[@dep_city_code].address rescue ""
     airport_details['arr_airport_address'] = @airports[@arr_city_code].address rescue ""
@@ -387,7 +387,8 @@ class FlightScheduleService
       dom_airlines = AirlineBrand.where(country_code: @country_code).order("brand_routes_count desc").limit(8).pluck(:carrier_code).uniq
       # int_airlines = AirlineBrand.where.not(country_code: @country_code).order("brand_routes_count desc").limit(8).pluck(:carrier_code).uniq
       #Ending of footer randamization code
-      @footer_data = AeAirlineFooter.first
+      footer_model_name = "#{@country_code.titleize}AirlineFooter".constantize
+      @footer_data = footer_model_name.first
       total_footer_count =   eval(@footer_data.airline_footer_en).count
       if @footer_data.current_count == 0 
         @footer_data_limit_10 =  eval(@footer_data.airline_footer_en).first(10)
@@ -504,6 +505,7 @@ class FlightScheduleService
     city_layout_values["dom_airlines"] = schedule_airline_values["top_dom_airlines"]
     city_layout_values["int_airlines"] = schedule_airline_values["top_int_airlines"]
     city_layout_values['airport_name'] = airport.airport_name
+    city_layout_values['airport_name_ar'] = airport.airport_name_ar
     city_layout_values['airport_code'] = airport.airport_code
     city_layout_values['airport_address'] = airport.address
     city_layout_values['airport_phone'] = airport.phone

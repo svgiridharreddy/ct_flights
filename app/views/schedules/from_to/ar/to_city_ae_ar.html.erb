@@ -72,7 +72,7 @@
           <% end %>
           </div>
         <% end %>
-          <% if city_layout_values["to_more_routes"].present? %>
+          <% if pagination[:routes].present? %>
             <div class="content-desc">
             <h2> <%= I18n.t("from_city.flights_to")%>  <%= @city_name_ar %></h2>
             <%= render :partial=>"schedules/from_to/ar/shared/from_to_more_routes_ar", locals: { top_routes: pagination[:routes],section: "to" } %>
@@ -86,14 +86,13 @@
                     <a rel="prev" href='<%= "/ar/flight-schedule/#{pagination[:prev_url]}" %>' ><%= t('prev') %></a> | <a rel="next" href='<%= "/ar/flight-schedule/#{pagination[:next_url]}" %>' ><%= t('next') %></a>
                   <% end%>
                 </div>
-                <% end %> %>
+                <% end %>
             <div class="clearfix"></div>
             </div>
           <% end %>
         </div>
       </div>
-    </div>
-       <div id="Rside-bar">
+    <div id="Rside-bar">
       <div class="col-lg-3 col-md-3 col-sm-12 pad-rzero side-bar">
         <div class="blocks banner-section">
           <div id="banner">

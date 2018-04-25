@@ -58,10 +58,10 @@
                 </div>
               <% else %>
                  <div class="col-xs-2 no-padding pad-10">
-                  <span><%= route['dep_time'] %></span>
+                  <span><%= Time.strptime(route['dep_time'],"%H:%M").to_time.strftime("%I:%M %p") %></span>
                 </div>
                  <div class="col-xs-2 no-padding pad-10">
-                  <span><%= route['arr_time']%></span>
+                  <span><%= Time.strptime(route['arr_time'],"%H:%M").to_time.strftime("%I:%M %p")%></span>
                 </div>
               <% end %>
               <div class="col-xs-2 no-padding pad-10">
@@ -140,7 +140,7 @@
           </div>
           <% else %>
            <div class="col-xs-4 no-padding pad-10">
-              <span><%= route['dep_time'] %> - <%= route['arr_time']%></span>
+              <span><%= Time.strptime(route['dep_time'],"%H:%M").to_time.strftime("%I:%M %p") %> - <%= Time.strptime(route['arr_time'],"%H:%M").to_time.strftime("%I:%M %p")%></span>
             </div>
           <% end %>
 

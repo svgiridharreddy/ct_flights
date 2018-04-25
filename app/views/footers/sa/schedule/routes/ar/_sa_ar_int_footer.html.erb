@@ -1,6 +1,19 @@
 <div >
   <div class="container-fluid">
     <div class="sixteen columns alpha">
+     <% if  footer_airline_data.present? %>
+      <ul class="footerlinkssmall">
+        <% footer_airline_data.each_with_index do |airline,index| %>
+        <% if index == 0 %>
+        <li><%= t('footer.intl_airlines') %> :</li>
+        <li><%= link_to t("airlines.#{airline[1]}"), "/flight-booking/#{airline[0]}",title: t("airlines.#{airline[1]}") %></li>
+        <% else %>
+        <li><%= link_to t("airlines.#{airline[1]}"), "/flight-booking/#{airline[0]}",title: t("airlines.#{airline[1]}") %></li>
+        <% end %>
+        <% end %>
+      </ul>
+      <%end%>
+      
       <% if footer_links_data_arabic.present? %>
       <ul class="footerlinkssmall">
        <% footer_links_data_arabic.each_with_index do |link,index| %>

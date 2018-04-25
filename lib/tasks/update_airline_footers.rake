@@ -11,6 +11,6 @@ namespace :update do
 					arabic_data.push({carrier_code:row[0],carrier_name_ar:row[3],country_code: airline.country_code,icoa_code: airline.icoa_code})
 				end
 			end
-		AeAirlineFooter.create(airline_footer_en: english_data.to_s,airline_footer_ar: arabic_data.to_s,airline_footer_en_dup:english_data.to_s,airline_footer_ar_dup:arabic_data.to_s)
+		InAirlineFooter.create(airline_footer_en: english_data.to_s,airline_footer_ar: arabic_data.to_s,airline_footer_en_dup:english_data.to_s,airline_footer_ar_dup:arabic_data.to_s,current_count: 0)
 	end
 end
