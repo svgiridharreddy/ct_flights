@@ -19,19 +19,28 @@ class FlightTicketService
 
   def ticket_airline_values
     I18n.locale = @language.to_sym
-  	route_values = {}
-  	dep_city_name_formated = url_escape(@dep_city_name) rescue ""
-  	arr_city_name_formated = url_escape(@arr_city_name) rescue ""
-  	return_url = arr_city_name_formated +"-"+dep_city_name_formated +"-flights.html" rescue ""
-		top_dom_cc = AirlineBrand.where(country_code: @country_code).order("brand_routes_count desc").limit(8).pluck(:carrier_code)
-		top_dom_airlines = top_dom_cc.map{|cc| I18n.t("airlines.#{cc}")}
-		top_int_cc = AirlineBrand.where.not(country_code: @country_code).order("brand_routes_count desc").limit(8).pluck(:carrier_code)
-		top_int_airlines = top_int_cc.map{|cc| I18n.t("airlines.#{cc}") } 
-		route_values["return_url"] = return_url
-		route_values["dep_city_name_formated"] = dep_city_name_formated rescue ""
-		route_values["arr_city_name_formated"] = arr_city_name_formated rescue ""
-		route_values["top_dom_airlines"] = top_dom_cc
-		route_values["top_int_airlines"] = top_int_cc  
+    route_values = {}
+    model_name = "#{@country_code.titleize}FlightScheduleCollective".constantize
+    dep_city_name_formated = url_escape(@dep_city_name) rescue ""
+    arr_city_name_formated = url_escape(@arr_city_name) rescue ""
+    return_url = arr_city_name_formated +"-"+dep_city_name_formated +"-flights.html" rescue ""
+    top_dom_cc = AirlineBrand.where(country_code: @country_code).order("brand_routes_count desc").pluck(:carrier_code).uniq
+    top_int_cc = AirlineBrand.where.not(country_code: @country_code).order("brand_routes_count desc").pluck(:carrier_code).uniq
+    unless @country_code == "IN"
+      top_cc = (top_dom_cc + top_int_cc).uniq
+    else
+      top_cc = top_int_cc
+    end
+    top_dom_routes_cc = model_name.where(dep_city_code: @dep_city_code,carrier_code: top_dom_cc).pluck(:carrier_code).uniq.take(8)
+    top_dom_airlines_with_name = top_dom_routes_cc.map{|cc| I18n.t("airlines.#{cc}")}
+    top_int_routes_cc = model_name.where(dep_city_code: @dep_city_code,carrier_code: top_cc).pluck(:carrier_code).uniq.take(8)
+    top_int_airlines_with_name = top_int_routes_cc.map{|cc| I18n.t("airlines.#{cc}")}
+    # top_int_airlines = top_int_cc.map{|cc| I18n.t("airlines.#{cc}") } 
+    route_values["return_url"] = return_url
+    route_values["dep_city_name_formated"] = dep_city_name_formated rescue ""
+    route_values["arr_city_name_formated"] = arr_city_name_formated rescue ""
+    route_values["top_dom_airlines"] = top_dom_routes_cc
+    route_values["top_int_airlines"] = top_int_routes_cc 
     return route_values
   end
 
@@ -118,7 +127,7 @@ class FlightTicketService
   #   return more_routes
   # end
   def ticket_footer
-      #Foooter links randamization code
+      # Foooter links randamization code
       model_name = "#{@country_code.titleize}Footer".constantize
        footer_links = model_name.where(city_code: @dep_city_code)
          if footer_links.present?
@@ -163,10 +172,29 @@ class FlightTicketService
             end
           end
         end
+
+      # footer random airlines 
       dom_airlines = AirlineBrand.where(country_code: @country_code).order("brand_routes_count desc").limit(8).pluck(:carrier_code).uniq
-      int_airlines = AirlineBrand.where.not(country_code: @country_code).order("brand_routes_count desc").limit(8).pluck(:carrier_code).uniq
-      #Ending of footer randamization code
-      return {footer_links_data: footer_links_data,footer_links_data_arabic: footer_links_data_arabic,dom_airlines: dom_airlines,int_airlines: int_airlines}
+      # int_airlines = AirlineBrand.where.not(country_code: @country_code).order("brand_routes_count desc").limit(8).pluck(:carrier_code).uniq
+      @footer_data = AeAirlineFooter.first
+      total_footer_count =   eval(@footer_data.airline_footer_en).count
+      if @footer_data.current_count == 0 
+        @footer_data_limit_10 =  eval(@footer_data.airline_footer_en).first(10)
+        @footer_data.update(current_count:@footer_data.current_count+10)
+      elsif @footer_data.current_count < total_footer_count 
+        @footer_data_limit_10 =  eval(@footer_data.airline_footer_en).drop(@footer_data.current_count).first(10)
+        @footer_data.update(current_count: @footer_data.current_count+10)
+      else
+        @footer_data.update(current_count:0)
+        @footer_data_limit_10 =  eval(@footer_data.airline_footer_en).first(10) 
+      end
+      if @footer_data_limit_10.count < 10
+        @footer_data_limit_10 =  eval(@footer_data.airline_footer_en).first(10)
+        @footer_data.update(current_count:0)
+      end
+      @footer_data_limit_10 = @footer_data_limit_10.map{|a|  [url_escape(format_overview_link(a[:carrier_name_en]))+".html", a[:carrier_code]] if a[:carrier_code].present? && a[:carrier_name_en].present?}
+      footer_airline_data = @footer_data_limit_10.present?  ? @footer_data_limit_10 : []
+    return {footer_links_data: footer_links_data,footer_links_data_arabic: footer_links_data_arabic,dom_airlines: dom_airlines,int_airlines: '',footer_airline_data: footer_airline_data}
   end
   def ticket_values(ticket_routes)
     I18n.locale = @language.to_sym

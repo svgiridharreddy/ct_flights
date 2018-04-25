@@ -20,18 +20,27 @@ class FlightScheduleService
   def schedule_airline_values
     I18n.locale = @language.to_sym
   	route_values = {}
+    model_name = "#{@country_code.titleize}FlightScheduleCollective".constantize
   	dep_city_name_formated = url_escape(@dep_city_name) rescue ""
   	arr_city_name_formated = url_escape(@arr_city_name) rescue ""
   	return_url = arr_city_name_formated +"-"+dep_city_name_formated +"-flights.html" rescue ""
-		top_dom_cc = AirlineBrand.where(country_code: @country_code).order("brand_routes_count desc").limit(8).pluck(:carrier_code)
-		top_dom_airlines = top_dom_cc.map{|cc| I18n.t("airlines.#{cc}")}
-		top_int_cc = AirlineBrand.where.not(country_code: @country_code).order("brand_routes_count desc").limit(8).pluck(:carrier_code)
-		top_int_airlines = top_int_cc.map{|cc| I18n.t("airlines.#{cc}") } 
+		top_dom_cc = AirlineBrand.where(country_code: @country_code).order("brand_routes_count desc").pluck(:carrier_code).uniq
+		top_int_cc = AirlineBrand.where.not(country_code: @country_code).order("brand_routes_count desc").pluck(:carrier_code).uniq
+    unless @country_code == "IN"
+      top_cc = (top_dom_cc + top_int_cc).uniq
+    else
+      top_cc = top_int_cc
+    end
+    top_dom_routes_cc = model_name.where(dep_city_code: @dep_city_code,carrier_code: top_dom_cc).pluck(:carrier_code).uniq.take(8)
+    top_dom_airlines_with_name = top_dom_routes_cc.map{|cc| I18n.t("airlines.#{cc}")}
+    top_int_routes_cc = model_name.where(dep_city_code: @dep_city_code,carrier_code: top_cc).pluck(:carrier_code).uniq.take(8)
+    top_int_airlines_with_name = top_int_routes_cc.map{|cc| I18n.t("airlines.#{cc}")}
+    # top_int_airlines = top_int_cc.map{|cc| I18n.t("airlines.#{cc}") } 
 		route_values["return_url"] = return_url
 		route_values["dep_city_name_formated"] = dep_city_name_formated rescue ""
 		route_values["arr_city_name_formated"] = arr_city_name_formated rescue ""
-		route_values["top_dom_airlines"] = top_dom_cc
-		route_values["top_int_airlines"] = top_int_cc  
+		route_values["top_dom_airlines"] = top_dom_routes_cc
+		route_values["top_int_airlines"] = top_int_routes_cc 
     return route_values
   end
 
@@ -54,7 +63,7 @@ class FlightScheduleService
   	return content
   end
 
-  def get_airport_deatils
+  def get_airport_details
     airport_details = {}
   	@airports = Hash[Airport.where(:city_code=>[@dep_city_code,@arr_city_code]).map{|c| [c.city_code,c]}]
     airport_details['dep_airport_name'] = @airport[@dep_city_code].airport_name rescue ""
@@ -136,7 +145,6 @@ class FlightScheduleService
     end
     operational_airline_codes = schedule_routes.group_by{|al| al.carrier_code}.map{|k,v| [k,v.count]}.to_h 
     operational_airline_names = operational_airline_codes.map{|k,v| I18n.t("airlines.#{k}")} 
-    airport_details = get_airport_deatils
     @calendar_dates = min_pr[:dt]
       @min30 = min_pr[:cc1]
       @min90 = min_pr[:cc2]
@@ -148,7 +156,6 @@ class FlightScheduleService
     schedule_layout_values["arr_city_name"] = @route.arr_city_name
     schedule_layout_values["dep_city_name_#{@language.downcase}"] = CityName.find_by(city_code: @dep_city_code).send(lang_city_name)
     schedule_layout_values["arr_city_name_#{@language.downcase}"] = CityName.find_by(city_code: @dep_city_code).send(lang_city_name)
-
     schedule_layout_values["dep_city_name_formated"] = schedule_airline_values["dep_city_name_formated"]
     schedule_layout_values["arr_city_name_formated"] = schedule_airline_values["arr_city_name_formated"]
     schedule_layout_values["arr_city_name"] = @route.arr_city_name
@@ -174,7 +181,7 @@ class FlightScheduleService
     schedule_layout_values["max_duration"] = if min_max_duration[1].include? (":") then min_max_duration[1].to_time.strftime("%Hh %Mm") else Time.at(min_max_duration[1].to_i*60).utc.strftime("%Hh %Mm") end
     schedule_layout_values["return_url"]  = schedule_airline_values["return_url"]
     schedule_layout_values["top_dom_airlines"] = schedule_airline_values["top_dom_airlines"] 
-    schedule_layout_values["top_int_airlines"] = schedule_airline_values["top_int_airlines"]
+    schedule_layout_values["top_int_airlines"] = schedule_airline_values["top_int_airlines"] #INTERNATIONAL_AIRLINES[@country_code]
     schedule_layout_values["distance"] = @route.distance 
     schedule_layout_values["weekly_flights_count"] = weekly_flights_count
     schedule_layout_values["operational_airlines"] = operational_airline_names.to_sentence
@@ -193,7 +200,7 @@ class FlightScheduleService
     schedule_layout_values["flight_timings"] = @min90
     schedule_layout_values["more_flights_from_dep"] = more_routes["dep_more_routes"]
     schedule_layout_values["more_flights_to_arr"] = more_routes["arr_more_routes"]
-    schedule_layout_values["airport_details"] = get_airport_deatils
+    schedule_layout_values["airport_details"] = get_airport_details
     return schedule_layout_values
   end
 
@@ -215,7 +222,6 @@ class FlightScheduleService
     # end
     operational_airline_codes = schedule_routes.group_by{|al| al.carrier_code}.map{|k,v| [k,v.count]}.to_h
     operational_airline_names = operational_airline_codes.map{|k,v| I18n.t("airlines.#{k}")}
-    airport_details = get_airport_deatils
     # @calendar_dates = min_pr[:dt]
     #   @min30 = min_pr[:cc1]
     #   @min90 = min_pr[:cc2]
@@ -270,7 +276,7 @@ class FlightScheduleService
     # schedule_layout_hop_values["flight_timings"] = @min90
     schedule_layout_hop_values["more_flights_from_dep"] = more_routes["dep_more_routes"]
     schedule_layout_hop_values["more_flights_to_arr"] = more_routes["arr_more_routes"]
-    schedule_layout_hop_values["airport_details"] = get_airport_deatils
+    schedule_layout_hop_values["airport_details"] = get_airport_details
     return schedule_layout_hop_values
   end
 
@@ -379,9 +385,27 @@ class FlightScheduleService
           end
         end
       dom_airlines = AirlineBrand.where(country_code: @country_code).order("brand_routes_count desc").limit(8).pluck(:carrier_code).uniq
-      int_airlines = AirlineBrand.where.not(country_code: @country_code).order("brand_routes_count desc").limit(8).pluck(:carrier_code).uniq
+      # int_airlines = AirlineBrand.where.not(country_code: @country_code).order("brand_routes_count desc").limit(8).pluck(:carrier_code).uniq
       #Ending of footer randamization code
-      return {footer_links_data: footer_links_data,footer_links_data_arabic: footer_links_data_arabic,dom_airlines: dom_airlines,int_airlines: int_airlines}
+      @footer_data = AeAirlineFooter.first
+      total_footer_count =   eval(@footer_data.airline_footer_en).count
+      if @footer_data.current_count == 0 
+        @footer_data_limit_10 =  eval(@footer_data.airline_footer_en).first(10)
+        @footer_data.update(current_count:@footer_data.current_count+10)
+      elsif @footer_data.current_count < total_footer_count 
+        @footer_data_limit_10 =  eval(@footer_data.airline_footer_en).drop(@footer_data.current_count).first(10)
+        @footer_data.update(current_count: @footer_data.current_count+10)
+      else
+        @footer_data.update(current_count:0)
+        @footer_data_limit_10 =  eval(@footer_data.airline_footer_en).first(10) 
+      end
+      if @footer_data_limit_10.count < 10
+        @footer_data_limit_10 =  eval(@footer_data.airline_footer_en).first(10)
+        @footer_data.update(current_count:0)
+      end
+      @footer_data_limit_10 = @footer_data_limit_10.map{|a|  [url_escape(format_overview_link(a[:carrier_name_en]))+".html", a[:carrier_code]] if a[:carrier_code].present? && a[:carrier_name_en].present?}
+      footer_airline_data = @footer_data_limit_10.present?  ? @footer_data_limit_10 : []
+    return {footer_links_data: footer_links_data,footer_links_data_arabic: footer_links_data_arabic,dom_airlines: dom_airlines,int_airlines: 'int_airlines',footer_airline_data: footer_airline_data}
   end
 
   def from_to_values(city_code,section,page_no)
@@ -630,16 +654,30 @@ class FlightScheduleService
     [day_least_rate["pr"].to_i,day_max_rate["pr"].to_i]
   end
 
- 
-  	def url_escape(url_string)
-		unless url_string.blank?
-			result = url_string.encode("UTF-8", :invalid => :replace, :undef => :replace).to_s
-			result = result.gsub(/[\/]/,'-')
-			result = result.gsub(/[^\x00-\x7F]+/, '') # Remove anything non-ASCII entirely (e.g. diacritics).
-			result = result.gsub(/[^\w_ \-]+/i,   '') # Remove unwanted chars.
-			result = result.gsub(/[ \-]+/i,      '-') # No more than one of the separator in a row.
-			result = result.gsub(/^\-|\-$/i,      '') # Remove leading/trailing separator.
-			result = result.downcase
-		end
-	end
+  def url_escape(url_string)
+    unless url_string.blank?
+      result = url_string.encode("UTF-8", :invalid => :replace, :undef => :replace).to_s
+      result = result.gsub(/[\/]/,'-')
+      result = result.gsub(/[^\x00-\x7F]+/, '') # Remove anything non-ASCII entirely (e.g. diacritics).
+      result = result.gsub(/[^\w_ \-]+/i,   '') # Remove unwanted chars.
+      result = result.gsub(/[ \-]+/i,      '-') # No more than one of the separator in a row.
+      result = result.gsub(/^\-|\-$/i,      '') # Remove leading/trailing separator.
+      result = result.downcase
+    end
+  end
+
+  def format_overview_link(carrier_name)
+    unless carrier_name.blank?
+      if(carrier_name.downcase.include?('airlines') || carrier_name.downcase.include?('airline')|| carrier_name.downcase.include?('air lines'))
+        result = carrier_name.downcase
+        result = result.gsub("airlines","")
+        result = result.gsub("airline","")
+        result = result.gsub("air lines","")
+        result = result.strip.downcase.gsub(" ", "-")
+        result = result+"-airlines"
+      else
+        result = carrier_name.downcase.gsub(" ","-")+ "-airlines"
+      end
+    end
+  end
 end

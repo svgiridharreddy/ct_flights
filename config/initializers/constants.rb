@@ -219,7 +219,7 @@ COUNTRY_LIST = ['IN', 'KW', 'OM', 'BH', 'AE', 'QA', 'SA']
 JS_INCLUDES=["http://54.169.172.141/assets/cleartrip_calendar.js"]
 INTERNATIONAL_AIRLINES = {'IN'=> ["AK","EK","BA","QR","SQ","EY"],
 'AE' => ["EY","9W","SV","AI","QR","GF"],
-'SA' => ["EY","9W","AI","EK","QR","FZ","G9"]}
-CALENDAR_COUNTRIES = ["IN","AE"]
+'SA' => ["EY","9W","AI","EK","QR","FZ","G9"],'BH' => ["EY","9W","AI","EK","QR","FZ","G9"],'KW' => ["EY","9W","AI","EK","QR","FZ","G9"],'QA' => ["EY","9W","AI","EK","QR","FZ","G9"],'OM' => ["EY","9W","AI","EK","QR","FZ","G9"]}
+CALENDAR_COUNTRIES = ["IN","AE","SA"]
 
 SEO_META = YAML.load_file(Rails.root.join("config","seo.yml"))

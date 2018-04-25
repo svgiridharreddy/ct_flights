@@ -2,15 +2,20 @@
   <div>
     <div class="container-fluid">
       <div class="sixteen columns alpha">
-      
         <ul class="footerlinkssmall list-unstyled">
           <% title = section.include?("dom") ? "Domestic Airlines:" : "International Airlines:" %>
           <li><%= title %></li>
-          <% top_airlines.each do |cc| %>
-            <li> 
-              <% airline_name = link_to( t("airlines.#{cc}"), "/flight-booking/" + format_airline_name(I18n.with_locale(:en) { t("airlines.#{cc}") }).downcase.gsub(" ", "-").gsub("--","-") + ".html") %>
-              <%= airline_name %>
-            </li>
+          <%if  footer_airline_data.present? %>
+            <ul class="footerlinkssmall">
+              <% footer_airline_data.each_with_index do |airline,index| %>
+                <% if index == 0 %>
+                  <li><%= t('footer.intl_airlines') %> :</li>
+                  <li><%= link_to t("airlines.#{airline[1]}"), "/flight-booking/#{airline[0]}",title: t("airlines.#{airline[1]}") %></li>
+                <% else %>
+                  <li><%= link_to t("airlines.#{airline[1]}"), "/flight-booking/#{airline[0]}",title: t("airlines.#{airline[1]}") %></li>
+                <% end %>
+              <% end %>
+            </ul>
           <% end %>
         </ul>
         <div class="clear"></div>

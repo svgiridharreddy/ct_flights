@@ -68,7 +68,7 @@ en:
     more_flights_from: "More Flights From"
     more_flights_to: "More Flights To"
     top_dom_airlines_from: "Top Domestic Airlines From "
-    top_int_airlines_from: "Top International Airlines From "
+    top_int_airlines_from: "Top Airlines From "
     flights_routes_html: "<a href= '%{link}' title = '%{dep_city_name} %{arr_city_name} flights'> %{dep_city_name} %{arr_city_name} flights </a>"
     internatoinal_flight_schedules: "International Flight Schedules"
     domesitc_flight_schedules: "Domestic Flight Schedules"

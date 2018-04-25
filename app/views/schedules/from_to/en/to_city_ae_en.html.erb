@@ -47,7 +47,7 @@
     <%= render :partial=>"common/search_widget" %>
     <div class="col-lg-9 col-md-9 col-sm-12 mobile-view pad-lzero" id="flight-schedule">
       <div class="list-box">
-      <% %>
+      <% if pagination[:current_page_no] == 0 %>
         <% if popular_routes["dom"].present? %>
           <h2><%=t('from_city.domestic_flights_from')%> <%= t('from_city.city_name', city_name: @city_name) %><span class="weak"> ( <%= t("from_city.flights_found", count: city_layout_values['dom_route_count']) %> )</span></h2>
            <%= render :partial=>"schedules/from_to/en/shared/from_to_city_table_en",:locals=>{:routes=> popular_routes["dom"], section: "dom", :country_code=> country_code, :use_helper=>use_helper, :assets_path=>assets_path} %><!--/normal-list-view-->
@@ -69,6 +69,7 @@
               </p>
             <% end %>
           </div>
+        <% end %>
           <% if pagination[:routes].present? %>
             <div class="content-desc">
               <h2>Flights to <%= @city_name %> </h2>

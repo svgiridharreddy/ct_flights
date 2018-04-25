@@ -125,6 +125,9 @@
               </div>
             </div>
             <%= render partial: "schedules/routes/shared/en/top_airlines_from",locals: {schedule_layout_values: schedule_layout_values,top_airlines: schedule_layout_values["top_int_airlines"],dep_city_name: dep_city_name,use_helper: use_helper,arr_city_name: arr_city_name} %>
+            <% if schedule_header["hotels_list"].present? %>
+                <%= render :partial=> "schedules/routes/shared/en/top_rhs_hotels",locals: { near_by_airport_hotels: schedule_header["near_by_airport_hotels"],hotels_list: schedule_header["hotels_list"],hotels_header_list: schedule_header["hotels_header_list"],arr_city_name: arr_city_name } %>
+            <% end %>
             <div class="blocks banner-section">
               <%= render :partial=>"common/banner",:locals=>{arr_city_name: arr_city_name, dep_city_name: dep_city_name,:country_code=>@country_code, use_helper: use_helper} %>
             </div>
