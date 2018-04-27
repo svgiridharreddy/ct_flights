@@ -6,15 +6,13 @@ class FlightSchedulesController < ApplicationController
 	def schedule_values
 		domain = request.domain
 		path = "#{request.fullpath}"
-
-		@file_name = params[:route] + ".html"
-		url = params[:route].gsub("-flights","")
 		@application_processor = ApplicationProcessor.new
 		@country_code = @application_processor.host_country_code(domain)[0]
 		@country_name = @application_processor.host_country_code(domain)[1]
-		@language = params[:lang].nil? ? 'en' : params[:lang]
-		@page_type="flight-schedule"
 		@host_name = @application_processor.host_name(@country_code)
+		@language = params[:lang].nil? ? 'en' : params[:lang]
+		@file_name = params[:route] + ".html"
+		
 		check_domain = check_domain(@language,@country_code)
 		if check_domain
 			lang = @language == "en" ? "" : "#{@language}"
@@ -24,11 +22,18 @@ class FlightSchedulesController < ApplicationController
 				redirect_to "#{@host_name}/#{lang}/flight-schedule/flight-schedules-domestic.html" and return
 			end
 		end
+		if params[:route].include?("flight-schedules")
+			# redirect_to "#{@host_name}/#{path}" and return
+			get_index_schedule_values(path)
+			return
+		end
 		if path.include?("flights-from") || path.include?("flights-to")
 			get_from_to(path)
 			return
 		end
-
+		@page_type="flight-schedule"
+		@meta_page_type = "flight-schedule"
+		url = params[:route].gsub("-flights","")
 		@route = UniqueRoute.find_by(schedule_route_url: url) 
 		
 		if @route.nil? || !@route.present?
@@ -109,7 +114,8 @@ class FlightSchedulesController < ApplicationController
 
 	def get_from_to(path)
 		@city_section = path.include?("from") ? "from" : "to"
-		@page_type = @city_section
+		@meta_page_type = @city_section
+		@page_type = "flight-schedule"
 		lang= @language=="ar" ? "/ar" : ""
 		url =  path.gsub("#{lang}/flight-schedule/",'').gsub(/-\d/,'').gsub('.html','')
 		if  @city_section == "from"
@@ -185,25 +191,27 @@ class FlightSchedulesController < ApplicationController
 	  end
     # comented because only in_flight_hop_schedule_collectives table has data
     # uncomment after feeding data to respective tables
-    # case @country_code
-    # when  "IN"
-    # 	@schedule_routes = @route.in_flight_hop_schedule_collectives.where("#{inc_cc}").order("dep_time asc").limit(10)
-    # when  "AE"
-    # 	@schedule_routes = @route.ae_flight_schedule_collectives.where("#{inc_cc}").order("dep_time asc").limit(10)
-    # when  "SA"
-    # 	@schedule_routes = @route.sa_flight_hop_schedule_collectives.where("#{inc_cc}").order("dep_time asc").limit(10)
-    # when  "BH"
-    # 	@schedule_routes = @route.bh_flight_hop_schedule_collectives.where("#{inc_cc}").order("dep_time asc").limit(10)
-    # when  "QA"
-    # 	@schedule_routes = @route.qa_flight_hop_schedule_collectives.where("#{inc_cc}").order("dep_time asc").limit(10)
-    # when  "KW"
-    # 	@schedule_routes = @route.kw_flight_hop_schedule_collectives.where("#{inc_cc}").order("dep_time asc").limit(10)
-    # when  "OM"
-    # 	@schedule_routes = @route.om_flight_hop_schedule_collectives.where("#{inc_cc}").order("dep_time asc").limit(10)
-    # else
-    # 	@schedule_routes = @route.in_flight_hop_schedule_collectives.where("#{inc_cc}").order("dep_time asc").limit(10)
-    # end
-    @schedule_routes = @route.in_flight_hop_schedule_collectives.where("#{inc_cc}").order("dep_time asc").limit(10)
+    case @country_code
+    when  "IN"
+    	@schedule_routes = @route.in_flight_hop_schedule_collectives.where("#{inc_cc}").order("dep_time asc").limit(10)
+    when  "AE"
+    	@schedule_routes = @route.ae_flight_schedule_collectives.where("#{inc_cc}").order("dep_time asc").limit(10)
+    when  "SA"
+    	@schedule_routes = @route.sa_flight_hop_schedule_collectives.where("#{inc_cc}").order("dep_time asc").limit(10)
+    when  "BH"
+    	@schedule_routes = @route.bh_flight_hop_schedule_collectives.where("#{inc_cc}").order("dep_time asc").limit(10)
+    when  "QA"
+    	@schedule_routes = @route.qa_flight_hop_schedule_collectives.where("#{inc_cc}").order("dep_time asc").limit(10)
+    when  "KW"
+    	@schedule_routes = @route.kw_flight_hop_schedule_collectives.where("#{inc_cc}").order("dep_time asc").limit(10)
+    when  "OM"
+    	@schedule_routes = @route.om_flight_hop_schedule_collectives.where("#{inc_cc}").order("dep_time asc").limit(10)
+    else
+    	@schedule_routes = @route.in_flight_hop_schedule_collectives.where("#{inc_cc}").order("dep_time asc").limit(10)
+    end
+    if @schedule_routes.empty?
+    	redirect_to "#{@host_name}/flight-schedule/flight-schedules-domestic.html" and return
+    end
 		header_values = flight_schedule_service.schedule_header_details
 		schedule_layout_values = flight_schedule_service.schedule_hop_values(@schedule_routes)
 		@title_min_price = 0 #schedule_layout_values["route_min_price"]
@@ -214,3 +222,21 @@ class FlightSchedulesController < ApplicationController
 	end
 end
 
+def get_index_schedule_values(path)
+	lang= @language=="ar" ? "/ar" : ""
+	page_no = @file_name.gsub(/[^0-9]/,'').to_i || 0
+	@page_type = "flight-schedule"
+	@meta_page_type = "schedule_index"
+	@section = params[:route].include?("domestic") ? "dom" : "int"
+	args = {language: @language,
+					country_code: @country_code,
+					section: @section}
+	flight_schedule_service = FlightScheduleService.new args
+	index_values = flight_schedule_service.index_values
+	more_routes = flight_schedule_service.index_more_routes
+	rhs_top_airlines = flight_schedule_service.index_rhs_top_airlines
+	rhs_top_airports = flight_schedule_service.index_rhs_top_airports
+	pagination = custom_pagination(page_no,more_routes,@file_name)
+	partial =  "schedules/index/#{@language.downcase}/flight_schedule_#{@language.downcase}_#{@section}_index"
+	render partial, locals: {index_values: index_values,pagination: pagination,popular_routes: index_values,rhs_top_airlines: rhs_top_airlines,rhs_top_airports: rhs_top_airports,rhs_top_routes: more_routes[0..5]}
+end

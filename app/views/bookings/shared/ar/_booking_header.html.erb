@@ -6,6 +6,7 @@
       
         <%  if popular_routes["dom_dom"].present?  && popular_routes["dom_dom"].length > 1%>
         <li>
+        
           <a class="dropdown-toggle" type="button" data-toggle="dropdown"><%= @carrier_name_ar %> رحلات طيران داخلي <span class="caret"></span></a>
           <ul class="list-unstyled dropdown-menu"> 
             <% popular_routes_dom = popular_routes["dom_dom"] %> 
@@ -64,7 +65,7 @@
           <% airports["dom_airports"].each do |airport|%>
           <li>
             <%  airport_name = link_to( airport['airport_name_ar'], "#{@host_name}/tourism/airports/ar/"+ "#{url_escape(airport['city_name'])+'-airport.html'.gsub('%2F','/')}", title: airport['airport_name_ar']) %>
-            <%=  airport['airport_name_ar'] %>
+            <%=  airport_name %>
           </li> 
           <% end %> 
         </ul>
@@ -78,7 +79,7 @@
           <%  airports["int_airports"].each do |airport| %>
           <li>
             <%  airport_name = link_to( airport['airport_name_ar'], "#{@host_name}tourism/airports/ar/"+ "#{url_escape(airport['city_name'])+'-airport.html'.gsub('%2F','/')}",title: airport['airport_name_ar'])  %>
-            <%=  airport['airport_name_ar'] %>
+            <%=  airport_name %>
           </li>  
           <% end %>
         </ul>

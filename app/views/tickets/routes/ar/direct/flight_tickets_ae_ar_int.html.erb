@@ -20,7 +20,6 @@
   				</ul>
   				<div class="Menuicon visible-xs pull-right"> <span></span> <span></span> <span></span></div>
   			</div>
-  			<div class="ctCol ctCenter mview-center">&nbsp;</div>
   			<div class="ctCol">
   				<ul class="list-inline language">
   					<li class="en first active">
@@ -124,7 +123,7 @@
         <%= render partial: "footers/#{country_code.downcase}/ticket/ae_ar_ticket_footer", locals: {country_code: country_code,dep_city_name: dep_city_name_ar,arr_city_name: arr_city_name_ar,dep_city_name_formated: ticket_layout_values["dep_city_name_formated"],arr_city_name_formated: ticket_layout_values["arr_city_name_formated"],page_type: 'ticket-routes',footer_links_data_arabic: ticket_footer[:footer_links_data_arabic],top_airlines: ticket_footer[:int_airlines],section: @section,footer_airline_data: ticket_footer[:footer_airline_data]}%>
       </div>
     </div>
-    <%= render "shared/ae/ae_gac"%>
+    <%= render :partial=>"shared/#{country_code.downcase}/#{country_code.downcase}_gac"%>
     <%= render "common/comscore" %>
     <% lang = {
       "calender"=>{

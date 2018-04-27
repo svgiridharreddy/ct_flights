@@ -1,4 +1,6 @@
-<% use_helper = self.extend ApplicationHelper %>
+<% use_helper = self.extend ApplicationHelper
+  country_code = @country_code
+ %>
     <%= render partial: "common/google_tag_manager" %>
   	<section id="flights-nav">
   		<div class="container-fluid">
@@ -142,7 +144,7 @@
         <%= render partial: "footers/#{country_code.downcase}/schedule/routes/en/en_schedule_footer", locals: {country_code: country_code,dep_city_name: dep_city_name,arr_city_name: arr_city_name,dep_city_name_formated: schedule_layout_values["dep_city_name_formated"],arr_city_name_formated: schedule_layout_values["arr_city_name_formated"],page_type: 'schedule-routes',footer_links_data: schedule_footer[:footer_links_data],top_airlines: schedule_footer[:int_airlines],flights_header: schedule_header,section: @section}%>
       </div>
     </div>      
-      <%= render "shared/ae/ae_gac"%>
+      <%= render :partial=>"shared/#{@country_code.downcase}/#{@country_code.downcase}_gac"%>
       <%= render "common/comscore" %>
       <% lang = {
       "calender"=>{

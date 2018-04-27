@@ -16,7 +16,74 @@ class FlightScheduleService
     @route_type = args[:route_type]
     @domestic_carrier_codes = AirlineBrand.where(country_code: @country_code).pluck("distinct(carrier_code)") 
   end
+  def index_values
+    if @section == "dom"
+      query_part = "dep_country_code='#{@country_code}' and arr_country_code='#{@country_code}'"
+      brand_query = "carrier_code in (?)"
+    else
+      query_part = "(dep_country_code!='#{@country_code}' and arr_country_code='#{@country_code}') or (dep_country_code='#{@country_code}' and arr_country_code!='#{@country_code}') or (dep_country_code!='#{@country_code}' and arr_country_code!='#{@country_code}')"
+      brand_query = "carrier_code not in (?) "
+    end
+    routes = UniqueRoute.where("weekly_flights_count IS NOT NULL and dep_city_name!=' ' and arr_city_name!='' and #{query_part}").limit(10)
+    popular_routes = []
+    model_name = "#{@country_code.titleize}FlightScheduleCollective".constantize
+    routes.each do |r|
+      route = model_name.where("dep_city_code='#{r.dep_city_code}' and arr_city_code='#{r.arr_city_code}' and #{brand_query}",@domestic_carrier_codes).first
+      if route.present? 
+        min_pr = get_price(route.dep_city_code,route.arr_city_code,route.carrier_code)
+        route_json = eval(route.to_json)
+        route_json[:min_price] = min_pr[0]
+        route_json[:max_price] = min_pr[1]
+        route_json[:dep_city_name] = r.dep_city_name
+        route_json[:arr_city_name] =  r.arr_city_name
+        route_json[:dep_city_name_ar] = r.dep_city_name_ar rescue r.dep_city_name
+        route_json[:arr_city_name_ar] = r.arr_city_name_ar rescue r.arr_city_name
+        popular_routes << route_json
+      end
+    end
+    return popular_routes
+  end
+  def index_rhs_top_airlines
+    top_dom_cc = AirlineBrand.where(country_code: @country_code).order("brand_routes_count desc").limit(7).pluck(:carrier_code).uniq
+    top_int_cc = INTERNATIONAL_AIRLINES[@country_code]
+    {dom_airlines: top_dom_cc,int_airlines: top_int_cc}
+  end
 
+  def index_rhs_top_airports
+    airports = {"dom_airports" => [],
+                "int_airports" => []
+              }
+    dom_airport_records = Airport.where("country_code='#{@country_code}' and  airport_routes_count is not NULL").order('airport_routes_count desc').limit(5)
+    int_airport_records = Airport.where("country_code!='#{@country_code}' and airport_routes_count is not NULL").order('airport_routes_count desc').limit(5)
+    dom_airport_records.each do |airport|
+      airports["dom_airports"] << {
+        "airport_name" => airport.airport_name,
+        "airport_code" => airport.airport_code,
+        "airport_name_ar" => airport.airport_name_ar,
+        "city_name" => airport.city_name,
+        "city_code" => airport.city_code
+      }
+    end
+    int_airport_records.each do |airport|
+      airports["int_airports"] << {
+        "airport_name" => airport.airport_name,
+        "airport_name_ar" => airport.airport_name_ar,
+        "airport_code" => airport.airport_code,
+        "city_name" => airport.city_name,
+        "city_code" => airport.city_code
+      }
+    end
+    return airports
+  end
+  def index_more_routes 
+    if @section == "dom"
+      query_part = "dep_country_code='#{@country_code}' and arr_country_code='#{@country_code}'"
+    else
+      query_part = "(dep_country_code!='#{@country_code}' and arr_country_code='#{@country_code}') or (dep_country_code='#{@country_code}' and arr_country_code!='#{@country_code}') or (dep_country_code!='#{@country_code}' and arr_country_code!='#{@country_code}')"
+    end
+    routes = UniqueRoute.where("weekly_flights_count IS NOT NULL and dep_city_name!=' ' and arr_city_name!='' and #{query_part}").limit(100)
+    return routes
+  end
   def schedule_airline_values
     I18n.locale = @language.to_sym
   	route_values = {}

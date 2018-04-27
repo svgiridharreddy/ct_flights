@@ -2,9 +2,9 @@
 
     def seo_header
       meta_title = meta_keywords = meta_description = ""
-      meta_info = SEO_META[@page_type]
+      meta_info = SEO_META[@meta_page_type]
       host = get_domain
-      case @page_type 
+      case @meta_page_type
       when "flight-schedule"
         if @language == "ar"
           title = (@title_min_price.present? && @title_min_price!=0) ? "title_with_price" : "title_without_price"
@@ -63,13 +63,33 @@
           meta_keywords = meta_info["#{@country_code.downcase}"]["#{@language.downcase}"]["#{@section[3..5]}"]["keywords"]  %{dep_city_name: @dep_city_name,arr_city_name: @arr_city_name}
           amp_url = meta_info["#{@country_code.downcase}"]["#{@language.downcase}"]["amp_url"] %{file_name: @file_name}
         else
-          meta_title = meta_info["#{@country_code.downcase}"]["#{@language.downcase}"]["#{@section[3..5]}"]["title"] %{dep_city_name: @dep_city_name,arr_city_name: @arr_city_name,dep_city_code: @route.dep_city_code,arr_city_code: @route.arr_city_code,min_pirce: @title_min_price}
-          meta_description = meta_info["#{@country_code.downcase}"]["#{@language.downcase}"]["#{@section[3..5]}"]["description"] %{dep_city_name: @dep_city_name,arr_city_name: @arr_city_name}
-          meta_keywords = meta_info["#{@country_code.downcase}"]["#{@language.downcase}"]["#{@section[3..5]}"]["keywords"] %{dep_city_name: @dep_city_name,arr_city_name: @arr_city_name}
+          meta_title = meta_info["#{@country_code.downcase}"]["#{@language.downcase}"]["#{@section}"]["title"] %{dep_city_name: @dep_city_name,arr_city_name: @arr_city_name,dep_city_code: @route.dep_city_code,arr_city_code: @route.arr_city_code,min_pirce: @title_min_price}
+          meta_description = meta_info["#{@country_code.downcase}"]["#{@language.downcase}"]["#{@section}"]["description"] %{dep_city_name: @dep_city_name,arr_city_name: @arr_city_name}
+          meta_keywords = meta_info["#{@country_code.downcase}"]["#{@language.downcase}"]["#{@section}"]["keywords"] %{dep_city_name: @dep_city_name,arr_city_name: @arr_city_name}
           amp_url = meta_info["#{@country_code.downcase}"]["#{@language.downcase}"]["amp_url"] %{file_name: @file_name}
         end
+      when "schedule_index"
+        if @language == "ar"
+          meta_title = meta_info["#{@country_code.downcase}"]["#{@language.downcase}"]["#{@section}"]["title"] 
+          meta_description = meta_info["#{@country_code.downcase}"]["#{@language.downcase}"]["#{@section}"]["description"] 
+          meta_keywords = meta_info["#{@country_code.downcase}"]["#{@language.downcase}"]["#{@section}"]["keywords"]  
+        else
+          meta_title = meta_info["#{@country_code.downcase}"]["#{@language.downcase}"]["#{@section}"]["title"]
+          meta_description = meta_info["#{@country_code.downcase}"]["#{@language.downcase}"]["#{@section}"]["description"] 
+          meta_keywords = meta_info["#{@country_code.downcase}"]["#{@language.downcase}"]["#{@section}"]["keywords"] 
+        end
+      when "ticket_index"
+        if @language == "ar"
+          meta_title = meta_info["#{@country_code.downcase}"]["#{@language.downcase}"]["#{@section}"]["title"] 
+          meta_description = meta_info["#{@country_code.downcase}"]["#{@language.downcase}"]["#{@section}"]["description"] 
+          meta_keywords = meta_info["#{@country_code.downcase}"]["#{@language.downcase}"]["#{@section}"]["keywords"]  
+        else
+          meta_title = meta_info["#{@country_code.downcase}"]["#{@language.downcase}"]["#{@section}"]["title"]
+          meta_description = meta_info["#{@country_code.downcase}"]["#{@language.downcase}"]["#{@section}"]["description"] 
+          meta_keywords = meta_info["#{@country_code.downcase}"]["#{@language.downcase}"]["#{@section}"]["keywords"] 
+        end
       end
-      {:title =>meta_title,:keywords=>meta_keywords,:description=>meta_description,amp_url: amp_url}
+        {:title =>meta_title,:keywords=>meta_keywords,:description=>meta_description,amp_url: amp_url}
     end
 
   def og_tags
@@ -89,8 +109,7 @@
     routes_count = routes.count 
     pagination_routes_count = routes_count-44
     total_pages,remaing_routes_count = pagination_routes_count.divmod(45)
-    file_name = file_name.gsub(/\d/,'').gsub(".html",'')
-
+    file_name = file_name.gsub(/-\d/,'').gsub(/\d/,'').gsub(".html",'')
     if remaing_routes_count > 0   
       total_pages += 1
     end

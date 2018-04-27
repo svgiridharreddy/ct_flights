@@ -157,18 +157,20 @@
           </li>
         <% end %>
       <% end %>
-      <li>
-        <a class="dropdown-toggle" type="button" data-toggle="dropdown">Offers <span class="caret"></span></a>
-        <ul class="list-unstyled dropdown-menu"> 
-          <li><a href="https://www.cleartrip.com/offers/india/payless" target="_blank" title="Domestic flight offers">Domestic flight offers</a></li> 
-           <li><a href="https://www.cleartrip.com/offers/india/anywhere" target="_blank" title="International flight offers">International flight offers</a></li> 
-           <li><a href="https://www.cleartrip.com/offers/india/awesome-long-weekends-2017" title="Long weekend offers" target="_blank">Long weekend offers</a></li> 
-          <li><a href="https://www.cleartrip.com/offers/india/hdfc-weekends" title="HDFC weekend offers" target="_blank">HDFC weekend offers</a></li> 
-          <li><a href="https://www.cleartrip.com/offers/india/hsbc-offers" title="HSBC offers" target="_blank">HSBC offers</a></li> 
-          <li><a href="https://www.cleartrip.com/offers/india/yes-bank" target="_blank" title="Yes bank offers ">Yes bank offers </a></li> 
-          <li><a href="https://www.cleartrip.com/offers/india/axisbank" target="_blank" title="AXIS bank offers">AXIS bank offers</a></li> 
-          <li><a href="https://www.cleartrip.com/offers/india/amex-tuesday" title="American express offers" target="_blank">American express offers</a></li> 
-        </ul>
-      </li>
+      <% if @country_code == "IN" %>
+        <li>
+          <a class="dropdown-toggle" type="button" data-toggle="dropdown">Offers <span class="caret"></span></a>
+          <ul class="list-unstyled dropdown-menu"> 
+            <li><a href="https://www.cleartrip.com/offers/india/payless" target="_blank" title="Domestic flight offers">Domestic flight offers</a></li> 
+             <li><a href="https://www.cleartrip.com/offers/india/anywhere" target="_blank" title="International flight offers">International flight offers</a></li> 
+             <li><a href="https://www.cleartrip.com/offers/india/awesome-long-weekends-2017" title="Long weekend offers" target="_blank">Long weekend offers</a></li> 
+            <li><a href="https://www.cleartrip.com/offers/india/hdfc-weekends" title="HDFC weekend offers" target="_blank">HDFC weekend offers</a></li> 
+            <li><a href="https://www.cleartrip.com/offers/india/hsbc-offers" title="HSBC offers" target="_blank">HSBC offers</a></li> 
+            <li><a href="https://www.cleartrip.com/offers/india/yes-bank" target="_blank" title="Yes bank offers ">Yes bank offers </a></li> 
+            <li><a href="https://www.cleartrip.com/offers/india/axisbank" target="_blank" title="AXIS bank offers">AXIS bank offers</a></li> 
+            <li><a href="https://www.cleartrip.com/offers/india/amex-tuesday" title="American express offers" target="_blank">American express offers</a></li> 
+          </ul>
+        </li>
+      <% end %>
     </ul>
   </section>

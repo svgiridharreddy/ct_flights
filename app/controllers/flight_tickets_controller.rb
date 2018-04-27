@@ -9,7 +9,6 @@ class FlightTicketsController < ApplicationController
 		@country_code = @application_processor.host_country_code(domain)[0]
 		@country_name = @application_processor.host_country_code(domain)[1]
 		@language = params[:lang].nil? ? 'en' : params[:lang]
-		@page_type="flight-tickets"
 		@host_name = @application_processor.host_name(@country_code)
 		check_domain = check_domain(@language,@country_code)
 		if check_domain
@@ -20,6 +19,12 @@ class FlightTicketsController < ApplicationController
 				redirect_to "#{@host_name}/#{lang}/flight-tickets/cheap-flight-air-tickets-domestic.html" and return
 			end
 		end
+		if params[:route].include?("cheap-flight-air-tickets")
+			get_ticket_index_values 
+			return
+		end
+		@page_type="flight-tickets"
+		@meta_page_type = "flight-tickets"
 		@route = UniqueRoute.find_by(schedule_route_url: url)
 		if @route.nil? || !@route.present?
 			@route = UniqueHopRoute.find_by(url: url)
@@ -131,25 +136,25 @@ class FlightTicketsController < ApplicationController
     end
     # comented because only in_flight_hop_schedule_collectives table has data
     # uncomment after feeding data to respective tables
-    # case @country_code
-    # when  "IN"
-    # 	@schedule_routes = @route.in_flight_hop_schedule_collectives.where("#{inc_cc}").order("dep_time asc").limit(10)
-    # when  "AE"
-    # 	@schedule_routes = @route.ae_flight_schedule_collectives.where("#{inc_cc}").order("dep_time asc").limit(10)
-    # when  "SA"
-    # 	@schedule_routes = @route.sa_flight_hop_schedule_collectives.where("#{inc_cc}").order("dep_time asc").limit(10)
-    # when  "BH"
-    # 	@schedule_routes = @route.bh_flight_hop_schedule_collectives.where("#{inc_cc}").order("dep_time asc").limit(10)
-    # when  "QA"
-    # 	@schedule_routes = @route.qa_flight_hop_schedule_collectives.where("#{inc_cc}").order("dep_time asc").limit(10)
-    # when  "KW"
-    # 	@schedule_routes = @route.kw_flight_hop_schedule_collectives.where("#{inc_cc}").order("dep_time asc").limit(10)
-    # when  "OM"
-    # 	@schedule_routes = @route.om_flight_hop_schedule_collectives.where("#{inc_cc}").order("dep_time asc").limit(10)
-    # else
-    # 	@schedule_routes = @route.in_flight_hop_schedule_collectives.where("#{inc_cc}").order("dep_time asc").limit(10)
-    # end
-    @ticket_routes = @route.ae_flight_hop_ticket_collectives.where("#{inc_cc}").order("dep_time asc").limit(10)
+    case @country_code
+    when  "IN"
+    	@ticket_routes = @route.in_flight_hop_schedule_collectives.where("#{inc_cc}").order("dep_time asc").limit(10)
+    when  "AE"
+    	@ticket_routes = @route.ae_flight_schedule_collectives.where("#{inc_cc}").order("dep_time asc").limit(10)
+    when  "SA"
+    	@ticket_routes = @route.sa_flight_hop_schedule_collectives.where("#{inc_cc}").order("dep_time asc").limit(10)
+    when  "BH"
+    	@ticket_routes = @route.bh_flight_hop_schedule_collectives.where("#{inc_cc}").order("dep_time asc").limit(10)
+    when  "QA"
+    	@ticket_routes = @route.qa_flight_hop_schedule_collectives.where("#{inc_cc}").order("dep_time asc").limit(10)
+    when  "KW"
+    	@ticket_routes = @route.kw_flight_hop_schedule_collectives.where("#{inc_cc}").order("dep_time asc").limit(10)
+    when  "OM"
+    	@ticket_routes = @route.om_flight_hop_schedule_collectives.where("#{inc_cc}").order("dep_time asc").limit(10)
+    else
+    	@ticket_routes = @route.in_flight_hop_schedule_collectives.where("#{inc_cc}").order("dep_time asc").limit(10)
+    end
+    # @ticket_routes = @route.ae_flight_hop_ticket_collectives.where("#{inc_cc}").order("dep_time asc").limit(10)
     if @ticket_routes.empty?
     	redirect_to "#{@host_name}/flight-schedule/flight-schedules-domestic.html" and return
     end
@@ -161,6 +166,24 @@ class FlightTicketsController < ApplicationController
 		@arr_city_name_formated = ticket_layout_values["arr_city_name_formated"]
 		partial = "tickets/routes/#{@language}/hop/flight_ticket_hop_#{@country_code.downcase}_#{@language.downcase}_#{@section[3..5]}"
 		render  partial,locals: {ticket_layout_values: ticket_layout_values,dep_city_name: @dep_city_name,arr_city_name: @arr_city_name,dep_city_name_ar: @dep_city_name_ar,arr_city_name_ar: @arr_city_name_ar,dep_city_code: @route.dep_city_code,arr_city_code: @route.arr_city_code,ticket_header: header_values,ticket_footer: ticket_footer }
-		
+	end
+
+	def get_ticket_index_values
+		lang= @language == "ar" ? "/ar" : ""
+		page_no = @file_name.gsub(/[^0-9]/,'').to_i || 0
+		@page_type="flight-tickets"
+		@meta_page_type = "ticket_index"
+		@section = params[:route].include?("domestic") ? "dom" : "int"
+		args = {language: @language,
+						country_code: @country_code,
+						section: @section}
+		flight_ticket_service = FlightTicketService.new args
+		index_values = flight_ticket_service.index_values
+		more_routes = flight_ticket_service.index_more_routes
+		rhs_top_airlines = flight_ticket_service.index_rhs_top_airlines
+		rhs_top_airports = flight_ticket_service.index_rhs_top_airports
+		pagination = custom_pagination(page_no,more_routes,@file_name)
+		partial =  "tickets/index/#{@language.downcase}/flight_ticket_#{@language.downcase}_#{@section}_index"
+		render partial, locals: {index_values: index_values,pagination: pagination,popular_routes: index_values,rhs_top_airlines: rhs_top_airlines,rhs_top_airports: rhs_top_airports,rhs_top_routes: more_routes[0..5]}
 	end
 end

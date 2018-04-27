@@ -10,6 +10,7 @@ Rails.application.routes.draw do
 	scope ':lang/flight-schedule' do
 		get '/:route' => "flight_schedules#schedule_values"
 	end
+	
 	scope 'flight-booking' do 
 		get '/:airline' => "overview_bookings#booking_values"
 	end

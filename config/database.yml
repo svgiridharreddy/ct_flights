@@ -24,10 +24,10 @@ development:
 calendar_mysql: 
   adapter: mysql2
   username: root
-  password: CT-F-C-API$
+  password: root
   database: cleartrip_widgets_development 
   pool: 1000
-  host: 54.169.143.74
+  host: 13.229.249.99
   encoding: utf8  
 db_editor_panel:
   adapter: mysql2

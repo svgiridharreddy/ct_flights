@@ -3,8 +3,6 @@
     <div class="container-fluid">
       <div class="sixteen columns alpha">
         <ul class="footerlinkssmall list-unstyled">
-          <% title = section.include?("dom") ? "Domestic Airlines:" : "International Airlines:" %>
-          <li><%= title %></li>
           <%if  footer_airline_data.present? %>
             <ul class="footerlinkssmall">
               <% footer_airline_data.each_with_index do |airline,index| %>

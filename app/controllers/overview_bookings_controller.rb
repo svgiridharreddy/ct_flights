@@ -7,7 +7,8 @@ class OverviewBookingsController < ApplicationController
 		@country_name = application_processor.host_country_code(domain)[1]
 		@language = params[:lang].nil? ? 'en' : params[:lang]
 		@host_name = application_processor.host_name(@country_code)
-		@page_type = "booking-overview"
+		@page_type = "flight-booking"
+		@meta_page_type  = "booking-overview"
 		airline_name = params[:airline] 
 		carrier_name = params[:airline].gsub("-",' ').gsub(/\d/,'').gsub("airlines",'').titleize.strip
 		carrier_name_with_airline = carrier_name + " Airlines"			
@@ -47,7 +48,7 @@ class OverviewBookingsController < ApplicationController
     baggages = @country_code=='IN' ? baggages_airlines.include?(@carrier_code) : false
 		flight_booking_service = FlightBookingService.new @airline_details
 		airline_more_routes =  flight_booking_service.airline_more_routes
-		pagination = custom_pagination(page_no,airline_more_routes,page_name)
+		pagination = custom_pagination(page_no,airline_more_routes,@file_name)
 		if page_no == 0
 			popular_routes = flight_booking_service.airline_popular_routes
 			content = flight_booking_service.fetch_content

@@ -4,8 +4,7 @@
       <div class="sixteen columns alpha">
       
         <ul class="footerlinkssmall list-unstyled">
-          <% title = section.include?("dom") ? "Domestic Airlines:" : "International Airlines:" %>
-          <li><%= title %></li>
+          
           <% top_airlines.each do |cc| %>
             <li> 
               <% airline_name = link_to( t("airlines.#{cc}"), "/flight-booking/" + format_airline_name(I18n.with_locale(:en) { t("airlines.#{cc}") }).downcase.gsub(" ", "-").gsub("--","-") + ".html") %>
